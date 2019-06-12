@@ -24,11 +24,19 @@ public class CreateProject {
 
     @FXML
     void saveAction(ActionEvent event) {
-
+//        projIdTF
     }
 
     @FXML
     void nextStepAction(ActionEvent event) {
+
+    }
+
+    private String createTime = null;
+    private String modifyTime = null;
+
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
 
     }
 
