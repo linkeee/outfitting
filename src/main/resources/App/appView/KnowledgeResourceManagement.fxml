@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="knowledgeResourceBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1000.0" stylesheets="@KnowledgeResourceManagement.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KnowledgeResourceManagement">
+   <top>
+      <VBox prefHeight="45.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar fx:id="topToolBar" prefHeight="40.0" prefWidth="200.0">
+              <items>
+                  <Label alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="268.0" text="企业信息资源管理">
+                     <font>
+                        <Font name="Times New Roman" size="27.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="KBButton" mnemonicParsing="false" onAction="#goKbManagement" text="知识库管理" />
+                  <Button fx:id="DBButton" mnemonicParsing="false" onAction="#goDbManagement" text="数值管理" />
+                  <Button fx:id="statisticButton" mnemonicParsing="false" onAction="#goStatistic" text="数据库管理" />
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#backHome" text="返回" />
+              </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>

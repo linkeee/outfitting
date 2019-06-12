@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="498.0" prefWidth="798.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1"
+            fx:controller="App.controller.SelectionItemGongyoudanyuan">
+   <VBox layoutX="243.0" layoutY="70.0" prefHeight="498.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0"
+         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane alignment="CENTER_RIGHT" focusTraversable="true" maxHeight="1.7976931348623157E308"
+                maxWidth="1.7976931348623157E308">
+         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="94.0" minWidth="0.0" prefWidth="74.0"/>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="225.0" minWidth="10.0" prefWidth="160.0"/>
+            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="218.0" minWidth="10.0" prefWidth="92.0"/>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="237.0" minWidth="10.0" prefWidth="166.0"/>
+            <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="149.0" minWidth="10.0" prefWidth="98.0"/>
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="200.0" minWidth="10.0" prefWidth="197.0"/>
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="243.0" minHeight="0.0" prefHeight="42.0" valignment="CENTER" vgrow="ALWAYS"/>
+            <RowConstraints maxHeight="243.0" minHeight="0.0" prefHeight="38.0" valignment="CENTER" vgrow="ALWAYS"/>
+            <RowConstraints maxHeight="243.0" minHeight="10.0" prefHeight="38.0" valignment="CENTER" vgrow="ALWAYS"/>
+         </rowConstraints>
+         <TextField fx:id="ruleIdTF" GridPane.columnIndex="1"/>
+         <TextField fx:id="itemNameTF" editable="false" promptText="供油单元" GridPane.columnIndex="3"/>
+         <TextField fx:id="outfittingTypeTF" GridPane.columnIndex="5"/>
+         <TextField fx:id="gongyouliangTF" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+         <TextField fx:id="zhongyouOutputViscosityTF" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+         <TextField fx:id="zhongyouOutputTemperatureTF" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+         <TextField fx:id="zhongyouOutputPressureTF" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+         <TextField fx:id="itemHyperLinkTF" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+         <Label text="规则ID"/>
+         <Label text="舾装件名称" GridPane.columnIndex="2"/>
+         <Label text="舾装类型" GridPane.columnIndex="4"/>
+         <Label text="供油量" GridPane.rowIndex="1"/>
+         <Label text="重油输出粘度" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+         <Label text="重油输出温度" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+         <Label text="重油输出压力" GridPane.rowIndex="2"/>
+         <Label text="设备工程项" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleQuery" text="智能选型"
+                 GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+         <Button mnemonicParsing="false" onAction="#handleReset" text="重置" GridPane.columnIndex="5"
+                 GridPane.rowIndex="2">
+            <GridPane.margin>
+               <Insets left="30.0"/>
+            </GridPane.margin>
+         </Button>
+      </GridPane>
+      <Separator prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets top="5.0"/>
+         </VBox.margin>
+      </Separator>
+      <TableView fx:id="selectionItemGongyoudanyuanTableView" editable="true" maxHeight="1.7976931348623157E308"
+                 maxWidth="1.7976931348623157E308" prefHeight="148.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+         </columnResizePolicy>
+         <columns>
+            <TableColumn prefWidth="75.0" text="IF">
+               <columns>
+                  <TableColumn fx:id="ruleIdTC" prefWidth="75.0" text="规则ID"/>
+                  <TableColumn fx:id="itemNameTC" prefWidth="75.0" text="舾装件名称" visible="false"/>
+                  <TableColumn fx:id="outfittingTypeTC" prefWidth="75.0" text="舾装类型"/>
+                  <TableColumn fx:id="gongyouliangTC" prefWidth="71.0" text="供油量（m3/h）"/>
+                  <TableColumn fx:id="zhongyouOutputViscosityTC" prefWidth="126.0" text="重油输出粘度（cSt）"/>
+                  <TableColumn fx:id="zhongyouOutputTemperatureTC" prefWidth="75.0" text="重油输出温度"/>
+                  <TableColumn fx:id="zhongyouOutputPressureTC" prefWidth="75.0" text="重油输出压力"/>
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="75.0" text="THEN">
+               <columns>
+                  <TableColumn fx:id="itemHyperLinkTC" prefWidth="75.0" text="设备工程项"/>
+               </columns>
+            </TableColumn>
+         </columns>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+         </VBox.margin>
+      </TableView>
+   </VBox>
+</AnchorPane>

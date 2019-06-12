@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="380.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.AddEditPerson">
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="88.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="288.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="姓名：">
+                    <GridPane.margin>
+                        <Insets left="30.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label text="电话：" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="30.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label text="工号：" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="30.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label text="职位：" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="30.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label text="权限：" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets left="30.0" />
+                    </GridPane.margin>
+                </Label>
+                <TextField fx:id="nameText" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="260.0" GridPane.columnIndex="1">
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="telText" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="jobText" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </TextField>
+            <ComboBox fx:id="positionComboBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="roleComboBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            </children>
+            <BorderPane.margin>
+                <Insets left="8.0" right="8.0" />
+            </BorderPane.margin>
+        </GridPane>
+    </center>
+    <top>
+        <VBox>
+            <children>
+                <Label text="-&gt;添加/修改新用户" BorderPane.alignment="TOP_LEFT">
+                    <BorderPane.margin>
+                        <Insets left="5.0" top="5.0" />
+                    </BorderPane.margin>
+                    <VBox.margin>
+                        <Insets left="5.0" top="7.0" />
+                    </VBox.margin>
+                </Label>
+                <Separator maxHeight="-Infinity" minHeight="-Infinity" prefHeight="3.0" prefWidth="200.0" />
+            </children>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox prefHeight="67.0" prefWidth="378.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="OK">
+                    <HBox.margin>
+                        <Insets left="180.0" top="15.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel">
+                    <HBox.margin>
+                        <Insets top="15.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets left="8.0" right="8.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+</BorderPane>

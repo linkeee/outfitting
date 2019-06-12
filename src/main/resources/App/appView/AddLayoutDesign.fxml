@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.AddLayoutDesign">
+    <center>
+        <AnchorPane fx:id="anchorpane">
+            <children>
+                <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label fx:id="lbl" prefHeight="40.0" prefWidth="211.0" text="舾装区域布局设计添加/修改">
+                            <VBox.margin>
+                                <Insets left="10.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Separator fx:id="separator2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.4" />
+                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="723.0" VBox.vgrow="ALWAYS">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" prefWidth="65.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="173.0" />
+                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="192.93234252929688" minWidth="10.0" prefWidth="88.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.8369140625" minWidth="10.0" prefWidth="177.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="302.7701416015625" minWidth="0.0" prefWidth="55.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="168.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="船长" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                <Label text="型深" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                <Label text="船宽" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                <TextField fx:id="lengthTextFiled" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                <TextField fx:id="depthTextFiled" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                <TextField fx:id="widthTextFiled" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                        <Label text="船舶类型" GridPane.rowIndex="3" />
+                        <TextField fx:id="layoutShipNumTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="船舶编号" GridPane.rowIndex="1" />
+                        <Label text="布局案例名称" GridPane.columnIndex="2" />
+                        <TextField fx:id="layoutNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="3" />
+                        <TextField fx:id="layoutIDTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" />
+                        <Label text="实例ID" />
+                        <Label text="设计类型" GridPane.columnIndex="4" />
+                        <TextField fx:id="layoutTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="5" />
+                        <Label text="吃水" GridPane.rowIndex="2" />
+                        <TextField fx:id="draughtTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="船型系数" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="coefficientsTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                        <Label text="载重量" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <TextField fx:id="weightTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="chuanboTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            </children>
+                            <VBox.margin>
+                                <Insets left="10.0" />
+                            </VBox.margin>
+                        </GridPane>
+                        <Separator prefWidth="200.0" />
+                  <GridPane VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="74.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="659.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="361.0762176513672" minHeight="10.0" prefHeight="291.85296630859375" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" prefHeight="19.0" prefWidth="62.0" text="布局案例">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="layoutDesignTextArea" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets right="10.0" top="20.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                     </children>
+                  </GridPane>
+                  <HBox alignment="CENTER" spacing="40.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="确定">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleCancel" text="取消">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

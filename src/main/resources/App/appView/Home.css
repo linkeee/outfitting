@@ -1,0 +1,65 @@
+﻿.root {
+    -fx-font-family: "仿宋";
+    -fx-font-size: 16px;
+}
+
+.label {
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    -fx-font-family: "楷体";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}
+
+#borderPane {
+    -fx-background-image: url("images/奢华绸缎.png");
+    -fx-background-size: stretch stretch;
+    -fx-background-position: center center;
+    -fx-background-color: linear-gradient(to bottom,#C9F0EE,#EBC9F0);
+}
+
+#button1, #button2, #button3, #button4, #button5 {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0.4, 5, 5);
+    -fx-background-color: linear-gradient(#00678e, #0095cc);
+    -fx-background-position: center center;
+    -fx-background-size: 90px;
+    -fx-font-family: "仿宋";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-text-fill: #000000;
+}
+
+#button1:hover, #button2:hover, #button3:hover, #button4:hover, #button5:hover {
+    -fx-background-color: linear-gradient(#83C9FD, #0C9FE8 50%, #1979A8 50%,#0C8AE8);
+    -fx-text-fill: #FF0900;
+}
+
+#button1 {
+    -fx-background-image: url("images/彩色书本知识树.png");
+}
+
+#button2 {
+    -fx-background-image: url("images/红色卡通船.png");
+}
+
+#button3 {
+    -fx-background-image: url("images/放大镜查电脑图标.png");
+}
+
+#button4 {
+    -fx-background-image: url("images/用户文件夹.png");
+}
+
+#button5 {
+    -fx-background-insets: 5;
+}
+
+#titleLabel {
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-font-family: "隶书";
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}

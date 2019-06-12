@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@LoginWindows.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.LoginWindows">
+   <left>
+              <VBox alignment="CENTER" prefHeight="550.0" prefWidth="330.0" spacing="30.0" BorderPane.alignment="CENTER">
+                  <children>
+                      <Label fx:id="chineseTitleLabel" alignment="CENTER" contentDisplay="CENTER" text="船舶舾装智能化设计系统" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                          <VBox.margin>
+                              <Insets />
+                          </VBox.margin>
+               <font>
+                  <Font name="Microsoft YaHei Bold" size="24.0" />
+               </font>
+                      </Label>
+            <Label fx:id="englishTitleLabel" alignment="CENTER" text="Intelligent design of outfitting system" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Times New Roman Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+                  </children>
+              </VBox>
+   </left>
+   <right>
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="270.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="welcomeLabel" text="Welcome" />
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+               <children>
+                            <Label text="用户名：" />
+                            <TextField fx:id="userName" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="170.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+               <children>
+                            <Label text="密   码：" />
+                            <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="170.0" />
+               </children>
+            </HBox>
+                        <CheckBox fx:id="rememberPwd" mnemonicParsing="false" text="记住密码" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+                        </CheckBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="signUpButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="注册">
+                     <HBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+                              <Button fx:id="signInButton" defaultButton="true" mnemonicParsing="false" onAction="#goHome" prefHeight="30.0" prefWidth="70.0" text="登录">
+                     <HBox.margin>
+                        <Insets left="25.0" top="20.0" />
+                     </HBox.margin>
+                              </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </right>
+   <center>
+      <Separator orientation="VERTICAL" prefHeight="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="585.0" prefWidth="1190.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.OutfittingDesignLayoutDesignSearch">
+   <center>
+          <VBox prefHeight="550.0" prefWidth="1180.0" BorderPane.alignment="CENTER">
+              <children>
+                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="146.0" prefWidth="1165.0" VBox.vgrow="ALWAYS">
+                      <columnConstraints>
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="233.0" prefWidth="121.13074493408203" />
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="332.0" prefWidth="187.86925506591797" />
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="192.93234252929688" prefWidth="70.31851196289062" />
+                          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="303.8369140625" prefWidth="196.3231201171875" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="302.7701416015625" prefWidth="86.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="302.7701416015625" prefWidth="89.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="302.7701416015625" prefWidth="220.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="ALWAYS" />
+                          <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="ALWAYS" />
+                      </rowConstraints>
+                      <children>
+                          <Label text="型号" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                          <Label text="船长" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </Label>
+                          <TextField fx:id="weightTextField" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                          <TextField fx:id="lengthTextFiled" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <ChoiceBox fx:id="chuanboTypeChoiceBox" prefWidth="170.0" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </ChoiceBox>
+                  <Label text="船舶类型" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="layoutNameTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="舾装件/区域名称" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="船舶编号" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <TextField fx:id="layoutShipNumTextField" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="layoutTypeTextField" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="载重量" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="船宽" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="widthTextFiled" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="型深" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="depthTextFiled" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label text="吃水" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <TextField fx:id="draughtTextField" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                          <Label text="船型系数" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </Label>
+                          <TextField fx:id="coefficientsTextField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="layoutDesignQueryTextField" disable="true" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                     <children>
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleLayoutDesignQuery" text="智能选型">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetLayoutDesign" text="重置">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                      </children>
+                      <VBox.margin>
+                          <Insets left="10.0" />
+                      </VBox.margin>
+                  </GridPane>
+                  <Separator prefWidth="200.0" />
+            <HBox VBox.vgrow="ALWAYS">
+               <children>
+                        <TableView fx:id="layoutDesignTable" prefHeight="419.0" prefWidth="1100.0" HBox.hgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="l51" maxWidth="2000.0" prefWidth="53.307939767837524" text="实例ID" />
+                        <TableColumn fx:id="l52" maxWidth="3000.0" prefWidth="-1.0" text="舾装件名称" />
+                        <TableColumn fx:id="l53" maxWidth="1500.0" prefWidth="116.83522033691406" text="型号" />
+                                <TableColumn fx:id="l54" maxWidth="2500.0" prefWidth="119.16476440429688" text="船舶类型" />
+                        <TableColumn fx:id="l55" maxWidth="2000.0" prefWidth="119.16476440429688" text="载重量" />
+                                <TableColumn fx:id="l56" prefWidth="274.3929443359375" text="布局设计方案" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                        </TableView>
+                  <VBox prefHeight="419.0" prefWidth="1200.0">
+                     <children>
+                        <GridPane prefHeight="419.0" prefWidth="629.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="316.0941162109375" minWidth="-Infinity" prefWidth="112.0" />
+                            <ColumnConstraints hgrow="ALWAYS" maxWidth="561.7763671875" minWidth="10.0" prefWidth="527.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="247.59133911132812" minHeight="10.0" prefHeight="198.80935668945312" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="361.0762176513672" minHeight="10.0" prefHeight="220.19064331054688" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="布局设计方案" GridPane.halignment="RIGHT">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" right="2.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="方案模型图" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" right="2.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextArea fx:id="layoutDesignTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <GridPane.margin>
+                                    <Insets bottom="3.0" left="3.0" right="7.0" top="3.0" />
+                                 </GridPane.margin>
+                              </TextArea>
+                              <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="design1ImageView" fitHeight="225.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <HBox.margin>
+                                          <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fx:id="design2ImageView" fitHeight="218.0" fitWidth="253.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets bottom="3.0" left="3.0" right="7.0" top="3.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+              </children>
+          </VBox>
+   </center>
+</BorderPane>

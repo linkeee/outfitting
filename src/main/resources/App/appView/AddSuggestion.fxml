@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.AddSuggestion">
+    <center>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <Label text="船东/船检意见添加/修改" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            <Separator prefWidth="200.0" />
+                <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="94.0" prefWidth="342.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="233.0" minWidth="0.0" prefWidth="82.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="661.0" minWidth="10.0" prefWidth="213.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="654.0" minWidth="10.0" prefWidth="146.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="781.0" minWidth="10.0" prefWidth="214.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <TextField fx:id="outfittingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="船舶类型" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label text="船东/船检公司" GridPane.columnIndex="2" />
+                        <Label text="舾装区域" GridPane.rowIndex="1" />
+                        <Label text="意见ID" />
+                        <TextField fx:id="suggestionIDTextFiled" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="179.0" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="shipCompanyChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
+                        <ComboBox fx:id="shipTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    </children>
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                </GridPane>
+            <Separator prefWidth="200.0" />
+                <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label prefHeight="15.0" prefWidth="54.0" text="问题描述" />
+                                <TextArea fx:id="problemDescribeTextArea" prefHeight="161.0" prefWidth="249.0" promptText="问题描述" wrapText="true" />
+                                <Label prefHeight="15.0" prefWidth="54.0" text="方法描述">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <TextArea fx:id="solutionDescribeTextArea" prefHeight="161.0" prefWidth="286.0" promptText="方法描述" wrapText="true" />
+                            </children>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                            <padding>
+                                <Insets left="20.0" right="20.0" />
+                            </padding>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <VBox alignment="CENTER_LEFT" spacing="5.0">
+                            <children>
+                                  <Label text="文件内容" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                                  <TextArea fx:id="sugFileContentTextArea" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" wrapText="true" />
+                                <Label text="请将意见文件拖放于上方框内以添加/修改内容" />
+                            </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                        </VBox>
+                          <HBox alignment="CENTER_LEFT">
+                              <padding>
+                                  <Insets left="20.0" right="20.0" />
+                              </padding>
+                     <children>
+                        <Label text="文件地址：">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                                <Hyperlink fx:id="sugFilePathHyperLink" text="文件地址">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Hyperlink>
+                     </children>
+                          </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" spacing="50.0">
+                            <children>
+                                <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="确定">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#handleCancel" text="取消">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                            <padding>
+                                <Insets bottom="5.0" />
+                            </padding>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

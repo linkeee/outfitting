@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="knowledgeSupplyBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1000.0" stylesheets="@KnowledgeSupply.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KnowledgeSupply">
+   <top>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar fx:id="topToolBar" prefHeight="40.0" prefWidth="200.0">
+               <items>
+                  <Label alignment="BOTTOM_LEFT" contentDisplay="TOP" prefHeight="40.0" prefWidth="170.0" text="知识供应">
+                     <font>
+                        <Font name="Times New Roman" size="27.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#goKnowledgeSearch" text="知识检索" />
+                  <Button mnemonicParsing="false" onAction="#goKnowledgeActiveSupply" text="知识主动供应" />
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#backHome" text="返回" />
+               </items>
+            </ToolBar>
+            <Separator prefWidth="200.0" />
+         </children>
+      </VBox>
+   </top>
+</BorderPane>

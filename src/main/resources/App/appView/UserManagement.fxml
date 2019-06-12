@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@UserManagement.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.UserManagement">
+   <center>
+          <VBox alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="1000.0" BorderPane.alignment="CENTER_LEFT">
+              <children>
+                  <Label fx:id="lbl" prefHeight="40.0" text="用户管理">
+                      <VBox.margin>
+                          <Insets left="10.0" />
+                      </VBox.margin>
+                  </Label>
+                  <Separator fx:id="separator1" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.4" />
+                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="81.0" prefWidth="1059.0" VBox.vgrow="ALWAYS">
+                      <columnConstraints>
+                          <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="53.0" />
+                          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="332.0" minWidth="-Infinity" prefWidth="214.0" />
+                          <ColumnConstraints halignment="RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="49.0" />
+                          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="334.0" minWidth="-Infinity" prefWidth="187.0" />
+                          <ColumnConstraints halignment="RIGHT" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="78.0" />
+                          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="244.0" minWidth="-Infinity" prefWidth="244.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="237.0" minWidth="10.0" prefWidth="237.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
+                          <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="50.0" valignment="CENTER" vgrow="ALWAYS" />
+                      </rowConstraints>
+                      <children>
+                          <Label text="姓名：" />
+                          <Label text="工号：" GridPane.rowIndex="1" />
+                          <Label text="职位：" GridPane.columnIndex="2" />
+                          <Label text="联系电话：" GridPane.columnIndex="4" />
+                          <Label text="权限：" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                          <TextField fx:id="userNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" />
+                          <TextField fx:id="jobNumTextField" maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                          <TextField fx:id="telTextField" maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="5" />
+                  <ComboBox fx:id="positionComboBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
+                  <ComboBox fx:id="roleComboBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                      </children>
+                      <VBox.margin>
+                          <Insets left="10.0" />
+                      </VBox.margin>
+                  </GridPane>
+                  <Separator fx:id="separator2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.4" />
+            <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="45.0" prefWidth="1069.0" VBox.vgrow="ALWAYS">
+               <children>
+                        <HBox alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="1069.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                        <TextField fx:id="userQueryTextField" prefWidth="300.0">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleUserQuery" text="检索" />
+                        <Button mnemonicParsing="false" onAction="#showAddNewPerson" text="添加" />
+                        <Button mnemonicParsing="false" onAction="#handleEditPerson" text="修改" />
+                        <Button mnemonicParsing="false" onAction="#handleDeletePerson" text="删除" />
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetPerson" text="重置" />
+                            </children>
+                        </HBox>
+                  <Button fx:id="backHomeBtn" layoutX="965.0" layoutY="8.0" mnemonicParsing="false" onAction="#backHome" text="返回" AnchorPane.rightAnchor="30.0" />
+               </children>
+            </AnchorPane>
+                  <Separator />
+                  <TableView fx:id="personTable" VBox.vgrow="ALWAYS">
+                      <columns>
+                          <TableColumn fx:id="jobNumColumn" prefWidth="75.0" text="工号" />
+                          <TableColumn fx:id="nameColumn" prefWidth="75.0" text="姓名" />
+                          <TableColumn fx:id="telColumn" prefWidth="75.0" text="联系电话" />
+                          <TableColumn fx:id="positionColumn" prefWidth="75.0" text="职位" />
+                          <TableColumn fx:id="roleColumn" prefWidth="75.0" text="权限" />
+                      </columns>
+                      <columnResizePolicy>
+                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                      </columnResizePolicy>
+                  </TableView>
+              </children>
+          </VBox>
+   </center>
+</BorderPane>
