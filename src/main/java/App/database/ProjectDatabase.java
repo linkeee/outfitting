@@ -75,15 +75,15 @@ public class ProjectDatabase extends DatabaseItem {
     /**
      * 修改project数据库
      * @param projectData
-     * @param editProjectName 项目名称
+     * @param editProjectId 项目名称
      * @return
      */
-    public static boolean update(ProjectData projectData, String editProjectName) {
+    public static boolean update(ProjectData projectData, int editProjectId) {
         boolean flag = true;
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "update project set proj_name=?, proj_create_time=?, proj_modify_time=?, proj_creator=?, proj_description=? where proj_name=?";
+        String sql = "update project set proj_name=?, proj_create_time=?, proj_modify_time=?, proj_creator=?, proj_description=? where proj_id=?";
         Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -93,7 +93,7 @@ public class ProjectDatabase extends DatabaseItem {
             preparedStatement.setString(3, projectData.getProj_modify_time());
             preparedStatement.setString(4, projectData.getProj_creator());
             preparedStatement.setString(5, projectData.getProj_description());
-            preparedStatement.setString(6, editProjectName);
+            preparedStatement.setInt(6, editProjectId);
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;
@@ -153,15 +153,17 @@ public class ProjectDatabase extends DatabaseItem {
     }
 
     public static int getIdByName(String projectName) {
+        int ans = 0;
         try {
             PreparedStatement ps = connectDB().prepareStatement("select proj_id from project where proj_name = ?");
             ps.setString(1, projectName);
             ps.execute();
-            ps.getResultSet();
+            ResultSet rs = ps.getResultSet();
+            ans = rs.getInt("proj_id");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 1;
+        return ans;
     }
 
 }

@@ -40,25 +40,30 @@ public class CreateProject {
         projectData.setProj_creator(projPersonInChargeTF.getText());
         projectData.setProj_description(projRemarkTF.getText());
 
+        System.out.println("isContain?: "+ProjectDatabase.getProjectNameList().contains(projNameTF.getText()));
         if (ProjectDatabase.getProjectNameList().contains(projNameTF.getText())) {
-            Optional<ButtonType> result = Dialog.confirmation("项目信息修改确认", "确认修改项目\"" + projNameTF.getText() + "\"信息？", "");
-            if (result.get() == ButtonType.OK) {
-                ProjectDatabase.update(projectData, projNameTF.getText());
-            }
+            System.out.println("projNameTF.getText(): "+projNameTF.getText());
+            System.out.println("idByName: "+ProjectDatabase.getIdByName(projNameTF.getText()));
+            ProjectDatabase.update(projectData, ProjectDatabase.getIdByName(projNameTF.getText()));
         } else {
             ProjectDatabase.insert(projectData);
-            Dialog.information("新建项目", "项目\"" + projNameTF.getText() + "\"已保存", "");
         }
-        ProjectDatabase.insert(projectData);
+
+//        if (ProjectDatabase.getProjectNameList().contains(projNameTF.getText())) {
+//            Optional<ButtonType> result = Dialog.confirmation("项目信息修改确认", "确认修改项目\"" + projNameTF.getText() + "\"信息？", "");
+//            if (result.get() == ButtonType.OK) {
+//                ProjectDatabase.update(projectData, ProjectDatabase.getIdByName(projNameTF.getText()));
+//            }
+//        } else {
+//            ProjectDatabase.insert(projectData);
+//            Dialog.information("新建项目", "项目\"" + projNameTF.getText() + "\"已保存", "");
+//        }
     }
 
     @FXML
     void nextStepAction(ActionEvent event) {
 
     }
-
-    private String createTime = null;
-    private String modifyTime = null;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -68,8 +73,6 @@ public class CreateProject {
         String createDate = sdf.format(date);
         projCreateTimeTF.setText(createDate);
         projModifyTimeTF.setText(createDate);
-        createTime = createDate;
-        modifyTime = createDate;
     }
 
 }
