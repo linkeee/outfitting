@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectDatabase extends DatabaseItem {
 
@@ -74,15 +75,15 @@ public class ProjectDatabase extends DatabaseItem {
     /**
      * 修改project数据库
      * @param projectData
-     * @param editProjectId 项目数据库的自增id
+     * @param editProjectName 项目名称
      * @return
      */
-    public static boolean update(ProjectData projectData, int editProjectId) {
+    public static boolean update(ProjectData projectData, String editProjectName) {
         boolean flag = true;
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "update project set proj_name=?, proj_create_time=?, proj_modify_time=?, proj_creator=?, proj_description=? where proj_id=?";
+        String sql = "update project set proj_name=?, proj_create_time=?, proj_modify_time=?, proj_creator=?, proj_description=? where proj_name=?";
         Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -92,7 +93,7 @@ public class ProjectDatabase extends DatabaseItem {
             preparedStatement.setString(3, projectData.getProj_modify_time());
             preparedStatement.setString(4, projectData.getProj_creator());
             preparedStatement.setString(5, projectData.getProj_description());
-            preparedStatement.setInt(6, editProjectId);
+            preparedStatement.setString(6, editProjectName);
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;
@@ -130,6 +131,37 @@ public class ProjectDatabase extends DatabaseItem {
         }
         if (flag) System.out.println("操作成功！");
         return flag;
+    }
+
+    /**
+     * 以list返回所有项目的名称
+     * @return 项目名称列表
+     */
+    public static List<String> getProjectNameList() {
+        List<String> projectNameList = new ArrayList<>();
+        Connection connection = connectDB();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from project order by proj_id+0");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                projectNameList.add(resultSet.getString("proj_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projectNameList;
+    }
+
+    public static int getIdByName(String projectName) {
+        try {
+            PreparedStatement ps = connectDB().prepareStatement("select proj_id from project where proj_name = ?");
+            ps.setString(1, projectName);
+            ps.execute();
+            ps.getResultSet();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 
 }
