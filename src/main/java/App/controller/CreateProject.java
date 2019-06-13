@@ -4,13 +4,12 @@ import App.appModel.ProjectData;
 import App.database.ProjectDatabase;
 import App.function.Dialog;
 import App.utile.DateUtile;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.Optional;
 
@@ -32,7 +31,16 @@ public class CreateProject {
     private TextArea projRemarkTF;
 
     @FXML
-    private ComboBox projectComboBox;
+    private Label projectLabel;
+
+    @FXML
+    private ComboBox<String> projectComboBox;
+
+    @FXML
+    private Button ctrBtn;
+
+    @FXML
+    private Button mtrBtn;
 
     @FXML
     void createTimeRefresh(ActionEvent event) {
@@ -47,6 +55,11 @@ public class CreateProject {
 
     @FXML
     void displayDBData(ActionEvent event) {
+        projNameTF.setText(projectData.getProj_name());
+        projCreateTimeTF.setText(projectData.getProj_create_time());
+        projModifyTimeTF.setText(projectData.getProj_modify_time());
+        projPersonInChargeTF.setText(projectData.getProj_creator());
+        projRemarkTF.setText(projectData.getProj_description());
     }
 
     @FXML
@@ -67,17 +80,36 @@ public class CreateProject {
             ProjectDatabase.insert(projectData);
             Dialog.information("新建项目成功", "项目\"" + projNameTF.getText() + "\"已保存", "");
         }
+        projectComboBox.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectNameList()));
     }
 
     @FXML
     void nextStepAction(ActionEvent event) {
     }
 
+    private ProjectData projectData;
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         projCreateTimeTF.setText(DateUtile.nowDateFormat());
         projModifyTimeTF.setText(DateUtile.nowDateFormat());
         projectComboBox.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectNameList()));
+        projectComboBox.setTooltip(new Tooltip("选择项目"));
+        ctrBtn.setTooltip(new Tooltip("将项目创建时间更新为当前时间，由于修改时间不能早于创建时间，修改时间也将更新为当前时间。"));
+        mtrBtn.setTooltip(new Tooltip("将项目修改时间更新为当前时间。"));
+
+        projectComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                projectData = ProjectDatabase.getProjectDataByName(newValue);
+                projectLabel.setText(projectData.getProj_name());
+                projNameTF.setText(projectData.getProj_name());
+                projCreateTimeTF.setText(projectData.getProj_create_time());
+                projModifyTimeTF.setText(projectData.getProj_modify_time());
+                projPersonInChargeTF.setText(projectData.getProj_creator());
+                projRemarkTF.setText(projectData.getProj_description());
+            }
+        });
     }
 
 }

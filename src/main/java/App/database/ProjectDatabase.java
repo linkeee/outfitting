@@ -108,7 +108,7 @@ public class ProjectDatabase extends DatabaseItem {
 
     /**
      * 删除
-     * @param projectId
+     * @param projectId 项目id
      * @return
      */
     public static boolean delete(int projectId) {
@@ -152,10 +152,14 @@ public class ProjectDatabase extends DatabaseItem {
         return projectNameList;
     }
 
+    /**
+     * 根据项目名称获得项目id
+     * @param projectName 项目名称
+     * @return 项目id
+     */
     public static int getIdByName(String projectName) {
         int ans = 0;
         Connection connection = connectDB();
-//        ProjectData projectData = new ProjectData();
         try {
             PreparedStatement ps = connection.prepareStatement("select proj_id from project where proj_name = ?");
             ps.setString(1, projectName);
@@ -164,17 +168,36 @@ public class ProjectDatabase extends DatabaseItem {
             while (rs.next()) {
                 ans = rs.getInt(1);
             }
-
-//            projectData.setProj_id(rs.getInt(1));
-//            projectData.setProj_name(rs.getString(2));
-//            projectData.setProj_create_time(rs.getString(3));
-//            projectData.setProj_modify_time(rs.getString(4));
-//            projectData.setProj_creator(rs.getString(5));
-//            projectData.setProj_description(rs.getString(6));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return ans;
+    }
+
+    /**
+     * 根据项目名称返回项目数据模型
+     * @param projectName 项目名称
+     * @return 返回项目数据模型
+     */
+    public static ProjectData getProjectDataByName(String projectName) {
+        ProjectData projectData = new ProjectData();
+        try {
+            PreparedStatement ps = connectDB().prepareStatement("select * from project where proj_name = ?");
+            ps.setString(1, projectName);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                projectData.setProj_id(rs.getObject("proj_id"));
+                projectData.setProj_name(rs.getString("proj_name"));
+                projectData.setProj_create_time(rs.getString("proj_create_time"));
+                projectData.setProj_modify_time(rs.getString("proj_modify_time"));
+                projectData.setProj_creator(rs.getString("proj_creator"));
+                projectData.setProj_description(rs.getString("proj_description"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projectData;
     }
 
 }
