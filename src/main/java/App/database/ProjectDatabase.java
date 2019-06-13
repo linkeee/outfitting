@@ -154,12 +154,23 @@ public class ProjectDatabase extends DatabaseItem {
 
     public static int getIdByName(String projectName) {
         int ans = 0;
+        Connection connection = connectDB();
+//        ProjectData projectData = new ProjectData();
         try {
-            PreparedStatement ps = connectDB().prepareStatement("select proj_id from project where proj_name = ?");
+            PreparedStatement ps = connection.prepareStatement("select proj_id from project where proj_name = ?");
             ps.setString(1, projectName);
-            ps.execute();
-            ResultSet rs = ps.getResultSet();
-            ans = rs.getInt("proj_id");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ans = rs.getInt(1);
+            }
+
+//            projectData.setProj_id(rs.getInt(1));
+//            projectData.setProj_name(rs.getString(2));
+//            projectData.setProj_create_time(rs.getString(3));
+//            projectData.setProj_modify_time(rs.getString(4));
+//            projectData.setProj_creator(rs.getString(5));
+//            projectData.setProj_description(rs.getString(6));
         } catch (SQLException e) {
             e.printStackTrace();
         }
