@@ -1,6 +1,5 @@
 package App.controller;
 
-import App.database.ProjParamAndValueDatabase;
 import App.database.ProjectDatabase;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -19,7 +18,7 @@ public class InputParameter {
     private TableColumn<?, ?> outfittingNameTC;
 
     @FXML
-    private ComboBox<?> versionChooserCB;
+    private ComboBox<String> versionChooserCB;
 
     @FXML
     private TableColumn<?, ?> paramDescriptionTC;
@@ -64,7 +63,7 @@ public class InputParameter {
     void initialize() {
         projChooserCB.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectNameList()));
         // Todo
-        versionChooserCB.setItems(FXCollections.observableArrayList(ProjParamAndValueDatabase.getSingleVersionList));
+//        versionChooserCB.setItems(FXCollections.observableArrayList(ProjParamAndValueDatabase.getSingleVersionList));
     }
 
 }

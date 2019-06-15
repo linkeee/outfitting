@@ -137,7 +137,7 @@ public class DBTableCreate {
 
     /**
      * 项目参数库：
-     *
+     * <p>
      * 项目参数ID 自增
      * 项目ID（定位）
      * 版本号（定位，用V+项目修改时间表示）
@@ -162,6 +162,16 @@ public class DBTableCreate {
             "fulltext key (version, outfitting_name, param_name, param_description, param_value, remark) with parser ngram" +
             ")ENGINE=InnoDB default charset=utf8;";
 
+    /**
+     * 版本库
+     */
+    private static String sql12 = "create table if not exists version(" +
+            "id int(100) not null primary key auto_increment," +
+            "proj_id int(100) not null," +
+            "version_name varchar(100) not null," +
+            "version_description varchar(1000)" +
+            ")ENGINE=InnoDB default charset=utf8;";
+
     public static void main(String[] args) {
         List<String> list = new ArrayList<>();
         list.add(sql1);
@@ -175,6 +185,7 @@ public class DBTableCreate {
 //        list.add(sql9);
         list.add(sql10);
         list.add(sql11);
+        list.add(sql12);
 
         for (String sql : list) {
             executeSql(sql);

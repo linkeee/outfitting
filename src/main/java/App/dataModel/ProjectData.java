@@ -1,7 +1,8 @@
 package App.dataModel;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+
+import java.util.List;
 
 /**
  * "proj_id int(100) not null primary key auto_increment," +
@@ -18,18 +19,20 @@ public class ProjectData {
     private final SimpleStringProperty proj_modify_time;
     private final SimpleStringProperty proj_creator;
     private final SimpleStringProperty proj_description;
+    private final List<String> versionList;
 
     public ProjectData() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null);
     }
 
-    public ProjectData(String proj_id, String proj_name, String proj_create_time, String proj_modify_time, String proj_creator, String proj_description) {
+    public ProjectData(String proj_id, String proj_name, String proj_create_time, String proj_modify_time, String proj_creator, String proj_description, List<String> versionList) {
         this.proj_id = new SimpleStringProperty(proj_id);
         this.proj_name = new SimpleStringProperty(proj_name);
         this.proj_create_time = new SimpleStringProperty(proj_create_time);
         this.proj_modify_time = new SimpleStringProperty(proj_modify_time);
         this.proj_creator = new SimpleStringProperty(proj_creator);
         this.proj_description = new SimpleStringProperty(proj_description);
+        this.versionList = versionList;
     }
 
     public Object getProj_id() {
@@ -102,5 +105,13 @@ public class ProjectData {
 
     public void setProj_description(String proj_description) {
         this.proj_description.set(proj_description);
+    }
+
+    public List<String> getVersionList() {
+        return versionList;
+    }
+
+    public void setVersionList(List<String> versionList) {
+        this.versionList.addAll(versionList);
     }
 }

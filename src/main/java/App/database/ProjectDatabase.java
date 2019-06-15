@@ -25,7 +25,7 @@ public class ProjectDatabase extends DatabaseItem {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 ProjectData projectData = new ProjectData();
-                projectData.setProj_id(resultSet.getString("proj_id"));
+                projectData.setProj_id(String.valueOf(resultSet.getInt("proj_id")));
                 projectData.setProj_name(resultSet.getString("proj_name"));
                 projectData.setProj_create_time(resultSet.getString("proj_create_time"));
                 projectData.setProj_modify_time(resultSet.getString("proj_modify_time"));
@@ -187,7 +187,7 @@ public class ProjectDatabase extends DatabaseItem {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                projectData.setProj_id(rs.getString("proj_id"));
+                projectData.setProj_id(String.valueOf(rs.getString("proj_id")));
                 projectData.setProj_name(rs.getString("proj_name"));
                 projectData.setProj_create_time(rs.getString("proj_create_time"));
                 projectData.setProj_modify_time(rs.getString("proj_modify_time"));
