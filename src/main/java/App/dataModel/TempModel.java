@@ -1,4 +1,4 @@
-package App.appModel;
+package App.dataModel;
 
 import javafx.beans.property.SimpleStringProperty;
 

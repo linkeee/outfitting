@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.RuleItemData;
+import App.dataModel.RuleItemData;
 import App.database.RuleItemDatabase;
 import App.function.Dialog;
 import javafx.event.ActionEvent;

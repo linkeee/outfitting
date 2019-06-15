@@ -1,6 +1,6 @@
 package App.database;
 
-import App.appModel.UserData;
+import App.dataModel.UserData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

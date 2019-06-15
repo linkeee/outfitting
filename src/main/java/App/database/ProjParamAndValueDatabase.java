@@ -1,6 +1,6 @@
 package App.database;
 
-import App.appModel.ProjParamAndValueData;
+import App.dataModel.ProjParamAndValueData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,7 +19,7 @@ public class ProjParamAndValueDatabase extends DatabaseItem {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 ProjParamAndValueData data = new ProjParamAndValueData();
-                data.setProj_id(resultSet.getObject("proj_id"));
+                data.setProj_id(resultSet.getString("proj_id"));
                 data.setParam_name(resultSet.getString("param_name"));
                 data.setParam_value(resultSet.getString("param_value"));
                 data.setParam_description(resultSet.getString("param_description"));
@@ -46,7 +46,7 @@ public class ProjParamAndValueDatabase extends DatabaseItem {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 ProjParamAndValueData data = new ProjParamAndValueData();
-                data.setProj_id(resultSet.getObject("proj_id"));
+                data.setProj_id(resultSet.getString("proj_id"));
                 data.setParam_name(resultSet.getString("param_name"));
                 data.setParam_value(resultSet.getString("param_value"));
                 data.setParam_description(resultSet.getString("param_description"));

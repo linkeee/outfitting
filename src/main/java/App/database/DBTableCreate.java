@@ -93,16 +93,17 @@ public class DBTableCreate {
 //            "fulltext key (ruleId, itemName, itemHyperLink, outfittingType, anchorType, manufacturer, gongyouliang, zhongyouOutputPressure, zhongyouOutputTemperature, zhongyouOutputViscosity) with parser ngram" +
 //            ")ENGINE=InnoDB default charset=utf8;";
 
-//    /**
-//     * 参数库
-//     */
-//    private static String sql8 = "CREATE TABLE IF NOT EXISTS parameter(" +
-//            "param_id int(100) not null primary key auto_increment," +
-//            "param_name varchar(100) not null," +
-//            "param_type tinyint(1) not null," +
-//            "param_description varchar(100)," +
-//            "fulltext key (param_name, param_description) with parser ngram" +
-//            ")ENGINE=InnoDB default charset=utf8;";
+    /**
+     * 参数库
+     */
+    private static String sql8 = "CREATE TABLE IF NOT EXISTS parameter(" +
+            "param_id int(100) not null primary key auto_increment," +
+            "outfitting_name varchar(100)," +
+            "param_name varchar(100) not null," +
+            "param_type tinyint(1) not null," +
+            "param_description varchar(100)," +
+            "fulltext key (outfitting_name, param_name, param_description) with parser ngram" +
+            ")ENGINE=InnoDB default charset=utf8;";
 
 //    /**
 //     * 公式库
@@ -151,13 +152,14 @@ public class DBTableCreate {
             "id int(100) not null primary key auto_increment," +
             "proj_id int(100) not null," +
             "version varchar(100) not null," +
-            "outfitting_name varchar(100) not null," +
+            "param_id int(100) not null," +
+            "outfitting_name varchar(100)," +
             "param_name varchar(100) not null," +
-            "param_type varchar(10) not null," +
-            "param_description varchar(500)," +
-            "param_value varchar(100) not null," +
-            "remark varchar(1000) not null," +
-            "fulltext key (version, outfitting_name, param_name, param_type, param_description, param_value, remark) with parser ngram" +
+            "param_type tinyint(1) not null," +
+            "param_description varchar(100)," +
+            "param_value varchar(100)," +
+            "remark varchar(1000)," +
+            "fulltext key (version, outfitting_name, param_name, param_description, param_value, remark) with parser ngram" +
             ")ENGINE=InnoDB default charset=utf8;";
 
     public static void main(String[] args) {
@@ -169,7 +171,7 @@ public class DBTableCreate {
         list.add(sql5);
         list.add(sql6);
 //        list.add(sql7);
-//        list.add(sql8);
+        list.add(sql8);
 //        list.add(sql9);
         list.add(sql10);
         list.add(sql11);

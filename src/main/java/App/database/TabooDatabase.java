@@ -1,6 +1,6 @@
 package App.database;
 
-import App.appModel.TabooData;
+import App.dataModel.TabooData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

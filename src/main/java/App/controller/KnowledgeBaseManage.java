@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.*;
+import App.dataModel.*;
 import App.database.*;
 import App.utile.FxmlUtile;
 import App.utile.HyperlinkTableCell;
@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import App.appModel.SuggestionData;
+import App.dataModel.SuggestionData;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.TreeView;

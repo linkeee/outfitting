@@ -1,7 +1,7 @@
 package App.controller;
 
-import App.appModel.AnchorRuleData;
-import App.appModel.RuleItemData;
+import App.dataModel.AnchorRuleData;
+import App.dataModel.RuleItemData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

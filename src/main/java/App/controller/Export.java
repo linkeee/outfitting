@@ -1,7 +1,7 @@
 package App.controller;
 
-import App.appModel.ProjParamAndValueData;
-import App.appModel.ProjectData;
+import App.dataModel.ProjParamAndValueData;
+import App.dataModel.ProjectData;
 import App.database.ProjParamAndValueDatabase;
 import App.database.ProjectDatabase;
 import App.function.CopyFile;

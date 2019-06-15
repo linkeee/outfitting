@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.ProjectData;
+import App.dataModel.ProjectData;
 import App.database.ProjectDatabase;
 import App.function.Dialog;
 import App.utile.DateUtile;
@@ -62,6 +62,21 @@ public class CreateProject {
         projRemarkTF.setText(projectData.getProj_description());
     }
 
+    private String comboBoxSelectedName = null;
+
+    @FXML
+    void deleteProjectAction(ActionEvent event) {
+        if (comboBoxSelectedName == null) {
+            Dialog.information("提示", "未选择项目", "请使用下拉框选择项目。");
+        } else {
+            Optional<ButtonType> result = Dialog.confirmation("删除确认", null, "项目“" + comboBoxSelectedName + "”将被删除，不可恢复，确认删除吗？");
+            if (result.get() == ButtonType.OK) {
+                ProjectDatabase.delete(ProjectDatabase.getIdByName(comboBoxSelectedName));
+                initialize();
+            }
+        }
+    }
+
     @FXML
     void saveAction(ActionEvent event) {
         ProjectData projectData = new ProjectData();
@@ -108,6 +123,8 @@ public class CreateProject {
                 projModifyTimeTF.setText(projectData.getProj_modify_time());
                 projPersonInChargeTF.setText(projectData.getProj_creator());
                 projRemarkTF.setText(projectData.getProj_description());
+
+                comboBoxSelectedName = newValue;
             }
         });
     }

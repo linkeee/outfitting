@@ -1,10 +1,18 @@
-package App.appModel;
+package App.dataModel;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * "proj_id int(100) not null primary key auto_increment," +
+ *             "proj_name varchar(100) not null," +
+ *             "proj_create_time varchar(100) not null," +
+ *             "proj_modify_time varchar(100) not null," +
+ *             "proj_creator varchar(100)," +
+ *             "proj_description varchar(1000)," +
+ */
 public class ProjectData {
-    private final SimpleObjectProperty<Object> proj_id;
+    private final SimpleStringProperty proj_id;
     private final SimpleStringProperty proj_name;
     private final SimpleStringProperty proj_create_time;
     private final SimpleStringProperty proj_modify_time;
@@ -15,8 +23,8 @@ public class ProjectData {
         this(null, null, null, null, null, null);
     }
 
-    public ProjectData(Object proj_id, String proj_name, String proj_create_time, String proj_modify_time, String proj_creator, String proj_description) {
-        this.proj_id = new SimpleObjectProperty<>(proj_id);
+    public ProjectData(String proj_id, String proj_name, String proj_create_time, String proj_modify_time, String proj_creator, String proj_description) {
+        this.proj_id = new SimpleStringProperty(proj_id);
         this.proj_name = new SimpleStringProperty(proj_name);
         this.proj_create_time = new SimpleStringProperty(proj_create_time);
         this.proj_modify_time = new SimpleStringProperty(proj_modify_time);
@@ -28,11 +36,11 @@ public class ProjectData {
         return proj_id.get();
     }
 
-    public SimpleObjectProperty<Object> proj_idProperty() {
+    public SimpleStringProperty proj_idProperty() {
         return proj_id;
     }
 
-    public void setProj_id(Object proj_id) {
+    public void setProj_id(String proj_id) {
         this.proj_id.set(proj_id);
     }
 

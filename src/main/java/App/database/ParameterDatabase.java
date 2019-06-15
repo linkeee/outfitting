@@ -1,6 +1,6 @@
 package App.database;
 
-import App.appModel.ParameterData;
+import App.dataModel.ParameterData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

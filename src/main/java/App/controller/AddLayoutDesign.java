@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.LayoutData;
+import App.dataModel.LayoutData;
 import App.database.LayoutDatabase;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;

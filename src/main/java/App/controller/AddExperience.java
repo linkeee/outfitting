@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.ExperienceData;
+import App.dataModel.ExperienceData;
 import App.database.ExperienceDatabase;
 import App.function.FileReader;
 import App.utile.FxmlUtile;

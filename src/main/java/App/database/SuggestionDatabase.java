@@ -1,6 +1,6 @@
 package App.database;
 
-import App.appModel.SuggestionData;
+import App.dataModel.SuggestionData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

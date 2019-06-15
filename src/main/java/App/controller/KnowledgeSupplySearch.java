@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.*;
+import App.dataModel.*;
 import App.database.CriterionDatabase;
 import App.database.ExperienceDatabase;
 import App.database.SuggestionDatabase;

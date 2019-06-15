@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.CriterionData;
+import App.dataModel.CriterionData;
 
 import App.database.CriterionDatabase;
 import App.function.FileReader;

@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.UserData;
+import App.dataModel.UserData;
 import App.database.UserDatabase;
 import App.function.Dialog;
 import App.utile.FxmlUtile;

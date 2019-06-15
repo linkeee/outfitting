@@ -2,7 +2,7 @@ package App.controller;
 import java.io.IOException;
 
 import App.database.TabooDatabase;
-import App.appModel.TabooData;
+import App.dataModel.TabooData;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -2,7 +2,7 @@ package App.controller;
 
 import java.io.IOException;
 
-import App.appModel.SuggestionData;
+import App.dataModel.SuggestionData;
 import App.database.SuggestionDatabase;
 import App.function.FileReader;
 import App.utile.FxmlUtile;

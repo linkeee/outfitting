@@ -1,6 +1,6 @@
 package App.database;
 
-import App.appModel.LayoutData;
+import App.dataModel.LayoutData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

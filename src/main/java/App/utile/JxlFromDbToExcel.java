@@ -1,6 +1,6 @@
 package App.utile;
 
-import App.appModel.ParameterData;
+import App.dataModel.ParameterData;
 import App.database.ParameterDatabase;
 import jxl.Workbook;
 import jxl.write.Label;

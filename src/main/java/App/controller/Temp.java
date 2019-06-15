@@ -1,6 +1,6 @@
 package App.controller;
 
-import App.appModel.TempModel;
+import App.dataModel.TempModel;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,6 +1,6 @@
 package App.database;
 
-import App.appModel.CriterionData;
+import App.dataModel.CriterionData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

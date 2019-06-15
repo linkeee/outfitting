@@ -2,7 +2,7 @@ package App.controller;
 
 
 import App.Main;
-import App.appModel.RuleItemData;
+import App.dataModel.RuleItemData;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
