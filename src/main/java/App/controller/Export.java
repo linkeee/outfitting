@@ -1,8 +1,8 @@
 package App.controller;
 
-import App.dataModel.ProjParamAndValueData;
+import App.dataModel.ParamAndValueData;
 import App.dataModel.ProjectData;
-import App.database.ProjParamAndValueDatabase;
+import App.database.ParamAndValueDatabase;
 import App.database.ProjectDatabase;
 import App.function.CopyFile;
 import App.function.DirectoryScanner;
@@ -10,6 +10,7 @@ import App.function.ExcelFiller;
 import App.utile.ProgressFrom;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -42,7 +43,7 @@ public class Export {
     private TableColumn<ProjectData, String> projNameTC;
 
     @FXML
-    private TableColumn<ProjParamAndValueData, String> paramDescriptionTC;
+    private TableColumn<ParamAndValueData, String> paramDescriptionTC;
 
     @FXML
     private TextArea tipsTextArea1;
@@ -54,7 +55,7 @@ public class Export {
     private ListView<String> fileScannerListView1;
 
     @FXML
-    private TableView<ProjParamAndValueData> projParamTV;
+    private TableView<ParamAndValueData> projParamTV;
 
     @FXML
     private TableColumn<ProjectData, String> projCreateTimeTC;
@@ -66,18 +67,18 @@ public class Export {
     private TableColumn<ProjectData, String> projModifyTimeTC;
 
     @FXML
-    private TableColumn<ProjParamAndValueData, String> paramValueTC;
+    private TableColumn<ParamAndValueData, String> paramValueTC;
 
     @FXML
     private TableColumn<ProjectData, String> projCreatorTC;
 
     @FXML
-    private TableColumn<ProjParamAndValueData, String> paramNameTC;
+    private TableColumn<ParamAndValueData, String> paramNameTC;
 
     private String filePath;//模板文件路径
     private String fileName;//模板文件名
     private String listViewSelectedFile;//用于监听listView选中的文件名
-    private ObservableList<ProjParamAndValueData> paramAndValueList;
+    private ObservableList<ParamAndValueData> paramAndValueList;
 
     @FXML
     void selectDirectory1() throws NullPointerException {
@@ -119,7 +120,7 @@ public class Export {
             public void handle(ActionEvent event) {
                 if (fileName == null || filePath == null) selectDirectory1();
 
-                for (ProjParamAndValueData i : paramAndValueList) {
+                for (ParamAndValueData i : paramAndValueList) {
                     paramAndValueMap.put(i.getParam_name(), Double.valueOf(i.getParam_value()));
                 }
                 try {
@@ -204,11 +205,11 @@ public class Export {
     }
 
     void refreshProjectTable() {
-        projTV.setItems(ProjectDatabase.getProjectList());
+        projTV.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectList()));
     }
 
     private void showProjParam(Object project_id) {
-        paramAndValueList = ProjParamAndValueDatabase.getOneProjParamList(project_id);
+//        paramAndValueList = ParamAndValueDatabase.getOneProjParamList(project_id);
         projParamTV.setItems(paramAndValueList);
     }
 

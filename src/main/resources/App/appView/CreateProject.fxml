@@ -28,7 +28,7 @@
                   </Label>
                   <ComboBox fx:id="projectComboBox" prefWidth="150.0" />
                   <Label fx:id="projectLabel" />
-                  <Button mnemonicParsing="false" onAction="#deleteProjectAction" text="删除项目" />
+                  <Button fx:id="deleteBth" mnemonicParsing="false" onAction="#deleteProjectAction" text="删除项目" />
                </children>
             </HBox>
             <Separator />

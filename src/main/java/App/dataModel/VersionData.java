@@ -2,25 +2,25 @@ package App.dataModel;
 
 import javafx.beans.property.SimpleStringProperty;
 
-import java.util.Map;
+import java.util.List;
 
 public class VersionData {
-    private final SimpleStringProperty version_id;
-    private final SimpleStringProperty proj_id;
-    private final SimpleStringProperty version_name;
-    private final SimpleStringProperty version_description;
-    private final Map<String, String> param_value;
+    private SimpleStringProperty version_id;
+    private SimpleStringProperty proj_id;
+    private SimpleStringProperty version_name;
+    private SimpleStringProperty version_description;
+    private List<ParamAndValueData> param_value_list;
 
     public VersionData() {
         this(null, null, null, null, null);
     }
 
-    public VersionData(SimpleStringProperty version_id, SimpleStringProperty proj_id, SimpleStringProperty version_name, SimpleStringProperty version_description, Map<String, String> param_value) {
-        this.version_id = version_id;
-        this.proj_id = proj_id;
-        this.version_name = version_name;
-        this.version_description = version_description;
-        this.param_value = param_value;
+    public VersionData(String version_id, String proj_id, String version_name, String version_description, List<ParamAndValueData> param_value_list) {
+        this.version_id = new SimpleStringProperty(version_id);
+        this.proj_id = new SimpleStringProperty(proj_id);
+        this.version_name = new SimpleStringProperty(version_name);
+        this.version_description = new SimpleStringProperty(version_description);
+        this.param_value_list = param_value_list;
     }
 
     public String getVersion_id() {
@@ -71,11 +71,11 @@ public class VersionData {
         this.version_description.set(version_description);
     }
 
-    public Map<String, String> getParam_value() {
-        return param_value;
+    public List<ParamAndValueData> getParam_value_list() {
+        return param_value_list;
     }
 
-    public void setParam_value(Map<String, String> param_value) {
-        this.param_value.putAll(param_value);
+    public void setParam_value_list(List<ParamAndValueData> param_value_list) {
+        this.param_value_list = param_value_list;
     }
 }

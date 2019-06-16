@@ -1,8 +1,6 @@
 package App.database;
 
 import App.dataModel.ProjectData;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,11 +15,12 @@ public class ProjectDatabase extends DatabaseItem {
      * get the project table.
      * @return 以ObservableList返回项目表内容。
      */
-    public static ObservableList<ProjectData> getProjectList() {
-        ArrayList<ProjectData> projectList = new ArrayList<>();
+    public static List<ProjectData> getProjectList() {
+        List<ProjectData> projectList = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
         Connection connection = connectDB();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from project order by proj_id+0");
+            preparedStatement = connection.prepareStatement("select * from project order by proj_id+0");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 ProjectData projectData = new ProjectData();
@@ -31,13 +30,16 @@ public class ProjectDatabase extends DatabaseItem {
                 projectData.setProj_modify_time(resultSet.getString("proj_modify_time"));
                 projectData.setProj_creator(resultSet.getString("proj_creator"));
                 projectData.setProj_description(resultSet.getString("proj_description"));
+                projectData.setVersionList(VersionDatabase.getVersionDataListOfProj(Integer.valueOf(projectData.getProj_id())));
 
                 projectList.add(projectData);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeDatabase(preparedStatement, null, connectDB());
         }
-        return FXCollections.observableArrayList(projectList);
+        return projectList;
     }
 
     /**
@@ -140,14 +142,17 @@ public class ProjectDatabase extends DatabaseItem {
     public static List<String> getProjectNameList() {
         List<String> projectNameList = new ArrayList<>();
         Connection connection = connectDB();
+        PreparedStatement preparedStatement = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from project order by proj_id+0");
+            preparedStatement = connection.prepareStatement("select * from project order by proj_id+0");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 projectNameList.add(resultSet.getString("proj_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeDatabase(preparedStatement, null, connection);
         }
         return projectNameList;
     }
@@ -160,8 +165,9 @@ public class ProjectDatabase extends DatabaseItem {
     public static int getIdByName(String projectName) {
         int ans = 0;
         Connection connection = connectDB();
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = connection.prepareStatement("select proj_id from project where proj_name = ?");
+            ps = connection.prepareStatement("select proj_id from project where proj_name = ?");
             ps.setString(1, projectName);
             ResultSet rs = ps.executeQuery();
 
@@ -170,6 +176,8 @@ public class ProjectDatabase extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
         }
         return ans;
     }
@@ -179,10 +187,12 @@ public class ProjectDatabase extends DatabaseItem {
      * @param projectName 项目名称
      * @return 返回项目数据模型
      */
-    public static ProjectData getProjectDataByName(String projectName) {
+    public static ProjectData getOneProjectData(String projectName) {
         ProjectData projectData = new ProjectData();
+        PreparedStatement ps = null;
+        Connection connection = connectDB();
         try {
-            PreparedStatement ps = connectDB().prepareStatement("select * from project where proj_name = ?");
+            ps = connection.prepareStatement("select * from project where proj_name = ?");
             ps.setString(1, projectName);
             ResultSet rs = ps.executeQuery();
 
@@ -193,9 +203,12 @@ public class ProjectDatabase extends DatabaseItem {
                 projectData.setProj_modify_time(rs.getString("proj_modify_time"));
                 projectData.setProj_creator(rs.getString("proj_creator"));
                 projectData.setProj_description(rs.getString("proj_description"));
+                projectData.setVersionList(VersionDatabase.getVersionDataListOfProj(Integer.valueOf(projectData.getProj_id())));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
         }
         return projectData;
     }

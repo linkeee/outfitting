@@ -2,10 +2,10 @@ package App.dataModel;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class ProjParamAndValueData {
-    private final SimpleStringProperty proj_param_value_id;
+public class ParamAndValueData {
+    private final SimpleStringProperty param_value_id;
     private final SimpleStringProperty proj_id;
-    private final SimpleStringProperty version;
+    private final SimpleStringProperty version_name;
     private final SimpleStringProperty param_id;
     private final SimpleStringProperty outfitting_name;
     private final SimpleStringProperty param_name;
@@ -14,33 +14,33 @@ public class ProjParamAndValueData {
     private final SimpleStringProperty param_value;
     private final SimpleStringProperty remark;
 
-    public ProjParamAndValueData() {
+    public ParamAndValueData() {
         this(null, null, null, null, null, null, null, null, null, null);
     }
 
-    public ProjParamAndValueData(SimpleStringProperty proj_param_value_id, SimpleStringProperty proj_id, SimpleStringProperty version, SimpleStringProperty param_id, SimpleStringProperty outfitting_name, SimpleStringProperty param_name, SimpleStringProperty param_type, SimpleStringProperty param_description, SimpleStringProperty param_value, SimpleStringProperty remark) {
-        this.proj_param_value_id = proj_param_value_id;
-        this.proj_id = proj_id;
-        this.version = version;
-        this.param_id = param_id;
-        this.outfitting_name = outfitting_name;
-        this.param_name = param_name;
-        this.param_type = param_type;
-        this.param_description = param_description;
-        this.param_value = param_value;
-        this.remark = remark;
+    public ParamAndValueData(String param_value_id, String proj_id, String version_name, String param_id, String outfitting_name, String param_name, String param_type, String param_description, String param_value, String remark) {
+        this.param_value_id = new SimpleStringProperty(param_value_id);
+        this.proj_id = new SimpleStringProperty(proj_id);
+        this.version_name = new SimpleStringProperty(version_name);
+        this.param_id = new SimpleStringProperty(param_id);
+        this.outfitting_name = new SimpleStringProperty(outfitting_name);
+        this.param_name = new SimpleStringProperty(param_name);
+        this.param_type = new SimpleStringProperty(param_type);
+        this.param_description = new SimpleStringProperty(param_description);
+        this.param_value = new SimpleStringProperty(param_value);
+        this.remark = new SimpleStringProperty(remark);
     }
 
-    public String getProj_param_value_id() {
-        return proj_param_value_id.get();
+    public String getParam_value_id() {
+        return param_value_id.get();
     }
 
-    public SimpleStringProperty proj_param_value_idProperty() {
-        return proj_param_value_id;
+    public SimpleStringProperty param_value_idProperty() {
+        return param_value_id;
     }
 
-    public void setProj_param_value_id(String proj_param_value_id) {
-        this.proj_param_value_id.set(proj_param_value_id);
+    public void setParam_value_id(String param_value_id) {
+        this.param_value_id.set(param_value_id);
     }
 
     public String getProj_id() {
@@ -55,16 +55,16 @@ public class ProjParamAndValueData {
         this.proj_id.set(proj_id);
     }
 
-    public String getVersion() {
-        return version.get();
+    public String getVersion_name() {
+        return version_name.get();
     }
 
-    public SimpleStringProperty versionProperty() {
-        return version;
+    public SimpleStringProperty version_nameProperty() {
+        return version_name;
     }
 
-    public void setVersion(String version) {
-        this.version.set(version);
+    public void setVersion_name(String version_name) {
+        this.version_name.set(version_name);
     }
 
     public String getParam_id() {

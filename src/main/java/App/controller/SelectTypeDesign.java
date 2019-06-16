@@ -18,6 +18,10 @@ public class SelectTypeDesign {
 
     @FXML
     void createProjectAction(ActionEvent event) throws IOException {
+        showCreateProj();
+    }
+
+    void showCreateProj() throws IOException {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/CreateProject.fxml");
         selectTypeBorderPane.setCenter(loader.load());

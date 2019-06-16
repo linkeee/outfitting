@@ -13,19 +13,19 @@ import java.util.List;
  *             "proj_description varchar(1000)," +
  */
 public class ProjectData {
-    private final SimpleStringProperty proj_id;
-    private final SimpleStringProperty proj_name;
-    private final SimpleStringProperty proj_create_time;
-    private final SimpleStringProperty proj_modify_time;
-    private final SimpleStringProperty proj_creator;
-    private final SimpleStringProperty proj_description;
-    private final List<String> versionList;
+    private SimpleStringProperty proj_id;
+    private SimpleStringProperty proj_name;
+    private SimpleStringProperty proj_create_time;
+    private SimpleStringProperty proj_modify_time;
+    private SimpleStringProperty proj_creator;
+    private SimpleStringProperty proj_description;
+    private List<VersionData> versionList;
 
     public ProjectData() {
         this(null, null, null, null, null, null, null);
     }
 
-    public ProjectData(String proj_id, String proj_name, String proj_create_time, String proj_modify_time, String proj_creator, String proj_description, List<String> versionList) {
+    public ProjectData(String proj_id, String proj_name, String proj_create_time, String proj_modify_time, String proj_creator, String proj_description, List<VersionData> versionList) {
         this.proj_id = new SimpleStringProperty(proj_id);
         this.proj_name = new SimpleStringProperty(proj_name);
         this.proj_create_time = new SimpleStringProperty(proj_create_time);
@@ -35,7 +35,7 @@ public class ProjectData {
         this.versionList = versionList;
     }
 
-    public Object getProj_id() {
+    public String getProj_id() {
         return proj_id.get();
     }
 
@@ -107,11 +107,11 @@ public class ProjectData {
         this.proj_description.set(proj_description);
     }
 
-    public List<String> getVersionList() {
+    public List<VersionData> getVersionList() {
         return versionList;
     }
 
-    public void setVersionList(List<String> versionList) {
-        this.versionList.addAll(versionList);
+    public void setVersionList(List<VersionData> versionList) {
+        this.versionList = versionList;
     }
 }

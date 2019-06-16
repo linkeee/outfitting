@@ -148,7 +148,7 @@ public class DBTableCreate {
      * 参数值
      * 备注
      */
-    private static String sql11 = "CREATE TABLE IF NOT EXISTS projParamAndValue(" +
+    private static String sql11 = "CREATE TABLE IF NOT EXISTS paramandvalue(" +
             "id int(100) not null primary key auto_increment," +
             "proj_id int(100) not null," +
             "version varchar(100) not null," +
