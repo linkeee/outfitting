@@ -2,6 +2,7 @@ package App.dataModel;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VersionData {
@@ -12,15 +13,15 @@ public class VersionData {
     private List<ParamAndValueData> param_value_list;
 
     public VersionData() {
-        this(null, null, null, null, null);
+        this(null, null, null, null);
     }
 
-    public VersionData(String version_id, String proj_id, String version_name, String version_description, List<ParamAndValueData> param_value_list) {
+    public VersionData(String version_id, String proj_id, String version_name, String version_description) {
         this.version_id = new SimpleStringProperty(version_id);
         this.proj_id = new SimpleStringProperty(proj_id);
         this.version_name = new SimpleStringProperty(version_name);
         this.version_description = new SimpleStringProperty(version_description);
-        this.param_value_list = param_value_list;
+        this.param_value_list = new ArrayList<>();
     }
 
     public String getVersion_id() {
@@ -76,6 +77,7 @@ public class VersionData {
     }
 
     public void setParam_value_list(List<ParamAndValueData> param_value_list) {
-        this.param_value_list = param_value_list;
+        this.param_value_list.clear();
+        this.param_value_list.addAll(param_value_list);
     }
 }

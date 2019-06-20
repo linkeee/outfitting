@@ -149,17 +149,18 @@ public class DBTableCreate {
      * 备注
      */
     private static String sql11 = "CREATE TABLE IF NOT EXISTS paramandvalue(" +
-            "id int(100) not null primary key auto_increment," +
+//            "id int(100) not null primary key auto_increment," +
             "proj_id int(100) not null," +
-            "version varchar(100) not null," +
-            "param_id int(100) not null," +
-            "outfitting_name varchar(100)," +
-            "param_name varchar(100) not null," +
-            "param_type tinyint(1) not null," +
-            "param_description varchar(100)," +
+            "version_name varchar(100) not null," +
+            "param_id int(100) not null," +//
+            "outfitting_name varchar(100)," +//
+            "param_name varchar(100) not null," +//
+            "param_type tinyint(1) not null," +//
+            "param_description varchar(100)," +//
             "param_value varchar(100)," +
-            "remark varchar(1000)," +
-            "fulltext key (version, outfitting_name, param_name, param_description, param_value, remark) with parser ngram" +
+//            "remark varchar(1000)," +
+            "primary key(proj_id, version_name, param_id)," +
+            "fulltext key (version_name, outfitting_name, param_name, param_description, param_value) with parser ngram" +
             ")ENGINE=InnoDB default charset=utf8;";
 
     /**

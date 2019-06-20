@@ -10,7 +10,7 @@
    <center>
       <SplitPane dividerPositions="0.2" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane maxWidth="220.0" minWidth="150.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to bottom,#4876FF,#E066FF);">
+          <AnchorPane fx:id="leftOfSplitPane" maxWidth="220.0" minWidth="150.0" prefWidth="200.0">
                <children>
                   <VBox alignment="TOP_CENTER" layoutX="38.0" layoutY="123.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
                      <children>

@@ -1,35 +1,35 @@
 package App.dataModel;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class ParameterData {
-    private final SimpleIntegerProperty param_id;
+    private final SimpleStringProperty param_id;
     private final SimpleStringProperty param_name;
-    private final SimpleBooleanProperty param_type;
+    private final SimpleStringProperty param_type;
+    private final SimpleStringProperty outfitting_name;
     private final SimpleStringProperty param_description;
 
     public ParameterData() {
-        this(null, null, null, null);
+        this(null, null, null, null, null);
     }
 
-    public ParameterData(SimpleIntegerProperty param_id, SimpleStringProperty param_name, SimpleBooleanProperty param_type, SimpleStringProperty param_description) {
+    public ParameterData(SimpleStringProperty param_id, SimpleStringProperty param_name, SimpleStringProperty param_type, SimpleStringProperty outfitting_name, SimpleStringProperty param_description) {
         this.param_id = param_id;
         this.param_name = param_name;
         this.param_type = param_type;
+        this.outfitting_name = outfitting_name;
         this.param_description = param_description;
     }
 
-    public int getParam_id() {
+    public String getParam_id() {
         return param_id.get();
     }
 
-    public SimpleIntegerProperty param_idProperty() {
+    public SimpleStringProperty param_idProperty() {
         return param_id;
     }
 
-    public void setParam_id(int param_id) {
+    public void setParam_id(String param_id) {
         this.param_id.set(param_id);
     }
 
@@ -45,16 +45,28 @@ public class ParameterData {
         this.param_name.set(param_name);
     }
 
-    public boolean isParam_type() {
+    public String getParam_type() {
         return param_type.get();
     }
 
-    public SimpleBooleanProperty param_typeProperty() {
+    public SimpleStringProperty param_typeProperty() {
         return param_type;
     }
 
-    public void setParam_type(boolean param_type) {
+    public void setParam_type(String param_type) {
         this.param_type.set(param_type);
+    }
+
+    public String getOutfitting_name() {
+        return outfitting_name.get();
+    }
+
+    public SimpleStringProperty outfitting_nameProperty() {
+        return outfitting_name;
+    }
+
+    public void setOutfitting_name(String outfitting_name) {
+        this.outfitting_name.set(outfitting_name);
     }
 
     public String getParam_description() {

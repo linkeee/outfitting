@@ -3,7 +3,7 @@ package App.dataModel;
 import javafx.beans.property.SimpleStringProperty;
 
 public class ParamAndValueData {
-    private final SimpleStringProperty param_value_id;
+//    private final SimpleStringProperty param_value_id;
     private final SimpleStringProperty proj_id;
     private final SimpleStringProperty version_name;
     private final SimpleStringProperty param_id;
@@ -12,14 +12,14 @@ public class ParamAndValueData {
     private final SimpleStringProperty param_type;
     private final SimpleStringProperty param_description;
     private final SimpleStringProperty param_value;
-    private final SimpleStringProperty remark;
+//    private final SimpleStringProperty remark;
 
     public ParamAndValueData() {
-        this(null, null, null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null);
     }
 
-    public ParamAndValueData(String param_value_id, String proj_id, String version_name, String param_id, String outfitting_name, String param_name, String param_type, String param_description, String param_value, String remark) {
-        this.param_value_id = new SimpleStringProperty(param_value_id);
+    public ParamAndValueData(String proj_id, String version_name, String param_id, String outfitting_name, String param_name, String param_type, String param_description, String param_value) {
+//        this.param_value_id = new SimpleStringProperty(param_value_id);
         this.proj_id = new SimpleStringProperty(proj_id);
         this.version_name = new SimpleStringProperty(version_name);
         this.param_id = new SimpleStringProperty(param_id);
@@ -28,20 +28,20 @@ public class ParamAndValueData {
         this.param_type = new SimpleStringProperty(param_type);
         this.param_description = new SimpleStringProperty(param_description);
         this.param_value = new SimpleStringProperty(param_value);
-        this.remark = new SimpleStringProperty(remark);
+//        this.remark = new SimpleStringProperty(remark);
     }
 
-    public String getParam_value_id() {
-        return param_value_id.get();
-    }
+//    public String getParam_value_id() {
+//        return param_value_id.get();
+//    }
 
-    public SimpleStringProperty param_value_idProperty() {
-        return param_value_id;
-    }
+//    public SimpleStringProperty param_value_idProperty() {
+//        return param_value_id;
+//    }
 
-    public void setParam_value_id(String param_value_id) {
-        this.param_value_id.set(param_value_id);
-    }
+//    public void setParam_value_id(String param_value_id) {
+//        this.param_value_id.set(param_value_id);
+//    }
 
     public String getProj_id() {
         return proj_id.get();
@@ -139,15 +139,15 @@ public class ParamAndValueData {
         this.param_value.set(param_value);
     }
 
-    public String getRemark() {
-        return remark.get();
-    }
+//    public String getRemark() {
+//        return remark.get();
+//    }
 
-    public SimpleStringProperty remarkProperty() {
-        return remark;
-    }
+//    public SimpleStringProperty remarkProperty() {
+//        return remark;
+//    }
 
-    public void setRemark(String remark) {
-        this.remark.set(remark);
-    }
+//    public void setRemark(String remark) {
+//        this.remark.set(remark);
+//    }
 }

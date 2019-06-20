@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParameterDatabase extends DatabaseItem {
 
@@ -16,43 +18,48 @@ public class ParameterDatabase extends DatabaseItem {
      *
      * @return
      */
-    public static ObservableList<ParameterData> getParameterList() {
-        ObservableList<ParameterData> parameterList = FXCollections.observableArrayList();
+    public static List<ParameterData> getParameterList() {
+        List<ParameterData> list = new ArrayList<>();
+        PreparedStatement ps = null;
         Connection connection = connectDB();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from parameter order by param_id");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ps = connection.prepareStatement("select * from parameter order by param_id");
+            ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 ParameterData parameterData = new ParameterData();
-                parameterData.setParam_id(resultSet.getInt("param_id"));
+                parameterData.setParam_id(String.valueOf(resultSet.getInt("param_id")));
                 parameterData.setParam_name(resultSet.getString("param_name"));
-                parameterData.setParam_type(resultSet.getBoolean("param_type"));
+                parameterData.setParam_type(String.valueOf(resultSet.getInt("param_type")));
+                parameterData.setOutfitting_name(resultSet.getString("outfitting_name"));
                 parameterData.setParam_description(resultSet.getString("param_description"));
 
-                parameterList.add(parameterData);
+                list.add(parameterData);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
         }
-        return parameterList;
+        return list;
     }
 
     /**
-     * 以ObservableList形式返回参数表中的所有参数名。
+     * 以List形式返回参数表中的所有参数名。
      * @return
      */
-    public static ObservableList<String> getParameterNameList() {
-        ObservableList<String> parameterNameList = FXCollections.observableArrayList();
+    public static List<String> getParameterNameList() {
+        List<String> list = new ArrayList<>();
+        PreparedStatement ps = null;
         Connection connection = connectDB();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from parameter order by param_id");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ps = connection.prepareStatement("select * from parameter order by param_id");
+            ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                parameterNameList.add(resultSet.getString("param_name"));
+                list.add(resultSet.getString("param_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return parameterNameList;
+        return list;
     }
 }

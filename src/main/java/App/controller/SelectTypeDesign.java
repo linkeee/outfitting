@@ -1,5 +1,6 @@
 package App.controller;
 
+import App.utile.Docker;
 import App.utile.FxmlUtile;
 import App.utile.ProgressFrom;
 import javafx.concurrent.Task;
@@ -17,11 +18,12 @@ public class SelectTypeDesign {
     private BorderPane selectTypeBorderPane;
 
     @FXML
-    void createProjectAction(ActionEvent event) throws IOException {
-        showCreateProj();
+    void initialize() {
+        Docker.put("selectTypeBorderPane", selectTypeBorderPane);
     }
 
-    void showCreateProj() throws IOException {
+    @FXML
+    void createProjectAction(ActionEvent event) throws IOException {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/CreateProject.fxml");
         selectTypeBorderPane.setCenter(loader.load());
@@ -30,7 +32,7 @@ public class SelectTypeDesign {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                CreateProject controller = loader.getController();
+                loader.getController();
                 return null;
             }
         };

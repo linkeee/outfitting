@@ -1,15 +1,22 @@
 package App.controller;
 
+import App.utile.Docker;
 import App.dataModel.ProjectData;
 import App.database.ProjectDatabase;
 import App.function.Dialog;
 import App.utile.DateUtile;
+import App.utile.FxmlUtile;
+import App.utile.ProgressFrom;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -105,8 +112,27 @@ public class CreateProject {
     @FXML
     void nextStepAction(ActionEvent event) throws IOException {
         saveAction(event);
-        SelectTypeDesign std = new SelectTypeDesign();
-        std.showCreateProj();
+
+        Docker.put("isCreateProjectNextStep", true);
+        System.out.println(Docker.get("isCreateProjectNextStep"));
+        Docker.put("comboBoxSelection", projectComboBox.getValue());
+        System.out.println(Docker.get("comboBoxSelection"));
+
+        FxmlUtile fxmlUtile = new FxmlUtile();
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
+        BorderPane bp = (BorderPane)Docker.get("selectTypeBorderPane");
+        bp.setCenter(loader.load());
+        bp.setPadding(new Insets(5, 5, 5, 5));
+
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                loader.getController();
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+        progressFrom.activateProgressBar();
     }
 
     private ProjectData projectData;
