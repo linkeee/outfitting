@@ -17,7 +17,7 @@ public class DatabaseItem {
             String user = "root";
             String password = "sa";
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Database has been connected successfully!!!");
+//            System.out.println("Database has been connected successfully!!!");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -51,6 +51,6 @@ public class DatabaseItem {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        System.out.println("Database has been shutdown successfully!!!");
+//        System.out.println("Database has been shutdown successfully!!!");
     }
 }

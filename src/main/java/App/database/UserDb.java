@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UserDatabase extends DatabaseItem {
+public class UserDb extends DatabaseItem {
 
     /**
      * The getter and setter methods of variable userDataList.

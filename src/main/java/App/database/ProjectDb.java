@@ -9,10 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectDatabase extends DatabaseItem {
+public class ProjectDb extends DatabaseItem {
 
     /**
      * get the project table.
+     *
      * @return 以ObservableList返回项目表内容。
      */
     public static List<ProjectData> getProjectList() {
@@ -30,7 +31,7 @@ public class ProjectDatabase extends DatabaseItem {
                 projectData.setProj_modify_time(resultSet.getString("proj_modify_time"));
                 projectData.setProj_creator(resultSet.getString("proj_creator"));
                 projectData.setProj_description(resultSet.getString("proj_description"));
-                projectData.setVersionList(VersionDatabase.getVersionDataListOfProj(Integer.valueOf(projectData.getProj_id())));
+                projectData.setVersionList(VersionDb.getVersionDataListOfProj(Integer.valueOf(projectData.getProj_id())));
 
                 projectList.add(projectData);
             }
@@ -44,11 +45,12 @@ public class ProjectDatabase extends DatabaseItem {
 
     /**
      * 向project数据库中添加项目
+     *
      * @param projectData
      * @return
      */
     public static boolean insert(ProjectData projectData) {
-        boolean flag = true;
+        boolean flag = false;
 
         Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
@@ -64,18 +66,18 @@ public class ProjectDatabase extends DatabaseItem {
             preparedStatement.setString(5, projectData.getProj_description());
 
             int i = preparedStatement.executeUpdate();
-            if (i == 0) flag = false;
+            if (i == 1) flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeDatabase(preparedStatement, null, connection);
         }
-        if (flag) System.out.println("操作成功！");
         return flag;
     }
 
     /**
      * 修改project数据库
+     *
      * @param projectData
      * @param editProjectId 项目名称
      * @return
@@ -104,12 +106,12 @@ public class ProjectDatabase extends DatabaseItem {
         } finally {
             closeDatabase(preparedStatement, null, connection);
         }
-        if (flag) System.out.println("操作成功！");
         return flag;
     }
 
     /**
      * 删除
+     *
      * @param projectId 项目id
      * @return
      */
@@ -131,12 +133,12 @@ public class ProjectDatabase extends DatabaseItem {
         } finally {
             closeDatabase(preparedStatement, null, connection);
         }
-        if (flag) System.out.println("操作成功！");
         return flag;
     }
 
     /**
      * 以list返回所有项目的名称
+     *
      * @return 项目名称列表
      */
     public static List<String> getProjectNameList() {
@@ -146,6 +148,9 @@ public class ProjectDatabase extends DatabaseItem {
         try {
             preparedStatement = connection.prepareStatement("select * from project order by proj_id+0");
             ResultSet resultSet = preparedStatement.executeQuery();
+
+            projectNameList.add(null);
+
             while (resultSet.next()) {
                 projectNameList.add(resultSet.getString("proj_name"));
             }
@@ -159,6 +164,7 @@ public class ProjectDatabase extends DatabaseItem {
 
     /**
      * 根据项目名称获得项目id
+     *
      * @param projectName 项目名称
      * @return 项目id
      */
@@ -184,6 +190,7 @@ public class ProjectDatabase extends DatabaseItem {
 
     /**
      * 根据项目名称返回项目数据模型
+     *
      * @param projectName 项目名称
      * @return 返回项目数据模型
      */
@@ -203,7 +210,7 @@ public class ProjectDatabase extends DatabaseItem {
                 projectData.setProj_modify_time(rs.getString("proj_modify_time"));
                 projectData.setProj_creator(rs.getString("proj_creator"));
                 projectData.setProj_description(rs.getString("proj_description"));
-                projectData.setVersionList(VersionDatabase.getVersionDataListOfProj(Integer.valueOf(projectData.getProj_id())));
+                projectData.setVersionList(VersionDb.getVersionDataListOfProj(Integer.valueOf(projectData.getProj_id())));
             }
         } catch (SQLException e) {
             e.printStackTrace();

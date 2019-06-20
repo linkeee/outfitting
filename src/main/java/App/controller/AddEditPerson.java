@@ -1,8 +1,8 @@
 package App.controller;
 
 import App.dataModel.UserData;
-import App.database.UserDatabase;
-import App.function.Dialog;
+import App.database.UserDb;
+import App.utile.MyDialog;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,13 +50,13 @@ public class AddEditPerson {
         userData.setRole(roleComboBox.getValue());
 
         if (editJobNum != null) {
-            UserDatabase.update(userData, editJobNum);
+            UserDb.update(userData, editJobNum);
             closeAddEditPerson(event);
-            Dialog.information(null, null, userData.getName()+"的信息已修改!");
+            MyDialog.information(null, userData.getName()+"的信息已修改!");
         } else {
-            UserDatabase.insert(userData);
+            UserDb.insert(userData);
             closeAddEditPerson(event);
-            Dialog.information(null, null, "已添加用户"+userData.getName());
+            MyDialog.information(null, "已添加用户"+userData.getName());
         }
     }
 

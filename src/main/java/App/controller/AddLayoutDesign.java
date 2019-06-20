@@ -1,7 +1,7 @@
 package App.controller;
 
 import App.dataModel.LayoutData;
-import App.database.LayoutDatabase;
+import App.database.LayoutDb;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -110,10 +110,10 @@ public class AddLayoutDesign {
         layoutData.setLayoutDesignContent(layoutDesignTextArea.getText());
 
         if (editLayoutId != null) {
-            LayoutDatabase.update(layoutData, editLayoutId);
+            LayoutDb.update(layoutData, editLayoutId);
             closeAddLayoutDesign(event);
         } else {
-            LayoutDatabase.insert(layoutData);
+            LayoutDb.insert(layoutData);
             closeAddLayoutDesign(event);
         }
     }

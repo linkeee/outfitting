@@ -11,8 +11,8 @@ public class EditingCell<T> extends TableCell<T, String> {
     }
 
     @Override
-    public void commitEdit(String newValue) {
-        if (!isEditing() && !newValue.equals(this.getItem())) {
+    public void commitEdit(String inputValue) {
+        if (!isEditing() && !inputValue.equals(this.getItem())) {
             TableView<T> tableView = this.getTableView();
             if (tableView != null) {
                 TableColumn<T, String> column = this.getTableColumn();
@@ -21,11 +21,12 @@ public class EditingCell<T> extends TableCell<T, String> {
                                 tableView,
                                 new TablePosition<>(tableView, this.getIndex(), column),
                                 TableColumn.editCommitEvent(),
-                                newValue);
+                                inputValue);
                 Event.fireEvent(column, event);
+
             }
         }
-        super.commitEdit(newValue);
+        super.commitEdit(inputValue);
     }
 
     @Override
@@ -43,7 +44,8 @@ public class EditingCell<T> extends TableCell<T, String> {
     public void cancelEdit() {
         super.cancelEdit();
 
-        setText(getItem());
+        // 双击后，无输入退出编辑，设置cell的显示状态
+        setText(getString());
         setGraphic(null);
     }
 
@@ -62,6 +64,7 @@ public class EditingCell<T> extends TableCell<T, String> {
                 setText(null);
                 setGraphic(textField);
             } else {
+                // 初始化刷新表格时，将cell内容设置为getString()方法返回的字符串
                 setText(getString());
                 setGraphic(null);
             }
@@ -75,16 +78,18 @@ public class EditingCell<T> extends TableCell<T, String> {
             textField = new TextField(getString());
         }
         textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+        // 监听cell中的textField，编辑状态下有输入时，失焦后将输入提交给commitEdit()方法
         textField.focusedProperty().addListener(
                 (ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) -> {
                     if (!arg2) {
                         commitEdit(textField.getText());
+                        System.out.println("createTextField" + textField.getText());
                     }
                 }
         );
     }
 
     private String getString() {
-        return getItem() == null ? "双击添加" : getItem();
+        return (getItem() == null || getItem().equals("")) ? "双击添加" : getItem();
     }
 }

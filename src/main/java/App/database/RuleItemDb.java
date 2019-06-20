@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class RuleItemDatabase extends DatabaseItem {
+public class RuleItemDb extends DatabaseItem {
 
     public static ObservableList<RuleItemData> getRuleItemDataList(String itemName) {
         ArrayList<RuleItemData> list = getAllRuleItemData(itemName);

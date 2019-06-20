@@ -1,8 +1,8 @@
 package App.controller;
 
 import App.dataModel.RuleItemData;
-import App.database.RuleItemDatabase;
-import App.function.Dialog;
+import App.database.RuleItemDb;
+import App.utile.MyDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
@@ -88,7 +88,7 @@ public class ItemGongyoudanyuan {
     void handleQuery(ActionEvent event) {
         String keyword = ruleIdTF.getText()+itemNameTF.getText()+outfittingTypeTF.getText()+gongyouliangTF.getText()+zhongyouOutputViscosityTF.getText()+zhongyouOutputTemperatureTF.getText()+zhongyouOutputPressureTF.getText()+itemHyperLinkTF.getText();
         try {
-            itemGongyoudanyuanTableView.setItems(RuleItemDatabase.query("供油单元", keyword));
+            itemGongyoudanyuanTableView.setItems(RuleItemDb.query("供油单元", keyword));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -121,12 +121,12 @@ public class ItemGongyoudanyuan {
     @FXML
     void handleDelete(ActionEvent event) {
         RuleItemData deleteRuleItemData = itemGongyoudanyuanTableView.getSelectionModel().getSelectedItem();
-        Optional<ButtonType> result = Dialog.confirmation("删除确认", null, "确认删除ID为"+deleteRuleItemData.getRuleId()+"的条目吗？");
+        Optional<ButtonType> result = MyDialog.confirmation(null, "确认删除ID为"+deleteRuleItemData.getRuleId()+"的条目吗？");
         if (result.get() == ButtonType.OK) {
-            RuleItemDatabase.delete(deleteRuleItemData.getRuleId());
+            RuleItemDb.delete(deleteRuleItemData.getRuleId());
             refreshItemGongyoudanyuanTableView();
         }
-        RuleItemDatabase.delete(deleteRuleItemData.getRuleId());
+        RuleItemDb.delete(deleteRuleItemData.getRuleId());
         refreshItemGongyoudanyuanTableView();
     }
 
@@ -136,7 +136,7 @@ public class ItemGongyoudanyuan {
     }
 
     private void refreshItemGongyoudanyuanTableView() {
-        itemGongyoudanyuanTableView.setItems(RuleItemDatabase.getRuleItemDataList("供油单元"));
+        itemGongyoudanyuanTableView.setItems(RuleItemDb.getRuleItemDataList("供油单元"));
     }
 
     private void showItemGongyoudanyuanDetail(RuleItemData ruleItemData) {

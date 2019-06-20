@@ -1,10 +1,10 @@
 package App.controller;
 
 import App.dataModel.*;
-import App.database.CriterionDatabase;
-import App.database.ExperienceDatabase;
-import App.database.SuggestionDatabase;
-import App.database.TabooDatabase;
+import App.database.CriterionDb;
+import App.database.ExperienceDb;
+import App.database.SuggestionDb;
+import App.database.TabooDb;
 import App.utile.HyperlinkTableCell;
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.beans.value.ChangeListener;
@@ -198,7 +198,7 @@ public class KnowledgeSupplySearch {
     @FXML
     void handleCriterionSearch(ActionEvent event) {
         try {
-            criterionTable.setItems(CriterionDatabase.query(
+            criterionTable.setItems(CriterionDb.query(
                     criterionSearchTextField.getText(),
                     criterionShipTypeCB.getValue(),
                     criterionChuanjisheCB.getValue(),
@@ -216,13 +216,13 @@ public class KnowledgeSupplySearch {
         criterionShipTypeCB.setValue(null);
         guifanNameTextField.setText(null);
         guifanOutfittingTypeTextField.setText(null);
-        criterionTable.setItems(CriterionDatabase.getCriterionDataList());
+        criterionTable.setItems(CriterionDb.getCriterionDataList());
     }
 
     @FXML
     void handleSuggestionSearch(ActionEvent event) {
         try {
-            suggestionTable.setItems(SuggestionDatabase.query(
+            suggestionTable.setItems(SuggestionDb.query(
                     suggestionChuandongCompanyCB.getValue(),
                     suggestionShipTypeCB.getValue(),
                     soutfittingTypeTextField.getText(),
@@ -239,7 +239,7 @@ public class KnowledgeSupplySearch {
         suggestionShipTypeCB.setValue(null);
         soutfittingTypeTextField.setText(null);
         suggestionSearchTextField.setText(null);
-        suggestionTable.setItems(SuggestionDatabase.getSugDataList());
+        suggestionTable.setItems(SuggestionDb.getSugDataList());
     }
 
     @FXML
@@ -250,7 +250,7 @@ public class KnowledgeSupplySearch {
                 jinjioutfittingTypeTextField.getText() +
                 tabooSearchTextField.getText();
         try {
-            tabooTable.setItems(TabooDatabase.query(keyword));
+            tabooTable.setItems(TabooDb.query(keyword));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -258,13 +258,13 @@ public class KnowledgeSupplySearch {
 
     @FXML
     void handleResetTaboo(ActionEvent event) {
-        tabooTable.setItems(TabooDatabase.getTabooDataList());
+        tabooTable.setItems(TabooDb.getTabooDataList());
     }
 
     @FXML
     void handleExperienceSearch(ActionEvent event) {
         try {
-            experienceTable.setItems(ExperienceDatabase.query(
+            experienceTable.setItems(ExperienceDb.query(
                     experienceShipTypeCB.getValue(),
                     experienceOutfittingTypeTextField1.getText(),
                     experienceNameTextField1.getText(),
@@ -281,7 +281,7 @@ public class KnowledgeSupplySearch {
         experienceOutfittingTypeTextField1.setText(null);
         experienceNameTextField1.setText(null);
         experienceSearchTextField.setText(null);
-        experienceTable.setItems(ExperienceDatabase.getExpDataList());
+        experienceTable.setItems(ExperienceDb.getExpDataList());
     }
 
     private ObservableList<String> jinjiLevelList = FXCollections.observableArrayList(null, "公司级", "部门级", "船级社级");
@@ -494,10 +494,10 @@ public class KnowledgeSupplySearch {
     }
 
     void refreshAllTable() {
-        criterionTable.setItems(CriterionDatabase.getCriterionDataList());
-        suggestionTable.setItems(SuggestionDatabase.getSugDataList());
-        tabooTable.setItems(TabooDatabase.getTabooDataList());
-        experienceTable.setItems(ExperienceDatabase.getExpDataList());
+        criterionTable.setItems(CriterionDb.getCriterionDataList());
+        suggestionTable.setItems(SuggestionDb.getSugDataList());
+        tabooTable.setItems(TabooDb.getTabooDataList());
+        experienceTable.setItems(ExperienceDb.getExpDataList());
     }
 
     private void showCriterionDetail(CriterionData criterionData) {

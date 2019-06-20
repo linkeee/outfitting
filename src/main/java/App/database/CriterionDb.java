@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CriterionDatabase extends DatabaseItem {
+public class CriterionDb extends DatabaseItem {
 
     /**
      * Return all of the criterionData in a list way.

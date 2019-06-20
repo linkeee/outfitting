@@ -1,7 +1,7 @@
 package App.controller;
 
 import App.dataModel.RuleItemData;
-import App.database.RuleItemDatabase;
+import App.database.RuleItemDb;
 import App.utile.FxmlUtile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,10 +49,10 @@ public class AddItemAnchor {
         ruleItemData.setManufacturer(manufacturerTF.getText());
 
         if (this.editRuleId != null) {
-            RuleItemDatabase.update(ruleItemData, this.editRuleId);
+            RuleItemDb.update(ruleItemData, this.editRuleId);
             closeAddItemAnchor(event);
         } else {
-            RuleItemDatabase.insert(ruleItemData);
+            RuleItemDb.insert(ruleItemData);
             closeAddItemAnchor(event);
         }
     }

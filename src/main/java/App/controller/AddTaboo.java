@@ -1,7 +1,7 @@
 package App.controller;
 import java.io.IOException;
 
-import App.database.TabooDatabase;
+import App.database.TabooDb;
 import App.dataModel.TabooData;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
@@ -75,10 +75,10 @@ public class AddTaboo {
         tabooData.setJjinjiLevel(jinjiLevelChoiceBox.getValue());
 
         if (editTabooId != null) {
-            TabooDatabase.update(tabooData, editTabooId);
+            TabooDb.update(tabooData, editTabooId);
             closeAddTaboo(event);
         } else {
-            TabooDatabase.insert(tabooData);
+            TabooDb.insert(tabooData);
             closeAddTaboo(event);
         }
     }

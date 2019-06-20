@@ -3,10 +3,12 @@ package App.controller;
 import App.dataModel.ParamAndValueData;
 import App.dataModel.ParameterData;
 import App.dataModel.VersionData;
-import App.database.ParamAndValueDatabase;
+import App.database.ParamValueDb;
 import App.database.ParameterDatabase;
-import App.database.ProjectDatabase;
-import App.database.VersionDatabase;
+import App.database.ProjectDb;
+import App.database.VersionDb;
+import App.utile.MyDialog;
+import App.utile.DataModelUtil;
 import App.utile.Docker;
 import App.utile.EditingCell;
 import javafx.beans.value.ChangeListener;
@@ -16,12 +18,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.Callback;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InputParameter {
+
+    @FXML
+    private Button addVersionBtn;
+
+    @FXML
+    private Button deleteVersionBtn;
 
     @FXML
     private Label versionLabel;
@@ -56,25 +64,86 @@ public class InputParameter {
     @FXML
     private TextArea versionDescriptionTA;
 
+    private List<ParamAndValueData> paramDataListContainer = new ArrayList<>();
+
+    private int selectedProjId = -1;
+    private String selectedProjName;
+    private String selectedVersionName;
+
     @FXML
     void addVersionAction(ActionEvent event) {
+        if (selectedProjId == -1) {
+            MyDialog.information(null, "请选择项目。");
+        } else {
+            Optional<String> result = MyDialog.inputText("请输入新增版本的描述");
+            String newVersionDesc = null;
+            if (result.isPresent()) {
+                newVersionDesc = result.get();
+            }
 
+            // 版本号自动加1。   v1 -> v2
+            String newVersionName = VersionDb.getVersionNameNeedToAdd(selectedProjId);
+
+            // 将List<ParameterData>转换为List<ParamAndValueData>
+            paramDataListContainer.clear();
+            // Todo 参数库的接口，提供需要用到的参数list
+            for (ParameterData parameterData : ParameterDatabase.getParameterList()) {
+                // 将ParameterData的值对应转换到ParamAndValueData中
+                paramDataListContainer.add(DataModelUtil.getParamAndValueData(
+                        String.valueOf(selectedProjId),
+                        newVersionName,
+                        parameterData.getParam_id(),
+                        parameterData.getOutfitting_name(),
+                        parameterData.getParam_name(),
+                        parameterData.getParam_type(),
+                        parameterData.getParam_description(),
+                        null   // 参数值列留空等待用户输入
+                ));
+            }
+
+            VersionDb.insert(DataModelUtil.getVersionData(
+                    String.valueOf(selectedProjId),
+                    newVersionName,
+                    newVersionDesc,
+                    paramDataListContainer
+            ));
+            versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(selectedProjId)));
+            versionChooserCB.setValue(newVersionName);
+
+            ParamValueDb.insert(paramDataListContainer);
+            projParamValueTV.setItems(FXCollections.observableArrayList(ParamValueDb.getParamByProjAndVersion(selectedProjId, newVersionName)));
+        }
+
+    }
+
+    @FXML
+    void deleteVersionAction(ActionEvent event) {
+        Optional<String> result = MyDialog.inputText("该版本下的所有参数以及参数值都将被永久删除，且该操作不可恢复! " + "\r\n" + "请手动输入版本号确认!");
+        String confirmVersionName = null;
+        if (result.isPresent()) {
+            confirmVersionName = result.get();
+
+            if (!confirmVersionName.equals(selectedVersionName)) {
+                MyDialog.information("版本号输入有误", "删除失败");
+            } else {
+                VersionDb.delete(selectedProjId, selectedVersionName);
+                versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(selectedProjId)));
+                versionChooserCB.setValue(VersionDb.getLargestVersionName(selectedProjId));
+            }
+        }
     }
 
     @FXML
     void saveAction(ActionEvent event) {
         List<ParamAndValueData> list = projParamValueTV.getItems();
-        ParamAndValueDatabase.saveValue(selectedProjId, selectedVersionName, list);
+        ParamValueDb.insertValue(list);
+        MyDialog.information("项目“" + selectedProjName + "”的“" + selectedVersionName + "”版本数据已保存", null);
     }
 
     @FXML
     void nextStepAction(ActionEvent event) {
 
     }
-
-    private int selectedProjId;
-    private String selectedProjName;
-    private String selectedVersionName;
 
     @FXML
     void initialize() {
@@ -84,20 +153,22 @@ public class InputParameter {
         paramDescriptionTC.setCellValueFactory(new PropertyValueFactory<>("param_description"));
         paramValueTC.setCellValueFactory(new PropertyValueFactory<>("param_value"));
 
-        projChooserCB.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectNameList()));
+        projChooserCB.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
         if (Docker.containKey("isCreateProjectNextStep")) {
             projParamValueTV.setPlaceholder(new Label("请选择项目与版本！"));
             projChooserCB.setValue(Docker.get("comboBoxSelection").toString());
             projLabel.setText(Docker.get("comboBoxSelection").toString());
             selectedProjName = Docker.get("comboBoxSelection").toString();
-            versionChooserCB.setItems(FXCollections.observableArrayList(VersionDatabase.getVersionNameListOfProj(ProjectDatabase.getIdByName(Docker.get("comboBoxSelection").toString()))));
+            selectedProjId = ProjectDb.getIdByName(selectedProjName);
+            versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(Docker.get("comboBoxSelection").toString()))));
         }
         projChooserCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 selectedProjName = newValue;
+                selectedProjId = ProjectDb.getIdByName(selectedProjName);
                 projLabel.setText(newValue);
-                versionChooserCB.setItems(FXCollections.observableArrayList(VersionDatabase.getVersionNameListOfProj(ProjectDatabase.getIdByName(newValue))));
+                versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(newValue))));
             }
         });
         versionChooserCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -112,13 +183,14 @@ public class InputParameter {
                     projParamValueTV.setItems(null);
                     projParamValueTV.setPlaceholder(new Label("请选择项目与版本！"));
                 } else {// 项目和版本都已选择
-                    selectedProjId = ProjectDatabase.getIdByName(selectedProjName);
-                    VersionData versionData = VersionDatabase.getOneVersionData(selectedProjId, selectedVersionName);
+                    selectedProjId = ProjectDb.getIdByName(selectedProjName);
+                    VersionData versionData = VersionDb.getOneVersionData(selectedProjId, selectedVersionName);
                     versionDescriptionTA.setText(versionData.getVersion_description());
                     projParamValueTV.setItems(FXCollections.observableArrayList(versionData.getParam_value_list()));
                 }
             }
         });
+
         Docker.remove("isCreateProjectNextStep");
 
         // 第一种让TableView可双击编辑的方法，但必须回车提交
@@ -133,8 +205,6 @@ public class InputParameter {
         // 第二种让TableView可双击编辑的方法，失焦提交
         paramValueTC.setCellFactory(param -> new EditingCell<>());
 
-        // 将参数库中的参数取出，放入projParamValueTV.
-//        List<ParameterData> list = ParameterDatabase.getParameterList();
     }
 
 }

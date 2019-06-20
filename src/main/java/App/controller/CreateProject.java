@@ -2,8 +2,8 @@ package App.controller;
 
 import App.utile.Docker;
 import App.dataModel.ProjectData;
-import App.database.ProjectDatabase;
-import App.function.Dialog;
+import App.database.ProjectDb;
+import App.utile.MyDialog;
 import App.utile.DateUtile;
 import App.utile.FxmlUtile;
 import App.utile.ProgressFrom;
@@ -78,11 +78,11 @@ public class CreateProject {
     @FXML
     void deleteProjectAction(ActionEvent event) {
         if (comboBoxSelectedName == null) {
-            Dialog.information("提示", "未选择项目", "请使用下拉框选择项目。");
+            MyDialog.information("未选择项目", "请使用下拉框选择项目。");
         } else {
-            Optional<ButtonType> result = Dialog.confirmation("删除确认", null, "项目“" + comboBoxSelectedName + "”将被删除，不可恢复，确认删除吗？");
+            Optional<ButtonType> result = MyDialog.confirmation( null, "项目“" + comboBoxSelectedName + "”将被删除，不可恢复，确认删除吗？");
             if (result.get() == ButtonType.OK) {
-                ProjectDatabase.delete(ProjectDatabase.getIdByName(comboBoxSelectedName));
+                ProjectDb.delete(ProjectDb.getIdByName(comboBoxSelectedName));
                 initialize();
             }
         }
@@ -97,16 +97,31 @@ public class CreateProject {
         projectData.setProj_creator(projPersonInChargeTF.getText());
         projectData.setProj_description(projRemarkTF.getText());
 
-        if (ProjectDatabase.getProjectNameList().contains(projNameTF.getText())) {
-            Optional<ButtonType> result = Dialog.confirmation("项目信息修改确认", "确认修改项目“" + projNameTF.getText() + "”信息？", "");
-            if (result.get() == ButtonType.OK) {
-                ProjectDatabase.update(projectData, ProjectDatabase.getIdByName(projNameTF.getText()));
+        if (projNameTF.getText().equals("") || projCreateTimeTF.getText().equals("") || projModifyTimeTF.getText().equals("") || projPersonInChargeTF.getText().equals("")) {
+            MyDialog.information(null, "项目名称、创建时间、修改时间、负责人为必填项，请填写。");
+        } else if (ProjectDb.getProjectNameList().contains(projNameTF.getText())) {
+            ProjectData existPd = ProjectDb.getOneProjectData(projNameTF.getText());
+            if (
+                    existPd.getProj_name().equals(projNameTF.getText()) &&
+                    existPd.getProj_create_time().equals(projCreateTimeTF.getText()) &&
+                    existPd.getProj_modify_time().equals(projModifyTimeTF.getText()) &&
+                    existPd.getProj_creator().equals(projPersonInChargeTF.getText()) &&
+                    existPd.getProj_description().equals(projRemarkTF.getText())) {
+
+            } else {
+                Optional<ButtonType> result = MyDialog.confirmation("确认修改项目“" + projNameTF.getText() + "”信息？", "");
+                if (result.get() == ButtonType.OK) {
+                    ProjectDb.update(projectData, ProjectDb.getIdByName(projNameTF.getText()));
+                }
             }
+
         } else {
-            ProjectDatabase.insert(projectData);
-            Dialog.information("新建项目成功", "项目“" + projNameTF.getText() + "”已保存", "");
+            ProjectDb.insert(projectData);
+            MyDialog.information("项目“" + projNameTF.getText() + "”已保存", null);
         }
-        projectComboBox.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectNameList()));
+
+        // 更新项目选择框
+        projectComboBox.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
     }
 
     @FXML
@@ -114,9 +129,7 @@ public class CreateProject {
         saveAction(event);
 
         Docker.put("isCreateProjectNextStep", true);
-        System.out.println(Docker.get("isCreateProjectNextStep"));
         Docker.put("comboBoxSelection", projectComboBox.getValue());
-        System.out.println(Docker.get("comboBoxSelection"));
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
@@ -141,7 +154,7 @@ public class CreateProject {
     void initialize() {
         projCreateTimeTF.setText(DateUtile.nowDateFormat());
         projModifyTimeTF.setText(DateUtile.nowDateFormat());
-        projectComboBox.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectNameList()));
+        projectComboBox.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
         projectComboBox.setTooltip(new Tooltip("选择项目"));
         ctrBtn.setTooltip(new Tooltip("将项目创建时间更新为当前时间，由于修改时间不能早于创建时间，修改时间也将更新为当前时间。"));
         mtrBtn.setTooltip(new Tooltip("将项目修改时间更新为当前时间。"));
@@ -151,7 +164,7 @@ public class CreateProject {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 System.out.println(newValue);
-                projectData = ProjectDatabase.getOneProjectData(newValue);
+                projectData = ProjectDb.getOneProjectData(newValue);
                 projectLabel.setText(projectData.getProj_name());
                 projNameTF.setText(projectData.getProj_name());
                 projCreateTimeTF.setText(projectData.getProj_create_time());

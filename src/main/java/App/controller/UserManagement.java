@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import App.dataModel.UserData;
-import App.database.UserDatabase;
-import App.function.Dialog;
+import App.database.UserDb;
+import App.utile.MyDialog;
 import App.utile.FxmlUtile;
 import App.utile.ProgressFrom;
 import javafx.collections.FXCollections;
@@ -74,7 +74,7 @@ public class UserManagement {
     @FXML
     private void handleUserQuery() throws SQLException {
         String keyword = userQueryTextField.getText();
-        personTable.setItems(UserDatabase.query(keyword));
+        personTable.setItems(UserDb.query(keyword));
     }
 
     @FXML
@@ -86,9 +86,9 @@ public class UserManagement {
     private void handleDeletePerson(ActionEvent event) throws IOException {
         UserData deletedUserData = personTable.getSelectionModel().getSelectedItem();
         String deletedUserJobNum = deletedUserData.getJobNum();
-        Optional<ButtonType> result = Dialog.confirmation("删除确认", null, "确认删除"+deletedUserData.getName()+"吗？");
+        Optional<ButtonType> result = MyDialog.confirmation(null, "确认删除"+deletedUserData.getName()+"吗？");
         if (result.get() == ButtonType.OK) {
-            UserDatabase.delete(deletedUserJobNum);
+            UserDb.delete(deletedUserJobNum);
             refreshPersonTable();
         }
     }
@@ -139,7 +139,7 @@ public class UserManagement {
 
     //刷新personTable的显示
     private void refreshPersonTable() {
-        personTable.setItems(UserDatabase.getUserDataList());
+        personTable.setItems(UserDb.getUserDataList());
     }
 
     //显示用户管理界面

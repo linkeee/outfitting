@@ -32,7 +32,7 @@ public class SelectTypeDesign {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                loader.getController();
+                CreateProject controller = loader.getController();
                 return null;
             }
         };

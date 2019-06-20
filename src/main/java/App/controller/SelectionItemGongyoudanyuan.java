@@ -1,7 +1,7 @@
 package App.controller;
 
 import App.dataModel.RuleItemData;
-import App.database.RuleItemDatabase;
+import App.database.RuleItemDb;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -81,7 +81,7 @@ public class SelectionItemGongyoudanyuan {
     void handleQuery(ActionEvent event) {
         String keyword = ruleIdTF.getText()+itemNameTF.getText()+outfittingTypeTF.getText()+gongyouliangTF.getText()+zhongyouOutputViscosityTF.getText()+zhongyouOutputTemperatureTF.getText()+zhongyouOutputPressureTF.getText()+itemHyperLinkTF.getText();
         try {
-            selectionItemGongyoudanyuanTableView.setItems(RuleItemDatabase.query("供油单元", keyword));
+            selectionItemGongyoudanyuanTableView.setItems(RuleItemDb.query("供油单元", keyword));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,7 +93,7 @@ public class SelectionItemGongyoudanyuan {
     }
 
     private void refreshSelectionItemGongyoudanyuanTableView() {
-        selectionItemGongyoudanyuanTableView.setItems(RuleItemDatabase.getRuleItemDataList("供油单元"));
+        selectionItemGongyoudanyuanTableView.setItems(RuleItemDb.getRuleItemDataList("供油单元"));
     }
 
     private void showTextFieldDetail(RuleItemData ruleItemData) {

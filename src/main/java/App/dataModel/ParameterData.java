@@ -13,12 +13,12 @@ public class ParameterData {
         this(null, null, null, null, null);
     }
 
-    public ParameterData(SimpleStringProperty param_id, SimpleStringProperty param_name, SimpleStringProperty param_type, SimpleStringProperty outfitting_name, SimpleStringProperty param_description) {
-        this.param_id = param_id;
-        this.param_name = param_name;
-        this.param_type = param_type;
-        this.outfitting_name = outfitting_name;
-        this.param_description = param_description;
+    public ParameterData(String param_id, String param_name, String param_type, String outfitting_name, String param_description) {
+        this.param_id = new SimpleStringProperty(param_id);
+        this.param_name = new SimpleStringProperty(param_name);
+        this.param_type = new SimpleStringProperty(param_type);
+        this.outfitting_name = new SimpleStringProperty(outfitting_name);
+        this.param_description = new SimpleStringProperty(param_description);
     }
 
     public String getParam_id() {

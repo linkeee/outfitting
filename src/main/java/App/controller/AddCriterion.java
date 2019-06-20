@@ -2,7 +2,7 @@ package App.controller;
 
 import App.dataModel.CriterionData;
 
-import App.database.CriterionDatabase;
+import App.database.CriterionDb;
 import App.function.FileReader;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
@@ -91,10 +91,10 @@ public class AddCriterion {
         criterion.setCriFilePath(temp[1]);
 
         if (editCriterionId != null) {
-            CriterionDatabase.update(criterion, editCriterionId);
+            CriterionDb.update(criterion, editCriterionId);
             closeAddGuiFan(event);
         } else {
-            CriterionDatabase.insert(criterion);
+            CriterionDb.insert(criterion);
             closeAddGuiFan(event);
         }
     }

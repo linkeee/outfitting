@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class TabooDatabase extends DatabaseItem {
+public class TabooDb extends DatabaseItem {
 
     //该变量储存禁忌数据库中的禁忌条目列表
     private ObservableList<TabooData> tabooDataList = FXCollections.observableArrayList();

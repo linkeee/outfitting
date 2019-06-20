@@ -1,7 +1,7 @@
 package App.controller;
 
 import App.dataModel.ExperienceData;
-import App.database.ExperienceDatabase;
+import App.database.ExperienceDb;
 import App.function.FileReader;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
@@ -72,10 +72,10 @@ public class AddExperience {
         experienceData.setExpFilePath(pathNameHyperlink.getText());
 
         if (editExperienceId != null) {
-            ExperienceDatabase.update(experienceData, editExperienceId);
+            ExperienceDb.update(experienceData, editExperienceId);
             closeAddExperience(event);
         } else {
-            ExperienceDatabase.insert(experienceData);
+            ExperienceDb.insert(experienceData);
             closeAddExperience(event);
         }
     }

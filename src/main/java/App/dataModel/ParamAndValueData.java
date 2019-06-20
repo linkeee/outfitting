@@ -9,6 +9,7 @@ public class ParamAndValueData {
     private final SimpleStringProperty param_id;
     private final SimpleStringProperty outfitting_name;
     private final SimpleStringProperty param_name;
+    // 已知为0，待求为1
     private final SimpleStringProperty param_type;
     private final SimpleStringProperty param_description;
     private final SimpleStringProperty param_value;

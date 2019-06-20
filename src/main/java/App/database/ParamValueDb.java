@@ -1,6 +1,7 @@
 package App.database;
 
 import App.dataModel.ParamAndValueData;
+import App.utile.Constant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,19 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * private final SimpleStringProperty param_value_id;
- * private final SimpleStringProperty proj_id;
- * private final SimpleStringProperty version;
- * private final SimpleStringProperty param_id;
- * private final SimpleStringProperty outfitting_name;
- * private final SimpleStringProperty param_name;
- * private final SimpleStringProperty param_type;
- * private final SimpleStringProperty param_description;
- * private final SimpleStringProperty param_value;
- * private final SimpleStringProperty remark;
- */
-public class ParamAndValueDatabase extends DatabaseItem {
+public class ParamValueDb extends DatabaseItem {
 
     /**
      * 根据项目id和版本返回参数结果。
@@ -44,7 +33,6 @@ public class ParamAndValueDatabase extends DatabaseItem {
             while (rs.next()) {
                 ParamAndValueData paramAndValueData = new ParamAndValueData();
 
-//                paramAndValueData.setParam_value_id(String.valueOf(rs.getInt("id")));
                 paramAndValueData.setProj_id(String.valueOf(rs.getInt("proj_id")));
                 paramAndValueData.setVersion_name(rs.getString("version_name"));
                 paramAndValueData.setParam_id(String.valueOf(rs.getInt("param_id")));
@@ -53,7 +41,6 @@ public class ParamAndValueDatabase extends DatabaseItem {
                 paramAndValueData.setParam_type(String.valueOf(rs.getInt("param_type")));
                 paramAndValueData.setParam_description(rs.getString("param_description"));
                 paramAndValueData.setParam_value(rs.getString("param_value"));
-//                paramAndValueData.setRemark(rs.getString("remark"));
 
                 list.add(paramAndValueData);
             }
@@ -65,8 +52,14 @@ public class ParamAndValueDatabase extends DatabaseItem {
         return list;
     }
 
-    public static boolean insertAllColumn(List<ParamAndValueData> list) {
-        boolean flag = true;
+    /**
+     * 插入paramandvalue数据库，param_value可以为空，也可以不为空。
+     *
+     * @param list
+     * @return
+     */
+    public static boolean insert(List<ParamAndValueData> list) {
+        boolean flag = false;
         PreparedStatement ps = null;
         Connection connection = connectDB();
         String sql = "insert into jproject.paramandvalue (proj_id, version_name, param_id, outfitting_name, param_name, param_type, param_description, param_value) value(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -84,34 +77,72 @@ public class ParamAndValueDatabase extends DatabaseItem {
                 } else if (pvd.getParam_type().equals("待求")) {
                     ps.setInt(6, 1);
                 } else {
-                    throw new Exception("参数类型输入非法");
+                    throw new Exception("参数类型输入非法，仅支持“已知”和“待求”。");
                 }
                 ps.setString(7, pvd.getParam_description());
-                ps.setString(8, pvd.getParam_value());
-//                ps.setString(9, pvd.getRemark());
+                if (pvd.getParam_value() == null || pvd.getParam_value().equals("")) {
+                    ps.setString(8, null);
+                } else {
+                    ps.setString(8, pvd.getParam_value());
+                }
 
-                if (ps.executeUpdate() == 0) {
-                    flag = false;
+                if (ps.executeUpdate() == 1) {
+                    flag = true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                closeDatabase(ps, null, connection);
             }
         }
+        closeDatabase(ps, null, connection);
+
         return flag;
     }
 
+    /**
+     * 插入参数值。
+     *
+     * @param list
+     * @return
+     */
     public static boolean insertValue(List<ParamAndValueData> list) {
-        boolean flag = true;
+        boolean flag = false;
         PreparedStatement ps = null;
         Connection connection = connectDB();
-        String sql = "insert into jproject.paramandvalue (proj_id, version_name, param_id, outfitting_name, param_name, param_type, param_description, param_value, remark) value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "update " + Constant.paramValueTableName + " set param_value = ? where proj_id = ? and version_name = ? and param_id = ?";
+
+        for (ParamAndValueData pvd : list) {
+            try {
+                ps = connection.prepareStatement(sql);
+                ps.setString(1, pvd.getParam_value());
+                ps.setInt(2, Integer.valueOf(pvd.getProj_id()));
+                ps.setString(3, pvd.getVersion_name());
+                ps.setInt(4, Integer.valueOf(pvd.getParam_id()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        closeDatabase(ps, null, connection);
 
         return true;
     }
 
-    public static void saveValue(int selectedProjId, String selectedVersionName, List<ParamAndValueData> list) {
-
+    public static boolean deleteByProjVersion(int proj_id, String version_name) {
+        boolean flag = false;
+        PreparedStatement ps = null;
+        Connection connection = connectDB();
+        String sql = "delete from " + Constant.paramValueTableName + " where proj_id = ? and version_name = ?";
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, proj_id);
+            ps.setString(2, version_name);
+            int i = ps.executeUpdate();
+            if (i == 1) flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return flag;
     }
+
 }

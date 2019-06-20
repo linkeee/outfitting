@@ -61,7 +61,7 @@ public class ItemAnchor {
     void handleQuery(ActionEvent event) {
 //        String keyword = queryTF.getText();
 //        try {
-//            leftTableView.setItems(RuleItemDatabase.query("锚设备", keyword));
+//            leftTableView.setItems(RuleItemDb.query("锚设备", keyword));
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
@@ -94,12 +94,12 @@ public class ItemAnchor {
     @FXML
     void handleDelete(ActionEvent event) {
 //        RuleItemData deleteRuleItemData = itemAnchorTableView.getSelectionModel().getSelectedItem();
-//        Optional<ButtonType> result = Dialog.confirmation("删除确认", null, "确认删除ID为"+deleteRuleItemData.getRuleId()+"的条目吗？");
+//        Optional<ButtonType> result = MyDialog.confirmation("删除确认", null, "确认删除ID为"+deleteRuleItemData.getRuleId()+"的条目吗？");
 //        if (result.get() == ButtonType.OK) {
-//            RuleItemDatabase.delete(deleteRuleItemData.getRuleId());
+//            RuleItemDb.delete(deleteRuleItemData.getRuleId());
 //            refreshItemAnchorTableView();
 //        }
-//        RuleItemDatabase.delete(deleteRuleItemData.getRuleId());
+//        RuleItemDb.delete(deleteRuleItemData.getRuleId());
 //        refreshItemAnchorTableView();
     }
 
@@ -109,7 +109,7 @@ public class ItemAnchor {
     }
 
     private void refreshItemAnchorTableView() {
-//        itemAnchorTableView.setItems(RuleItemDatabase.getRuleItemDataList("锚设备"));
+//        itemAnchorTableView.setItems(RuleItemDb.getRuleItemDataList("锚设备"));
     }
 
     private void showItemAnchorDetail(RuleItemData ruleItemData) {

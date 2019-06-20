@@ -50,7 +50,7 @@ public class ProgressFrom {
         Thread thread = new Thread(task);
         thread.setDaemon(true);  //true为守护线程；false为用户线程，默认为false。
         thread.start();
-        System.out.println(thread.getName());
+//        System.out.println(thread.getName());
 
         task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
@@ -62,7 +62,7 @@ public class ProgressFrom {
     }
 
     public void activateProgressBar() {
-        System.out.println(Thread.currentThread().getName());
+//        System.out.println(Thread.currentThread().getName());
         dialogStage.showAndWait();
     }
 

@@ -2,8 +2,7 @@ package App.controller;
 
 import App.dataModel.ParamAndValueData;
 import App.dataModel.ProjectData;
-import App.database.ParamAndValueDatabase;
-import App.database.ProjectDatabase;
+import App.database.ProjectDb;
 import App.function.CopyFile;
 import App.function.DirectoryScanner;
 import App.function.ExcelFiller;
@@ -112,7 +111,7 @@ public class Export {
         projCreatorTC.setCellValueFactory(new PropertyValueFactory<>("proj_creator"));
         projDescriptionTC.setCellValueFactory(new PropertyValueFactory<>("proj_description"));
 
-        projTV.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> showProjParam(newValue.getProj_id())));
+        projTV.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showProjParam(newValue.getProj_id()));
 
         MenuItem projTVCMItem1 = new MenuItem("导出");
         projTVCMItem1.setOnAction(new EventHandler<ActionEvent>() {
@@ -205,11 +204,11 @@ public class Export {
     }
 
     void refreshProjectTable() {
-        projTV.setItems(FXCollections.observableArrayList(ProjectDatabase.getProjectList()));
+        projTV.setItems(FXCollections.observableArrayList(ProjectDb.getProjectList()));
     }
 
     private void showProjParam(Object project_id) {
-//        paramAndValueList = ParamAndValueDatabase.getOneProjParamList(project_id);
+//        paramAndValueList = ParamValueDb.getOneProjParamList(project_id);
         projParamTV.setItems(paramAndValueList);
     }
 

@@ -456,11 +456,11 @@ public class KnowledgeBaseManage {
     }
 
     void refreshAllTable() {
-        jinjiTable.setItems(TabooDatabase.getTabooDataList());
-        suggestionTable.setItems(SuggestionDatabase.getSugDataList());
-        experienceTable1.setItems(ExperienceDatabase.getExpDataList());
-        guifanTable.setItems(CriterionDatabase.getCriterionDataList());
-        layoutDesignTable.setItems((LayoutDatabase.getLayoutDataList()));
+        jinjiTable.setItems(TabooDb.getTabooDataList());
+        suggestionTable.setItems(SuggestionDb.getSugDataList());
+        experienceTable1.setItems(ExperienceDb.getExpDataList());
+        guifanTable.setItems(CriterionDb.getCriterionDataList());
+        layoutDesignTable.setItems((LayoutDb.getLayoutDataList()));
     }
 
     //用anchorpane加载
@@ -508,26 +508,26 @@ public class KnowledgeBaseManage {
     @FXML
     private void handleLayoutQuery() throws SQLException {
         String keyword = layoutshipType.getValue() + layoutNameTextField.getText() + layoutTypeTextField.getText() + layoutShipNumTextField.getText() + lengthTextFiled.getText() + widthTextFiled.getText() + depthTextFiled.getText() + draughtTextField.getText() + coefficientsTextField.getText() + weightTextField.getText();
-        layoutDesignTable.setItems(LayoutDatabase.query(keyword));
+        layoutDesignTable.setItems(LayoutDb.query(keyword));
     }
 
     @FXML
     private void handleEditLayoutDesign() throws IOException {
         LayoutData selectedLayout = layoutDesignTable.getSelectionModel().getSelectedItem();
         aldc.showAddLayoutDesign(selectedLayout);
-        layoutDesignTable.setItems(LayoutDatabase.getLayoutDataList());
+        layoutDesignTable.setItems(LayoutDb.getLayoutDataList());
     }
 
     @FXML
     private void showAddLayoutDesign() throws IOException {
         LayoutData tempLayoutData = new LayoutData();
         aldc.showAddLayoutDesign(tempLayoutData);
-        layoutDesignTable.setItems(LayoutDatabase.getLayoutDataList());
+        layoutDesignTable.setItems(LayoutDb.getLayoutDataList());
     }
 
     @FXML
     private void handleResetLayoutDesign() {
-        layoutDesignTable.setItems(LayoutDatabase.getLayoutDataList());
+        layoutDesignTable.setItems(LayoutDb.getLayoutDataList());
         showLayoutDesignDetails(null);
     }
 
@@ -535,8 +535,8 @@ public class KnowledgeBaseManage {
     private void handleDeleteLayoutDesign() {
         LayoutData deletedLayoutData = layoutDesignTable.getSelectionModel().getSelectedItem();
         String deletedLayoutId = deletedLayoutData.getLayoutDesignID();
-        LayoutDatabase.delete(deletedLayoutId);
-        layoutDesignTable.setItems(LayoutDatabase.getLayoutDataList());
+        LayoutDb.delete(deletedLayoutId);
+        layoutDesignTable.setItems(LayoutDb.getLayoutDataList());
     }
 
     //实例详细显示
@@ -578,7 +578,7 @@ public class KnowledgeBaseManage {
 
     @FXML
     private void handleSuggestionQuery() throws SQLException {
-        suggestionTable.setItems(SuggestionDatabase.query(
+        suggestionTable.setItems(SuggestionDb.query(
                 schuanDongChoiceBox.getValue(),
                 schuanboTypeChoiceBox.getValue(),
                 soutfittingTypeTextField.getText(),
@@ -590,27 +590,27 @@ public class KnowledgeBaseManage {
     private void showAddSuggestion() throws IOException {
         SuggestionData tempSuggestion = new SuggestionData();
         asc.showAddSuggestion(tempSuggestion);
-        suggestionTable.setItems(SuggestionDatabase.getSugDataList());
+        suggestionTable.setItems(SuggestionDb.getSugDataList());
     }
 
     @FXML
     private void handleEditSuggestion() throws IOException {
         SuggestionData selectedSuggestion = suggestionTable.getSelectionModel().getSelectedItem();
         asc.showAddSuggestion(selectedSuggestion);
-        suggestionTable.setItems(SuggestionDatabase.getSugDataList());
+        suggestionTable.setItems(SuggestionDb.getSugDataList());
     }
 
     @FXML
     private void handleDeleteSuggestion() {
         SuggestionData deletedSugData = suggestionTable.getSelectionModel().getSelectedItem();
         String deletedSugDataId = deletedSugData.getSugId();
-        SuggestionDatabase.delete(deletedSugDataId);
-        suggestionTable.setItems(SuggestionDatabase.getSugDataList());
+        SuggestionDb.delete(deletedSugDataId);
+        suggestionTable.setItems(SuggestionDb.getSugDataList());
     }
 
     @FXML
     private void handleResetSuggestion() {
-        suggestionTable.setItems(SuggestionDatabase.getSugDataList());
+        suggestionTable.setItems(SuggestionDb.getSugDataList());
         showSugDetails(null);
     }
 
@@ -638,12 +638,12 @@ public class KnowledgeBaseManage {
     @FXML
     private void handleTabooQuery() throws SQLException {
         String keyword = jinjishipTypeChoiceBox.getValue() + jinjiLevelChoiceBox.getValue() + jinjioutfittingTypeTextField.getText() + jinjiNameTextField.getText() + tabooQueryTextField.getText();
-        jinjiTable.setItems(TabooDatabase.query(keyword));
+        jinjiTable.setItems(TabooDb.query(keyword));
     }
 
     @FXML
     private void handleResetJinji() {
-        jinjiTable.setItems(TabooDatabase.getTabooDataList());
+        jinjiTable.setItems(TabooDb.getTabooDataList());
         showJinJiDetails(null);
     }
 
@@ -651,22 +651,22 @@ public class KnowledgeBaseManage {
     private void handleDeleteJinJi() throws IOException {
         TabooData deletedTabooData = jinjiTable.getSelectionModel().getSelectedItem();
         String deletedJinJiDataId = deletedTabooData.getJinjiID();
-        TabooDatabase.delete(deletedJinJiDataId);
-        jinjiTable.setItems(TabooDatabase.getTabooDataList());
+        TabooDb.delete(deletedJinJiDataId);
+        jinjiTable.setItems(TabooDb.getTabooDataList());
     }
 
     @FXML
     private void showAddJinJi() throws IOException {
         TabooData tempTabooData = new TabooData();
         atc.showAddTaboo(tempTabooData);
-        jinjiTable.setItems(TabooDatabase.getTabooDataList());
+        jinjiTable.setItems(TabooDb.getTabooDataList());
     }
 
     @FXML
     private void handleEditJinJi() throws IOException {
         TabooData selectedJinJi = jinjiTable.getSelectionModel().getSelectedItem();
         atc.showAddTaboo(selectedJinJi);
-        jinjiTable.setItems(TabooDatabase.getTabooDataList());
+        jinjiTable.setItems(TabooDb.getTabooDataList());
     }
 
     //在对应格子中显示选择的属性
@@ -691,7 +691,7 @@ public class KnowledgeBaseManage {
 
     @FXML
     private void handleExperienceQuery() throws SQLException {
-        experienceTable1.setItems(ExperienceDatabase.query(
+        experienceTable1.setItems(ExperienceDb.query(
                 experienceshipType1.getValue(),
                 experienceOutfittingTypeTextField1.getText(),
                 experienceNameTextField1.getText(),
@@ -701,7 +701,7 @@ public class KnowledgeBaseManage {
 
     @FXML
     private void handleResetExperience() {
-        experienceTable1.setItems(ExperienceDatabase.getExpDataList());
+        experienceTable1.setItems(ExperienceDb.getExpDataList());
         showExperienceDetails(null);
     }
 
@@ -709,22 +709,22 @@ public class KnowledgeBaseManage {
     private void handleDeleteExperience() {
         ExperienceData deletedExp = experienceTable1.getSelectionModel().getSelectedItem();
         String deletedExpId = deletedExp.getExpId();
-        ExperienceDatabase.delete(deletedExpId);
-        experienceTable1.setItems(ExperienceDatabase.getExpDataList());
+        ExperienceDb.delete(deletedExpId);
+        experienceTable1.setItems(ExperienceDb.getExpDataList());
     }
 
     @FXML
     private void showAddExperience() throws IOException {
         ExperienceData tempExperienceData = new ExperienceData();
         aec.showAddExperience(tempExperienceData);
-        experienceTable1.setItems(ExperienceDatabase.getExpDataList());
+        experienceTable1.setItems(ExperienceDb.getExpDataList());
     }
 
     @FXML
     private void handleEditExperience() throws Exception {
         ExperienceData selectedExperience = experienceTable1.getSelectionModel().getSelectedItem();
         aec.showAddExperience(selectedExperience);
-        experienceTable1.setItems(ExperienceDatabase.getExpDataList());
+        experienceTable1.setItems(ExperienceDb.getExpDataList());
     }
 
     //在对应格子中显示选择的属性
@@ -747,7 +747,7 @@ public class KnowledgeBaseManage {
 
     @FXML
     private void handleCriterionQuery() throws SQLException {
-        guifanTable.setItems(CriterionDatabase.query(
+        guifanTable.setItems(CriterionDb.query(
                 criterionQueryTextField.getText(),
                 critShipTypeChoiceBox.getValue(),
                 critClassificationSocietyChoiceBox.getValue(),
@@ -758,7 +758,7 @@ public class KnowledgeBaseManage {
 
     @FXML
     private void handleResetGuiFan() {
-        guifanTable.setItems(CriterionDatabase.getCriterionDataList());
+        guifanTable.setItems(CriterionDb.getCriterionDataList());
         showGuiFanDetails(null);
     }
 
@@ -766,22 +766,22 @@ public class KnowledgeBaseManage {
     private void handleDeleteGuiFan() {
         CriterionData deletedCrit = guifanTable.getSelectionModel().getSelectedItem();
         String deletedCritId = deletedCrit.getCriId();
-        CriterionDatabase.delete(deletedCritId);
-        guifanTable.setItems(CriterionDatabase.getCriterionDataList());
+        CriterionDb.delete(deletedCritId);
+        guifanTable.setItems(CriterionDb.getCriterionDataList());
     }
 
     @FXML
     private void showAddGuiFan() throws IOException {
         CriterionData tempCriterionData = new CriterionData();
         acc.showAddGuiFan(tempCriterionData);
-        guifanTable.setItems(CriterionDatabase.getCriterionDataList());
+        guifanTable.setItems(CriterionDb.getCriterionDataList());
     }
 
     @FXML
     private void handleEditGuiFan() throws IOException {
         CriterionData selectedCrit = guifanTable.getSelectionModel().getSelectedItem();
         acc.showAddGuiFan(selectedCrit);
-        guifanTable.setItems(CriterionDatabase.getCriterionDataList());
+        guifanTable.setItems(CriterionDb.getCriterionDataList());
     }
 
     //在对应格子中显示选择的属性

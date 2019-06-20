@@ -54,7 +54,7 @@ public class SelectionItemAnchor {
     void handleQuery(ActionEvent event) {
 //        String keyword = ruleIdTF.getText()+itemNameTF.getText()+anchorTypeTF.getText()+manufacturerTF.getText()+outfittingTypeTF.getText()+itemHyperLinkTF.getText();
 //        try {
-//            selectionItemAnchorTableView.setItems(RuleItemDatabase.query("锚设备", keyword));
+//            selectionItemAnchorTableView.setItems(RuleItemDb.query("锚设备", keyword));
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
@@ -66,7 +66,7 @@ public class SelectionItemAnchor {
     }
 
     private void refreshSelectionItemAnchorTableView() {
-//        selectionItemAnchorTableView.setItems(RuleItemDatabase.getRuleItemDataList("锚设备"));
+//        selectionItemAnchorTableView.setItems(RuleItemDb.getRuleItemDataList("锚设备"));
     }
 
     private void showTextFieldDetail(RuleItemData ruleItemData) {

@@ -1,7 +1,7 @@
 package App.controller;
 
 import App.dataModel.LayoutData;
-import App.database.LayoutDatabase;
+import App.database.LayoutDb;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -102,12 +102,12 @@ public class OutfittingDesignLayoutDesignSearch {
     @FXML
     private void handleLayoutDesignQuery() throws SQLException {
         String keyword = chuanboTypeChoiceBox.getValue()+layoutNameTextField.getText()+layoutTypeTextField.getText()+layoutShipNumTextField.getText()+lengthTextFiled.getText()+widthTextFiled.getText()+depthTextFiled.getText()+draughtTextField.getText()+coefficientsTextField.getText()+weightTextField.getText();
-        layoutDesignTable.setItems(LayoutDatabase.query(keyword));
+        layoutDesignTable.setItems(LayoutDb.query(keyword));
     }
 
     @FXML
     private void handleResetLayoutDesign() {
-        layoutDesignTable.setItems(LayoutDatabase.getLayoutDataList());
+        layoutDesignTable.setItems(LayoutDb.getLayoutDataList());
         showLayoutDesignDetails(null);
     }
 
@@ -115,7 +115,7 @@ public class OutfittingDesignLayoutDesignSearch {
 
     //在表格中显示数据库的内容
     void refreshLayoutDesignTable() {
-        layoutDesignTable.setItems(LayoutDatabase.getLayoutDataList());
+        layoutDesignTable.setItems(LayoutDb.getLayoutDataList());
     }
 
     //实例详细显示

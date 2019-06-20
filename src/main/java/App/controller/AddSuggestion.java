@@ -3,7 +3,7 @@ package App.controller;
 import java.io.IOException;
 
 import App.dataModel.SuggestionData;
-import App.database.SuggestionDatabase;
+import App.database.SuggestionDb;
 import App.function.FileReader;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
@@ -91,10 +91,10 @@ public class AddSuggestion {
         suggestionData.setSugContent(sugFileContentTextArea.getText());
 
         if (editSuggestionId != null) {
-            SuggestionDatabase.update(suggestionData, editSuggestionId);
+            SuggestionDb.update(suggestionData, editSuggestionId);
             closeAddSuggestion(event);
         } else {
-            SuggestionDatabase.insert(suggestionData);
+            SuggestionDb.insert(suggestionData);
             closeAddSuggestion(event);
         }
     }

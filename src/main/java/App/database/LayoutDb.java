@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class LayoutDatabase extends DatabaseItem {
+public class LayoutDb extends DatabaseItem {
 
     //该变量储存区域布局设计实例数据库中的条目列表
     private ObservableList<LayoutData> layoutDataList = FXCollections.observableArrayList();
