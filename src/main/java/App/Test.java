@@ -1,5 +1,7 @@
 package App;
 
+import javafx.scene.control.SplitPane;
+
 import java.util.HashMap;
 import java.util.Map;
 

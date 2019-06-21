@@ -173,7 +173,12 @@ public class InputParameter {
                 selectedProjName = newValue;
                 selectedProjId = ProjectDb.getIdByName(selectedProjName);
                 projLabel.setText(newValue);
-                versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(newValue))));
+                if (newValue == null) {
+                    versionChooserCB.setItems(null);
+                    versionChooserCB.setValue(null);
+                } else {
+                    versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(newValue))));
+                }
             }
         });
         versionChooserCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -183,7 +188,7 @@ public class InputParameter {
                 selectedVersionName = newValue;
 
                 // 项目和版本没有同时确定
-                if (selectedProjName == null || selectedVersionName == null) {
+                if (selectedProjName == null || newValue == null) {
                     versionDescriptionTA.setText(null);
                     projParamValueTV.setItems(null);
                     projParamValueTV.setPlaceholder(new Label("请选择项目与版本！"));

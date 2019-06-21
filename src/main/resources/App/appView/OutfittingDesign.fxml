@@ -6,26 +6,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="outfittingDesignBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1000.0" stylesheets="@OutfittingDesign.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.OutfittingDesign">
-    <top>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0">
-            <children>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #4876FF;">
-               <items>
-                      <Label alignment="BOTTOM_LEFT" contentDisplay="TOP" prefHeight="40.0" prefWidth="200.0" text="舾装智能设计">
-                          <font>
-                              <Font name="Times New Roman" size="27.0" />
-                          </font>
-                      </Label>
-                          <Button fx:id="outfittingItemSelectionButton" mnemonicParsing="false" onAction="#goOutfittingItemSelection" text="舾装件智能选型" />
-                          <Button fx:id="layoutDesignButton" mnemonicParsing="false" onAction="#goLayoutDesign" text="区域布局设计" />
-                          <Button fx:id="designReviewButton" mnemonicParsing="false" onAction="#goDesignReview" text="设计校审" />
-                  <Button mnemonicParsing="false" onAction="#goExport" text="导出" />
-                          <Button fx:id="backHomeBtn" cancelButton="true" mnemonicParsing="false" onAction="#backHome" text="返回" />
-               </items>
-            </ToolBar>
-                <Separator prefWidth="200.0" />
-            </children>
-        </VBox>
-    </top>
+<BorderPane fx:id="outfittingDesignBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.OutfittingDesign">
+   <left>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <VBox VBox.vgrow="ALWAYS">
+               <children>
+                          <Button fx:id="outfittingItemSelectionButton" mnemonicParsing="false" onAction="#goOutfittingItemSelection" prefHeight="40.0" prefWidth="40.0">
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+                          <Button fx:id="layoutDesignButton" mnemonicParsing="false" onAction="#goLayoutDesign" prefHeight="40.0" prefWidth="40.0" />
+                          <Button fx:id="designReviewButton" mnemonicParsing="false" onAction="#goDesignReview" prefHeight="40.0" prefWidth="40.0" />
+                  <Button mnemonicParsing="false" onAction="#goExport" prefHeight="40.0" prefWidth="40.0" />
+               </children>
+            </VBox>
+                    <Button fx:id="backHomeBtn" cancelButton="true" mnemonicParsing="false" onAction="#backHome" prefHeight="40.0" prefWidth="40.0" />
+         </children>
+      </VBox>
+   </left>
 </BorderPane>

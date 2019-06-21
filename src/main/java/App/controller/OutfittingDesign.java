@@ -60,7 +60,7 @@ public class OutfittingDesign {
         Scene scene = new Scene(borderPane);
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.setTitle("Outfitting intelligent design!");
+        stage.setTitle("舾装设计");
         stage.getIcons().add(new Image("App/appView/images/java图标.png"));
         stage.show();
     }
@@ -72,20 +72,6 @@ public class OutfittingDesign {
 
     //用borderpane加载选型界面
     private void loadSelectType() throws IOException {
-//        FxmlUtile fxmlUtile = new FxmlUtile();
-//        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/OutfittingItemSelection.fxml");
-//        outfittingDesignBorderPane.setCenter(loader.load());
-//        outfittingDesignBorderPane.setPadding(new Insets(5, 5, 5, 5));
-//
-//        Task task = new Task() {
-//            @Override
-//            protected Object call() throws Exception {
-//                OutfittingDesignItemSelection controller = loader.getController();
-//                return null;
-//            }
-//        };
-//        ProgressFrom progressFrom = new ProgressFrom(task, "数据加载中，请稍后...");
-//        progressFrom.activateProgressBar();
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/SelectTypeDesign.fxml");
         outfittingDesignBorderPane.setCenter(loader.load());
