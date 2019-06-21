@@ -155,7 +155,7 @@ public class DBTableCreate {
             "param_id int(100) not null," +//
             "outfitting_name varchar(100)," +//
             "param_name varchar(100) not null," +//
-            "param_type tinyint(1) not null," +//
+            "param_type int not null," +//
             "param_description varchar(100)," +//
             "param_value varchar(100)," +
 //            "remark varchar(1000)," +

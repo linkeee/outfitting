@@ -96,7 +96,7 @@ public class VersionDb extends DatabaseItem {
     public static String getVersionNameNeedToAdd(int proj_id) {
         List<String> list = getVersionNameListOfProj(proj_id);
         list.remove(0); // 去除第一个null
-        int max = -1;
+        int max = 0;
         for (String s : list) {
             max = Integer.valueOf(s.substring(1)) > max ? Integer.valueOf(s.substring(1)) : max;
         }
@@ -110,7 +110,7 @@ public class VersionDb extends DatabaseItem {
         for (String s : list) {
             max = Integer.valueOf(s.substring(1)) > max ? Integer.valueOf(s.substring(1)) : max;
         }
-        return "v" + max;
+        return max == -1 ? null : "v" + max;
     }
 
     /**
@@ -152,7 +152,7 @@ public class VersionDb extends DatabaseItem {
      * @param version_name
      * @return
      */
-    public static boolean delete(int proj_id, String version_name) {
+    public static boolean deleteAVersionAndParam(int proj_id, String version_name) {
         ParamValueDb.deleteByProjVersion(proj_id, version_name);
         boolean flag = false;
         PreparedStatement ps = null;

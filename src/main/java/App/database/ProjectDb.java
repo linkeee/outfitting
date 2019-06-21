@@ -115,11 +115,15 @@ public class ProjectDb extends DatabaseItem {
      * @param projectId 项目id
      * @return
      */
-    public static boolean delete(int projectId) {
-        boolean flag = true;
+    public static boolean deleteAProjAndVersionParam(int projectId) {
+        List<String> versionNameList = VersionDb.getVersionNameListOfProj(projectId);
+        for (String versionName : versionNameList) {
+            VersionDb.deleteAVersionAndParam(projectId, versionName);
+        }
+
+        boolean flag = false;
 
         PreparedStatement preparedStatement = null;
-
         String sql = "delete from project where proj_id = ?";
         Connection connection = connectDB();
         try {
@@ -127,7 +131,7 @@ public class ProjectDb extends DatabaseItem {
             preparedStatement.setInt(1, projectId);
 
             int i = preparedStatement.executeUpdate();
-            if (i == 0) flag = false;
+            if (i == 1) flag = true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

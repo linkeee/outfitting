@@ -1,7 +1,7 @@
 package App.utile;
 
 import App.dataModel.ParameterData;
-import App.database.ParameterDatabase;
+import App.database.ParameterDb;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
@@ -27,7 +27,7 @@ public class JxlFromDbToExcel {
             WritableSheet ws = wwb.createSheet("Test Shee 1", 0);
 
             //查询数据库中所有的数据
-            List<ParameterData> list = ParameterDatabase.getParameterList();
+            List<ParameterData> list = ParameterDb.getParameterList();
             //要插入到的Excel表格的行号，默认从0开始
             Label labelId = new Label(0, 0, "编号");//表示第
             Label labelName = new Label(1, 0, "姓名");

@@ -1,5 +1,6 @@
 package App.controller;
 
+import App.dataModel.VersionData;
 import App.utile.Docker;
 import App.dataModel.ProjectData;
 import App.database.ProjectDb;
@@ -19,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class CreateProject {
@@ -73,17 +75,27 @@ public class CreateProject {
         projRemarkTF.setText(projectData.getProj_description());
     }
 
-    private String comboBoxSelectedName = null;
+    private String selectedProjName = null;
 
     @FXML
     void deleteProjectAction(ActionEvent event) {
-        if (comboBoxSelectedName == null) {
+
+        if (selectedProjName == null || selectedProjName.equals("")) {
             MyDialog.information("未选择项目", "请使用下拉框选择项目。");
         } else {
-            Optional<ButtonType> result = MyDialog.confirmation( null, "项目“" + comboBoxSelectedName + "”将被删除，不可恢复，确认删除吗？");
-            if (result.get() == ButtonType.OK) {
-                ProjectDb.delete(ProjectDb.getIdByName(comboBoxSelectedName));
-                initialize();
+            List<VersionData> versionList = ProjectDb.getOneProjectData(selectedProjName).getVersionList();
+            String allVersionName = "";
+            for (VersionData versionData : versionList) allVersionName = allVersionName + versionData.getVersion_name() + " ";
+            Optional<String> result = MyDialog.inputText("该项目下的所有版本以及相关参数都将被永久删除，且该操作不可恢复!" + "\r\n" + "请手动输入项目名称确认!" + "\r\n" + "项目: " + selectedProjName + "\r\n" + "版本: " + allVersionName);
+            if (result.isPresent()) {
+                String confirmProjName = result.get();
+                if (!confirmProjName.equals(selectedProjName)) {
+                    MyDialog.information("项目名称输入有误", "删除失败");
+                } else {
+                    ProjectDb.deleteAProjAndVersionParam(ProjectDb.getIdByName(selectedProjName));
+                    projectComboBox.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
+                    projectComboBox.setValue(ProjectDb.getProjectNameList().get(ProjectDb.getProjectNameList().size() -1));
+                }
             }
         }
     }
@@ -110,7 +122,7 @@ public class CreateProject {
 
             } else {
                 Optional<ButtonType> result = MyDialog.confirmation("确认修改项目“" + projNameTF.getText() + "”信息？", "");
-                if (result.get() == ButtonType.OK) {
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     ProjectDb.update(projectData, ProjectDb.getIdByName(projNameTF.getText()));
                 }
             }
@@ -118,10 +130,12 @@ public class CreateProject {
         } else {
             ProjectDb.insert(projectData);
             MyDialog.information("项目“" + projNameTF.getText() + "”已保存", null);
+
         }
 
         // 更新项目选择框
         projectComboBox.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
+        projectComboBox.setValue(projNameTF.getText());
     }
 
     @FXML
@@ -163,7 +177,6 @@ public class CreateProject {
         projectComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
                 projectData = ProjectDb.getOneProjectData(newValue);
                 projectLabel.setText(projectData.getProj_name());
                 projNameTF.setText(projectData.getProj_name());
@@ -172,7 +185,7 @@ public class CreateProject {
                 projPersonInChargeTF.setText(projectData.getProj_creator());
                 projRemarkTF.setText(projectData.getProj_description());
 
-                comboBoxSelectedName = newValue;
+                selectedProjName = newValue;
             }
         });
     }

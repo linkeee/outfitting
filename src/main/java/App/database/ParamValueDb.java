@@ -38,7 +38,13 @@ public class ParamValueDb extends DatabaseItem {
                 paramAndValueData.setParam_id(String.valueOf(rs.getInt("param_id")));
                 paramAndValueData.setOutfitting_name(rs.getString("outfitting_name"));
                 paramAndValueData.setParam_name(rs.getString("param_name"));
-                paramAndValueData.setParam_type(String.valueOf(rs.getInt("param_type")));
+                if (rs.getInt("param_type") == 0) {
+                    paramAndValueData.setParam_type("已知");
+                } else if (rs.getInt("param_type") == 1) {
+                    paramAndValueData.setParam_type("待求");
+                } else {
+                    paramAndValueData.setParam_type("未知参数类型，请修正!");
+                }
                 paramAndValueData.setParam_description(rs.getString("param_description"));
                 paramAndValueData.setParam_value(rs.getString("param_value"));
 
@@ -117,13 +123,15 @@ public class ParamValueDb extends DatabaseItem {
                 ps.setInt(2, Integer.valueOf(pvd.getProj_id()));
                 ps.setString(3, pvd.getVersion_name());
                 ps.setInt(4, Integer.valueOf(pvd.getParam_id()));
+                int i = ps.executeUpdate();
+                if (i == 1) flag = true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         closeDatabase(ps, null, connection);
 
-        return true;
+        return flag;
     }
 
     public static boolean deleteByProjVersion(int proj_id, String version_name) {

@@ -83,7 +83,6 @@ public class EditingCell<T> extends TableCell<T, String> {
                 (ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) -> {
                     if (!arg2) {
                         commitEdit(textField.getText());
-                        System.out.println("createTextField" + textField.getText());
                     }
                 }
         );

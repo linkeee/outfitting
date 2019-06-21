@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParameterDatabase extends DatabaseItem {
+public class ParameterDb extends DatabaseItem {
 
     /**
      * 获取参数表中的所有内容。

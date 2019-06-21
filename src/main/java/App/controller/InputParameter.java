@@ -4,7 +4,7 @@ import App.dataModel.ParamAndValueData;
 import App.dataModel.ParameterData;
 import App.dataModel.VersionData;
 import App.database.ParamValueDb;
-import App.database.ParameterDatabase;
+import App.database.ParameterDb;
 import App.database.ProjectDb;
 import App.database.VersionDb;
 import App.utile.MyDialog;
@@ -67,8 +67,8 @@ public class InputParameter {
     private List<ParamAndValueData> paramDataListContainer = new ArrayList<>();
 
     private int selectedProjId = -1;
-    private String selectedProjName;
-    private String selectedVersionName;
+    private String selectedProjName = null;
+    private String selectedVersionName = null;
 
     @FXML
     void addVersionAction(ActionEvent event) {
@@ -87,7 +87,7 @@ public class InputParameter {
             // 将List<ParameterData>转换为List<ParamAndValueData>
             paramDataListContainer.clear();
             // Todo 参数库的接口，提供需要用到的参数list
-            for (ParameterData parameterData : ParameterDatabase.getParameterList()) {
+            for (ParameterData parameterData : ParameterDb.getParameterList()) {
                 // 将ParameterData的值对应转换到ParamAndValueData中
                 paramDataListContainer.add(DataModelUtil.getParamAndValueData(
                         String.valueOf(selectedProjId),
@@ -95,7 +95,7 @@ public class InputParameter {
                         parameterData.getParam_id(),
                         parameterData.getOutfitting_name(),
                         parameterData.getParam_name(),
-                        parameterData.getParam_type(),
+                        Integer.valueOf(parameterData.getParam_type()) == 1 ? "待求" : "已知",
                         parameterData.getParam_description(),
                         null   // 参数值列留空等待用户输入
                 ));
@@ -118,19 +118,24 @@ public class InputParameter {
 
     @FXML
     void deleteVersionAction(ActionEvent event) {
-        Optional<String> result = MyDialog.inputText("该版本下的所有参数以及参数值都将被永久删除，且该操作不可恢复! " + "\r\n" + "请手动输入版本号确认!");
-        String confirmVersionName = null;
-        if (result.isPresent()) {
-            confirmVersionName = result.get();
+        if (selectedProjName == null || selectedProjName.equals("") || selectedVersionName == null || selectedVersionName.equals("")) {
+            MyDialog.information("未选择项目&版本", "请使用下拉框选择项目和版本。");
+        } else {
+            Optional<String> result = MyDialog.inputText("该版本下的所有参数以及参数值都将被永久删除，且该操作不可恢复! " + "\r\n" + "请手动输入版本号确认!" + "\r\n" + "版本号: " + selectedVersionName);
+            String confirmVersionName = null;
+            if (result.isPresent()) {
+                confirmVersionName = result.get();
 
-            if (!confirmVersionName.equals(selectedVersionName)) {
-                MyDialog.information("版本号输入有误", "删除失败");
-            } else {
-                VersionDb.delete(selectedProjId, selectedVersionName);
-                versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(selectedProjId)));
-                versionChooserCB.setValue(VersionDb.getLargestVersionName(selectedProjId));
+                if (!confirmVersionName.equals(selectedVersionName)) {
+                    MyDialog.information("版本号输入有误", "删除失败");
+                } else {
+                    VersionDb.deleteAVersionAndParam(selectedProjId, selectedVersionName);
+                    versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(selectedProjId)));
+                    versionChooserCB.setValue(VersionDb.getLargestVersionName(selectedProjId));
+                }
             }
         }
+
     }
 
     @FXML
