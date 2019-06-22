@@ -8,20 +8,30 @@
 
 <AnchorPane fx:id="createProjAnchorPane" stylesheets="@CreateProject.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.CreateProject">
     <children>
-        <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                     <children>
                         <Label text="选择项目">
                             <HBox.margin>
-                                <Insets left="40.0" />
+                                <Insets />
                             </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="projectComboBox" prefWidth="150.0" />
-                        <Label fx:id="projectLabel" />
+                        <ComboBox fx:id="projectComboBox" prefWidth="200.0" />
                         <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteProjectAction" />
                     </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
                 </HBox>
+                  <Label fx:id="projectLabel">
+               <VBox.margin>
+                  <Insets left="110.0" />
+               </VBox.margin>
+            </Label>
                 <Separator />
                 <GridPane>
                     <children>
@@ -30,7 +40,7 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="projNameTF" prefWidth="250.0" GridPane.columnIndex="1">
+                        <TextField fx:id="projNameTF" prefWidth="1200.0" GridPane.columnIndex="1">
                             <GridPane.margin>
                                 <Insets left="10.0" />
                             </GridPane.margin>
@@ -40,7 +50,7 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="projCreateTimeTF" editable="false" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="projCreateTimeTF" editable="false" prefWidth="1200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <GridPane.margin>
                                 <Insets left="10.0" />
                             </GridPane.margin>
@@ -50,7 +60,7 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="projModifyTimeTF" editable="false" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="projModifyTimeTF" editable="false" prefWidth="1200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                             <GridPane.margin>
                                 <Insets left="10.0" />
                             </GridPane.margin>
@@ -60,7 +70,7 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="projPersonInChargeTF" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <TextField fx:id="projPersonInChargeTF" prefWidth="1200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                             <GridPane.margin>
                                 <Insets left="10.0" />
                             </GridPane.margin>
@@ -70,7 +80,7 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextArea fx:id="projRemarkTF" prefHeight="150.0" prefWidth="250.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <TextArea fx:id="projRemarkTF" prefHeight="150.0" prefWidth="1200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
                             <GridPane.margin>
                                 <Insets left="10.0" />
                             </GridPane.margin>
@@ -85,24 +95,30 @@
                                 <Insets left="10.0" />
                             </GridPane.margin>
                         </Label>
-                        <HBox alignment="CENTER" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <HBox alignment="BOTTOM_CENTER" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                             <children>
-                                <Button fx:id="createProjResetBtn" mnemonicParsing="false" onAction="#displayDBData">
+                                <Button fx:id="createProjResetBtn" mnemonicParsing="false" onAction="#displayDBData" text="复位">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="createProjSaveBtn" mnemonicParsing="false" onAction="#saveAction">
+                                <Button fx:id="createProjSaveBtn" mnemonicParsing="false" onAction="#saveAction" text="保存">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="createProjNextBtn" mnemonicParsing="false" onAction="#nextStepAction">
+                                <Button fx:id="createProjNextBtn" mnemonicParsing="false" onAction="#nextStepAction" text="下一步">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Button>
                             </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                     <padding>
+                        <Insets bottom="15.0" />
+                     </padding>
                         </HBox>
                         <Button fx:id="mtrBtn" mnemonicParsing="false" onAction="#modifyTimeRefresh" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                             <GridPane.margin>
@@ -116,18 +132,18 @@
                         </Button>
                     </children>
                     <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="80.0" prefWidth="150.0" />
-                        <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="273.0" />
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" />
+                        <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="273.0" />
                         <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="174.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
             </children>

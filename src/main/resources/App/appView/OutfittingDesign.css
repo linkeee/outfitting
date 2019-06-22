@@ -15,17 +15,13 @@
     -fx-background-color: rgb(70, 70, 70);
     /*设置圆角大小*/
     -fx-background-radius: 0;
-    -fx-background-size: 30px, 30px;
+    -fx-background-size: 20px;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
-.button:hover {
-    -fx-background-color: #6f6f6f;
-}
-
-.button:pressed {
-    -fx-background-color: #a0a0a0;
+.button:hover{
+    -fx-background-color: #646464;
 }
 
 #outfittingItemSelectionButton {
@@ -34,8 +30,7 @@
 }
 
 #layoutDesignButton {
-    -fx-background-image: url("images/used/layout-4.png");
-    -fx-background-size: 28px, 28px;
+    -fx-background-image: url("images/used/icon_deploy_layout.png");
 }
 
 #designReviewButton {
@@ -48,4 +43,5 @@
 
 #backHomeBtn {
     -fx-background-image: url("images/used/首页.png");
+    -fx-background-size: 25px;
 }

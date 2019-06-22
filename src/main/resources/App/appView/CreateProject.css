@@ -6,7 +6,11 @@
     -fx-background-color: #ffffff;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-radius: 0;
+    -fx-background-radius: 10;
+}
+
+.button:hover{
+    -fx-background-color: #ffffff;
 }
 
 #deleteBtn {
@@ -23,20 +27,11 @@
     -fx-background-size: 25px, 25px;
 }
 
-#createProjResetBtn {
-    -fx-background-image: url(images/used/刷新1.png);
-    -fx-pref-width: 40;
-    -fx-pref-height: 40;
-    -fx-background-size: 30px, 30px;
+#createProjResetBtn, #createProjSaveBtn, #createProjNextBtn {
+    -fx-background-color: #b4b4b4;
+    -fx-font-family: "微软雅黑";
 }
 
-#createProjSaveBtn {
-    -fx-background-image: url(images/used/java图标.png);
-    -fx-pref-width: 40;
-    -fx-pref-height: 40;
-    -fx-background-size: 30px, 30px;
-}
-
-#createProjNextBtn {
-
+#createProjResetBtn:hover, #createProjSaveBtn:hover, #createProjNextBtn:hover {
+    -fx-background-color: #ba6e05;
 }

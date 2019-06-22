@@ -1,13 +1,9 @@
 package App.controller;
 
-import App.dataModel.VersionData;
-import App.utile.Docker;
 import App.dataModel.ProjectData;
+import App.dataModel.VersionData;
 import App.database.ProjectDb;
-import App.utile.MyDialog;
-import App.utile.DateUtile;
-import App.utile.FxmlUtile;
-import App.utile.ProgressFrom;
+import App.utile.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,7 +11,6 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
@@ -54,6 +49,8 @@ public class CreateProject {
 
     @FXML
     private Button deleteBtn;
+    private String selectedProjName = null;
+    private ProjectData projectData;
 
     @FXML
     void createTimeRefresh(ActionEvent event) {
@@ -75,8 +72,6 @@ public class CreateProject {
         projRemarkTF.setText(projectData.getProj_description());
     }
 
-    private String selectedProjName = null;
-
     @FXML
     void deleteProjectAction(ActionEvent event) {
 
@@ -85,7 +80,8 @@ public class CreateProject {
         } else {
             List<VersionData> versionList = ProjectDb.getOneProjectData(selectedProjName).getVersionList();
             String allVersionName = "";
-            for (VersionData versionData : versionList) allVersionName = allVersionName + versionData.getVersion_name() + " ";
+            for (VersionData versionData : versionList)
+                allVersionName = allVersionName + versionData.getVersion_name() + " ";
             Optional<String> result = MyDialog.inputText("该项目下的所有版本以及相关参数都将被永久删除，且该操作不可恢复!" + "\r\n" + "请手动输入项目名称确认!" + "\r\n" + "项目: " + selectedProjName + "\r\n" + "版本: " + allVersionName);
             if (result.isPresent()) {
                 String confirmProjName = result.get();
@@ -94,7 +90,7 @@ public class CreateProject {
                 } else {
                     ProjectDb.deleteAProjAndVersionParam(ProjectDb.getIdByName(selectedProjName));
                     projectComboBox.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
-                    projectComboBox.setValue(ProjectDb.getProjectNameList().get(ProjectDb.getProjectNameList().size() -1));
+                    projectComboBox.setValue(ProjectDb.getProjectNameList().get(ProjectDb.getProjectNameList().size() - 1));
                 }
             }
         }
@@ -109,16 +105,16 @@ public class CreateProject {
         projectData.setProj_creator(projPersonInChargeTF.getText());
         projectData.setProj_description(projRemarkTF.getText());
 
-        if (projNameTF.getText().equals("") || projCreateTimeTF.getText().equals("") || projModifyTimeTF.getText().equals("") || projPersonInChargeTF.getText().equals("")) {
+        if (projNameTF.getText().equals("") || projCreateTimeTF.getText().equals("") || projModifyTimeTF.getText().equals("") || projPersonInChargeTF.getText().equals("") || projNameTF.getText() == null || projCreateTimeTF.getText() == null || projModifyTimeTF.getText() == null || projPersonInChargeTF.getText() == null) {
             MyDialog.information(null, "项目名称、创建时间、修改时间、负责人为必填项，请填写。");
         } else if (ProjectDb.getProjectNameList().contains(projNameTF.getText())) {
             ProjectData existPd = ProjectDb.getOneProjectData(projNameTF.getText());
             if (
                     existPd.getProj_name().equals(projNameTF.getText()) &&
-                    existPd.getProj_create_time().equals(projCreateTimeTF.getText()) &&
-                    existPd.getProj_modify_time().equals(projModifyTimeTF.getText()) &&
-                    existPd.getProj_creator().equals(projPersonInChargeTF.getText()) &&
-                    existPd.getProj_description().equals(projRemarkTF.getText())) {
+                            existPd.getProj_create_time().equals(projCreateTimeTF.getText()) &&
+                            existPd.getProj_modify_time().equals(projModifyTimeTF.getText()) &&
+                            existPd.getProj_creator().equals(projPersonInChargeTF.getText()) &&
+                            existPd.getProj_description().equals(projRemarkTF.getText())) {
 
             } else {
                 Optional<ButtonType> result = MyDialog.confirmation("确认修改项目“" + projNameTF.getText() + "”信息？", "");
@@ -138,16 +134,23 @@ public class CreateProject {
         projectComboBox.setValue(projNameTF.getText());
     }
 
+    private void setStyle(Button btn, Button... buttons) {
+        btn.setStyle("-fx-background-color: #646464");
+        for (Button button : buttons) button.setStyle("-fx-background-color: #505050");
+    }
+
     @FXML
     void nextStepAction(ActionEvent event) throws IOException {
         saveAction(event);
+
+        setStyle((Button) Docker.get("inputParamBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("calculateBtn"), (Button) Docker.get("correctBtn"), (Button) Docker.get("selectTypeBtn"));
 
         Docker.put("isCreateProjectNextStep", true);
         Docker.put("comboBoxSelection", projectComboBox.getValue());
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
-        BorderPane bp = (BorderPane)Docker.get("selectTypeBorderPane");
+        BorderPane bp = (BorderPane) Docker.get("selectTypeBorderPane");
         bp.setCenter(loader.load());
 
         Task task = new Task() {
@@ -161,9 +164,8 @@ public class CreateProject {
         progressFrom.activateProgressBar();
     }
 
-    private ProjectData projectData;
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         projCreateTimeTF.setText(DateUtile.nowDateFormat());
         projModifyTimeTF.setText(DateUtile.nowDateFormat());

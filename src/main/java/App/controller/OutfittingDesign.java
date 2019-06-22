@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -19,44 +20,54 @@ public class OutfittingDesign {
     @FXML
     private BorderPane outfittingDesignBorderPane;
 
-//    @FXML
-//    private Button outfittingItemSelectionButton;
-//
-//    @FXML
-//    private Button layoutDesignButton;
-//
-//    @FXML
-//    private Button designReviewButton;
-//
-//    @FXML
-//    private Button exportButton;
-//
-//    @FXML
-//    private Button backHomeBtn;
+    @FXML
+    private Button outfittingItemSelectionButton;
+
+    @FXML
+    private Button layoutDesignButton;
+
+    @FXML
+    private Button designReviewButton;
+
+    @FXML
+    private Button exportButton;
+
+    @FXML
+    private Button backHomeBtn;
 
     @FXML
     void initialize() throws IOException {
         loadSelectType();
+        setStyle(outfittingItemSelectionButton, layoutDesignButton, designReviewButton, exportButton);
+    }
+
+    private void setStyle(Button btn, Button... buttons) {
+        btn.setStyle("-fx-background-size: 25px; -fx-background-color: #646464");
+        for (Button button : buttons) button.setStyle("-fx-background-size: 20px; -fx-background-color: #464646");
     }
 
     @FXML
     void goOutfittingItemSelection(ActionEvent event) throws IOException {
         loadSelectType();
+        setStyle(outfittingItemSelectionButton, layoutDesignButton, designReviewButton, exportButton);
     }
 
     @FXML
     void goLayoutDesign(ActionEvent event) throws IOException {
         loadLayoutDesign();
+        setStyle(layoutDesignButton, outfittingItemSelectionButton, designReviewButton, exportButton);
     }
 
     @FXML
     void goDesignReview(ActionEvent event) throws IOException {
         loadDesignReview();
+        setStyle(designReviewButton, outfittingItemSelectionButton, layoutDesignButton, exportButton);
     }
 
     @FXML
     void goExport(ActionEvent event) throws IOException {
         loadExport();
+        setStyle(exportButton, outfittingItemSelectionButton, layoutDesignButton, designReviewButton);
     }
 
     @FXML
