@@ -53,7 +53,7 @@ public class CreateProject {
     private Button mtrBtn;
 
     @FXML
-    private Button deleteBth;
+    private Button deleteBtn;
 
     @FXML
     void createTimeRefresh(ActionEvent event) {
@@ -149,7 +149,6 @@ public class CreateProject {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
         BorderPane bp = (BorderPane)Docker.get("selectTypeBorderPane");
         bp.setCenter(loader.load());
-        bp.setPadding(new Insets(5, 5, 5, 5));
 
         Task task = new Task() {
             @Override
@@ -172,7 +171,7 @@ public class CreateProject {
         projectComboBox.setTooltip(new Tooltip("选择项目"));
         ctrBtn.setTooltip(new Tooltip("将项目创建时间更新为当前时间，由于修改时间不能早于创建时间，修改时间也将更新为当前时间。"));
         mtrBtn.setTooltip(new Tooltip("将项目修改时间更新为当前时间。"));
-        deleteBth.setTooltip(new Tooltip("删除左侧下拉框选中的项目。"));
+        deleteBtn.setTooltip(new Tooltip("删除左侧下拉框选中的项目。"));
 
         projectComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override

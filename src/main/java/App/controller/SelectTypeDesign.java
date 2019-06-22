@@ -27,7 +27,6 @@ public class SelectTypeDesign {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/CreateProject.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-        selectTypeBorderPane.setPadding(new Insets(5, 5, 5, 5));
 
         Task task = new Task() {
             @Override
@@ -45,7 +44,6 @@ public class SelectTypeDesign {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-        selectTypeBorderPane.setPadding(new Insets(5, 5, 5, 5));
 
         Task task = new Task() {
             @Override
@@ -68,7 +66,6 @@ public class SelectTypeDesign {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ModifyResult.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-        selectTypeBorderPane.setPadding(new Insets(5, 5, 5, 5));
 
         Task task = new Task() {
             @Override
@@ -86,7 +83,6 @@ public class SelectTypeDesign {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/SelectTheType.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-        selectTypeBorderPane.setPadding(new Insets(5, 5, 5, 5));
 
         Task task = new Task() {
             @Override

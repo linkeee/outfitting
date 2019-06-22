@@ -6,7 +6,6 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -19,6 +18,21 @@ public class OutfittingDesign {
 
     @FXML
     private BorderPane outfittingDesignBorderPane;
+
+//    @FXML
+//    private Button outfittingItemSelectionButton;
+//
+//    @FXML
+//    private Button layoutDesignButton;
+//
+//    @FXML
+//    private Button designReviewButton;
+//
+//    @FXML
+//    private Button exportButton;
+//
+//    @FXML
+//    private Button backHomeBtn;
 
     @FXML
     void initialize() throws IOException {
@@ -61,7 +75,7 @@ public class OutfittingDesign {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("舾装设计");
-        stage.getIcons().add(new Image("App/appView/images/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
         stage.show();
     }
 
@@ -82,7 +96,6 @@ public class OutfittingDesign {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/LayoutDesignSearch.fxml");
         outfittingDesignBorderPane.setCenter(loader.load());
-        outfittingDesignBorderPane.setPadding(new Insets(5, 5, 5, 5));
 
         Task task = new Task() {
             @Override
@@ -106,7 +119,6 @@ public class OutfittingDesign {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Export.fxml");
         outfittingDesignBorderPane.setCenter(loader.load());
-        outfittingDesignBorderPane.setPadding(new Insets(5, 5, 5, 5));
 
         Task task = new Task() {
             @Override

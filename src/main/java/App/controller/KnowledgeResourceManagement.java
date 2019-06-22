@@ -65,7 +65,7 @@ public class KnowledgeResourceManagement {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.setTitle("Enterprise knowledge resource management!");
-        stage.getIcons().add(new Image("App/appView/images/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
         stage.show();
     }
 

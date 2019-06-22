@@ -2,7 +2,7 @@
 .root {
     -fx-font-family: "宋体";
     -fx-font-size: 16px;
-    -fx-background-image: url('images/loginBackground.jpg');
+    -fx-background-image: url('images/used/loginBackground.jpg');
     -fx-background-color: linear-gradient(to bottom, white, grey);
     -fx-background-size: stretch stretch;
     -fx-background-position: center center;

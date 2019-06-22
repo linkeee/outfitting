@@ -161,7 +161,7 @@ public class UserManagement {
         progressFrom.activateProgressBar();
 
         stage.setTitle("User management!");
-        stage.getIcons().add(new Image("App/appView/images/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
         stage.show();
         return loader.getController();
     }

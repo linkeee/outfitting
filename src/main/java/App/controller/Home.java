@@ -71,7 +71,7 @@ public class Home {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.setTitle("Home");
-        stage.getIcons().add(new Image("App/appView/images/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
         stage.show();
     }
 

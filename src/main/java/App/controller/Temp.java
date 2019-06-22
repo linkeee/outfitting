@@ -53,7 +53,7 @@ public class Temp {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Layout Design");
-        stage.getIcons().add(new Image("App/appView/images/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
         stage.show();
     }
 

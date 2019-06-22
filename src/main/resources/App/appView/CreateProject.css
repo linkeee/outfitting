@@ -1,0 +1,42 @@
+#createProjAnchorPane {
+    -fx-background-color: #ffffff;
+}
+
+.button {
+    -fx-background-color: #ffffff;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-radius: 0;
+}
+
+#deleteBtn {
+    -fx-background-image: url("images/used/删除.png");
+    -fx-pref-height: 30px;
+    -fx-pref-width: 30px;
+    -fx-background-size: 30px, 30px;
+}
+
+#ctrBtn, #mtrBtn {
+    -fx-background-image: url(images/used/时间.png);
+    -fx-pref-width: 25;
+    -fx-pref-height: 25;
+    -fx-background-size: 25px, 25px;
+}
+
+#createProjResetBtn {
+    -fx-background-image: url(images/used/刷新1.png);
+    -fx-pref-width: 40;
+    -fx-pref-height: 40;
+    -fx-background-size: 30px, 30px;
+}
+
+#createProjSaveBtn {
+    -fx-background-image: url(images/used/java图标.png);
+    -fx-pref-width: 40;
+    -fx-pref-height: 40;
+    -fx-background-size: 30px, 30px;
+}
+
+#createProjNextBtn {
+
+}
