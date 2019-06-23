@@ -115,12 +115,12 @@ public class SelectTypeDesign {
         progressFrom.activateProgressBar();
     }
 
-    private void setStyle(String btn1, String btn2, String btn3, String btn4, String btn5) {
-        createProjBtn.setStyle("-fx-background-color: " + btn1);
-        inputParamBtn.setStyle("-fx-background-color: " + btn2);
-        calculateBtn.setStyle("-fx-background-color: " + btn3);
-        correctBtn.setStyle("-fx-background-color: " + btn4);
-        selectTypeBtn.setStyle("-fx-background-color: " + btn5);
+    private void setStyle(String btn1Style, String btn2Style, String btn3Strle, String btn4Style, String btn5Style) {
+        createProjBtn.setStyle("-fx-background-color: " + btn1Style);
+        inputParamBtn.setStyle("-fx-background-color: " + btn2Style);
+        calculateBtn.setStyle("-fx-background-color: " + btn3Strle);
+        correctBtn.setStyle("-fx-background-color: " + btn4Style);
+        selectTypeBtn.setStyle("-fx-background-color: " + btn5Style);
     }
 
 }

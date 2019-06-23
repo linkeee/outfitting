@@ -135,7 +135,7 @@ public class OutfittingDesign {
             @Override
             protected Object call() throws Exception {
                 Export controller = loader.getController();
-                controller.refreshProjectTable();
+//                controller.refreshProjectTable();
                 return null;
             }
         };

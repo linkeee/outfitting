@@ -1,0 +1,19 @@
+#buttonVBox {
+    -fx-background-color: rgb(80, 80, 80);
+}
+
+#firstNameLabel {
+    -fx-background-color: #464646;
+    -fx-font-family: "仿宋";
+    -fx-font-size: 18;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5;
+}
+
+.button {
+    -fx-background-color: rgb(80, 80, 80);
+    /*设置圆角大小*/
+    -fx-background-radius: 0;
+    -fx-font-size: 15;
+    -fx-text-fill: white;
+}

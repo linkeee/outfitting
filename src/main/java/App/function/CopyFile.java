@@ -1,5 +1,7 @@
 package App.function;
 
+import App.utile.Docker;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +29,9 @@ public class CopyFile {
         if (!newFile.exists()) newFile.createNewFile();
 
         copyFileContent(templateFile, newFile);
-        return "设备估算书" + time + ".xlsx";
+        String newName = "设备估算书" + time + ".xlsx";
+        Docker.put("newTemplateFileName", newName);
+        return newName;
     }
 
     private static void copyFileContent(File fromFile, File toFile) throws IOException {

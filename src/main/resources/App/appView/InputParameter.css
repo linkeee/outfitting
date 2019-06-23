@@ -1,4 +1,4 @@
-#createProjAnchorPane {
+#inputParamAnchorPane {
     -fx-background-color: #ffffff;
 }
 
@@ -9,28 +9,22 @@
     -fx-background-radius: 0;
 }
 
-.button:hover{
+.button:hover {
     -fx-background-color: #ffffff;
 }
 
-#deleteBtn {
+#deleteVersionBtn {
     -fx-background-image: url("images/used/删除.png");
+    -fx-background-color: #ffffff;
     -fx-pref-height: 30px;
     -fx-pref-width: 30px;
     -fx-background-size: 30px, 30px;
 }
 
-#ctrBtn, #mtrBtn {
-    -fx-background-image: url(images/used/时间.png);
-    -fx-pref-width: 25;
-    -fx-pref-height: 25;
-    -fx-background-size: 25px, 25px;
-}
-
-#createProjResetBtn, #createProjSaveBtn, #createProjNextBtn {
+#addVersionBtn, #inputParamSaveBtn, #inputParamNextBtn {
     -fx-background-color: #505050;
 }
 
-#createProjResetBtn:hover, #createProjSaveBtn:hover, #createProjNextBtn:hover {
+#addVersionBtn:hover, #inputParamSaveBtn:hover, #inputParamNextBtn:hover {
     -fx-background-color: #ba6e05;
 }

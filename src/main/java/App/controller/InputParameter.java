@@ -141,9 +141,13 @@ public class InputParameter {
 
     @FXML
     void saveAction(ActionEvent event) {
-        List<ParamAndValueData> list = projParamValueTV.getItems();
-        ParamValueDb.insertValue(list);
-        MyDialog.information("项目“" + selectedProjName + "”的“" + selectedVersionName + "”版本数据已保存", null);
+        if (selectedProjName == null || selectedVersionName == null) {
+            MyDialog.information("没有数据可以保存", "请使用下拉框选择项目和版本，或新增版本，并输入参数。");
+        } else {
+            List<ParamAndValueData> list = projParamValueTV.getItems();
+            ParamValueDb.insertValue(list);
+            MyDialog.information("数据已保存", "项目: " + selectedProjName + "\r\n" + "版本: " + selectedVersionName);
+        }
     }
 
     @FXML

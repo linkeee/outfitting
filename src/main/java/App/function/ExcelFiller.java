@@ -17,20 +17,14 @@ public class ExcelFiller {
      * @param map {parameter:value}
      * @throws Exception
      */
-    public static void filler(String excelPathWithName, Map<String, Double> map) throws Exception {
+    public static void filler(String excelPathWithName, Map<String, String> map) throws Exception {
         InputStream inputStream = new FileInputStream(excelPathWithName);
         Workbook workbook;
-        switch (excelPathWithName.split("\\.")[excelPathWithName.split("\\.").length - 1]) {
+        switch (excelPathWithName.split("\\.")[excelPathWithName.split("\\.").length - 1].toLowerCase()) {
             case "xlsx":
                 workbook = new XSSFWorkbook(inputStream);
                 break;
-            case "XLSX":
-                workbook = new XSSFWorkbook(inputStream);
-                break;
             case "xls":
-                workbook = new HSSFWorkbook(inputStream);
-                break;
-            case "XLS":
                 workbook = new HSSFWorkbook(inputStream);
                 break;
             default:

@@ -21,17 +21,21 @@
                         <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteProjectAction" />
                     </children>
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets />
                </VBox.margin>
                <padding>
                   <Insets left="50.0" />
                </padding>
                 </HBox>
-                  <Label fx:id="projectLabel">
-               <VBox.margin>
-                  <Insets left="110.0" />
-               </VBox.margin>
-            </Label>
+            <HBox>
+               <children>
+                  <Label text="项目：" />
+                        <Label fx:id="projectLabel" />
+               </children>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </HBox>
                 <Separator />
                 <GridPane>
                     <children>
@@ -80,9 +84,9 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextArea fx:id="projRemarkTF" prefHeight="150.0" prefWidth="1200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <TextArea fx:id="projRemarkTF" prefHeight="500.0" prefWidth="1200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5">
                             <GridPane.margin>
-                                <Insets left="10.0" />
+                                <Insets left="10.0" top="30.0" />
                             </GridPane.margin>
                         </TextArea>
                         <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
@@ -95,7 +99,7 @@
                                 <Insets left="10.0" />
                             </GridPane.margin>
                         </Label>
-                        <HBox alignment="BOTTOM_CENTER" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                        <HBox alignment="BOTTOM_CENTER" prefWidth="800.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                             <children>
                                 <Button fx:id="createProjResetBtn" mnemonicParsing="false" onAction="#displayDBData" text="复位">
                                     <font>
@@ -137,13 +141,13 @@
                         <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="174.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="50.0" prefHeight="60.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="120.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="120.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="120.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" prefHeight="400.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="60.0" prefHeight="80.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
             </children>
