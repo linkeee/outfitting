@@ -134,19 +134,14 @@ public class CreateProject {
         projectComboBox.setValue(projNameTF.getText());
     }
 
-    private void setStyle(Button btn, Button... buttons) {
-        btn.setStyle("-fx-background-color: #646464");
-        for (Button button : buttons) button.setStyle("-fx-background-color: #505050");
-    }
-
     @FXML
     void nextStepAction(ActionEvent event) throws IOException {
         saveAction(event);
 
-        setStyle((Button) Docker.get("inputParamBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("calculateBtn"), (Button) Docker.get("correctBtn"), (Button) Docker.get("selectTypeBtn"));
+        FxmlUtile.setStyle((Button) Docker.get("inputParamBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("calculateBtn"), (Button) Docker.get("correctBtn"), (Button) Docker.get("selectTypeBtn"));
 
         Docker.put("isCreateProjectNextStep", true);
-        Docker.put("comboBoxSelection", projectComboBox.getValue());
+        Docker.put("selectedProj", projectComboBox.getValue());
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");

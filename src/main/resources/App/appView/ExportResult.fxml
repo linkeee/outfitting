@@ -22,7 +22,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#selectDirectoryAction" text="选择模板文件" />
+                        <Button fx:id="selectDirectoryBtn" mnemonicParsing="false" onAction="#selectDirectoryAction" />
                      </children>
                      <HBox.margin>
                         <Insets />
@@ -35,7 +35,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#exportAction" text="导出" />
+                        <Button fx:id="exportBtn" mnemonicParsing="false" onAction="#exportAction" />
                      </children>
                   </VBox>
                </children>

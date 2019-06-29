@@ -33,7 +33,7 @@ public class Export {
 
     @FXML
     void exportResultAction(ActionEvent event) throws IOException {
-        setStyle("#646464", "#505050");
+        setStyle("rgb(0, 180, 255)", "rgb(0, 150, 255)");
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ExportResult.fxml");
@@ -52,7 +52,7 @@ public class Export {
 
     @FXML
     void exportItemListAction(ActionEvent event) {
-        setStyle("#505050", "#646464");
+        setStyle("rgb(0, 150, 255)", "rgb(0, 180, 255)");
 
     }
 

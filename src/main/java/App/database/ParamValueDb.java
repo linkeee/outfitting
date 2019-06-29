@@ -13,6 +13,54 @@ import java.util.List;
 public class ParamValueDb extends DatabaseItem {
 
     /**
+     * 返回特定类型的参数。
+     *
+     * @param proj_id 项目id
+     * @param version 版本号
+     * @param param_type 参数类型，0为需要输入的已知参数，1为待求参数
+     * @return
+     */
+    public static List<ParamAndValueData> getParamOfType(int proj_id, String version, int param_type) {
+        List<ParamAndValueData> list = new ArrayList<>();
+
+        PreparedStatement ps = null;
+        Connection conn = connectDB();
+        try {
+            ps = conn.prepareStatement("select * from " + Constant.paramValueTableName + " where proj_id = ? and version_name = ? and param_type = ?");
+            ps.setInt(1, proj_id);
+            ps.setString(2, version);
+            ps.setInt(3, param_type);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ParamAndValueData pvd = new ParamAndValueData();
+
+                pvd.setProj_id(String.valueOf(rs.getInt("proj_id")));
+                pvd.setVersion_name(rs.getString("version_name"));
+                pvd.setParam_id(String.valueOf(rs.getInt("param_id")));
+                pvd.setOutfitting_name(rs.getString("outfitting_name"));
+                pvd.setParam_name(rs.getString("param_name"));
+                if (rs.getInt("param_type") == 0) {
+                    pvd.setParam_type("已知");
+                } else if (rs.getInt("param_type") == 1) {
+                    pvd.setParam_type("待求");
+                } else {
+                    pvd.setParam_type("未知参数类型, 请修正!");
+                }
+                pvd.setParam_description(rs.getString("param_description"));
+                pvd.setParam_value(rs.getString("param_value"));
+
+                list.add(pvd);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, conn);
+        }
+        return list;
+    }
+
+    /**
      * 根据项目id和版本返回参数结果。
      *
      * @param proj_id 项目id

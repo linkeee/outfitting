@@ -1,0 +1,12 @@
+#modifyResultAnchorPane {
+    -fx-background-color: #ffffff;
+}
+
+.button {
+    -fx-background-color: #039ed3;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #ba6e05;
+}

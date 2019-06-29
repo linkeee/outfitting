@@ -12,7 +12,7 @@ public class EditingCell<T> extends TableCell<T, String> {
 
     @Override
     public void commitEdit(String inputValue) {
-        if (!isEditing() && !inputValue.equals(this.getItem())) {
+        if (!isEditing() && inputValue != this.getItem()) {
             TableView<T> tableView = this.getTableView();
             if (tableView != null) {
                 TableColumn<T, String> column = this.getTableColumn();

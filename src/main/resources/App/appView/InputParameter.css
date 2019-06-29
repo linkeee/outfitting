@@ -6,7 +6,7 @@
     -fx-background-color: #ffffff;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-radius: 0;
+    -fx-background-radius: 5;
 }
 
 .button:hover {
@@ -22,9 +22,10 @@
 }
 
 #addVersionBtn, #inputParamSaveBtn, #inputParamNextBtn {
-    -fx-background-color: #505050;
+    -fx-background-color: #039ed3;
 }
 
 #addVersionBtn:hover, #inputParamSaveBtn:hover, #inputParamNextBtn:hover {
     -fx-background-color: #ba6e05;
 }
+

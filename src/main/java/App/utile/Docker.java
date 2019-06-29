@@ -10,6 +10,10 @@ public class Docker {
         return map.get(key);
     }
 
+    public static void set(String key, Object obj) {
+        map.replace(key, obj);
+    }
+
     public static void put(String key, Object obj) {
         map.put(key, obj);
     }

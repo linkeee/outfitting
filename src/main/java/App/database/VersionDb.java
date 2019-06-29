@@ -146,6 +146,38 @@ public class VersionDb extends DatabaseItem {
     }
 
     /**
+     *
+     * @param proj_id 项目id
+     * @param version_Name 版本号
+     * @param param_type 0为需要输入的已知参数，1为待求参数
+     * @return
+     */
+    public static VersionData getOneVersionData(int proj_id, String version_Name, int param_type) {
+        VersionData versionData = new VersionData();
+        PreparedStatement ps = null;
+        Connection connection = connectDB();
+        try {
+            ps = connection.prepareStatement("select * from version where proj_id = ? and version_name = ?");
+            ps.setInt(1, proj_id);
+            ps.setString(2, version_Name);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                versionData.setVersion_id(String.valueOf(rs.getInt("id")));
+                versionData.setProj_id(String.valueOf(rs.getInt("proj_id")));
+                versionData.setVersion_name(rs.getString("version_name"));
+                versionData.setVersion_description(rs.getString("version_description"));
+                versionData.setParam_value_list(ParamValueDb.getParamOfType(Integer.valueOf(versionData.getProj_id()), versionData.getVersion_name(), param_type));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return versionData;
+    }
+
+    /**
      * 根据项目id和版本名称删除版本，以及该版本下的所有参数参数值。
      *
      * @param proj_id

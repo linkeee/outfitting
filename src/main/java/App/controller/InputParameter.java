@@ -7,23 +7,30 @@ import App.database.ParamValueDb;
 import App.database.ParameterDb;
 import App.database.ProjectDb;
 import App.database.VersionDb;
-import App.utile.MyDialog;
-import App.utile.DataModelUtil;
-import App.utile.Docker;
-import App.utile.EditingCell;
+import App.utile.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InputParameter {
+
+    @FXML
+    private Button inputParamSaveBtn;
+
+    @FXML
+    private Button inputParamNextBtn;
 
     @FXML
     private Button addVersionBtn;
@@ -110,7 +117,7 @@ public class InputParameter {
                 versionChooserCB.setValue(newVersionName);
 
                 ParamValueDb.insert(paramDataListContainer);
-                projParamValueTV.setItems(FXCollections.observableArrayList(ParamValueDb.getParamByProjAndVersion(selectedProjId, newVersionName)));
+                projParamValueTV.setItems(FXCollections.observableArrayList(ParamValueDb.getParamOfType(selectedProjId, newVersionName, 0)));
             }
 
         }
@@ -146,13 +153,33 @@ public class InputParameter {
         } else {
             List<ParamAndValueData> list = projParamValueTV.getItems();
             ParamValueDb.insertValue(list);
-            MyDialog.information("数据已保存", "项目: " + selectedProjName + "\r\n" + "版本: " + selectedVersionName);
+            MyDialog.information("输入参数已保存", "项目: " + selectedProjName + "\r\n" + "版本: " + selectedVersionName);
         }
     }
 
     @FXML
-    void nextStepAction(ActionEvent event) {
+    void nextStepAction(ActionEvent event) throws IOException {
+        saveAction(event);
+        FxmlUtile.setStyle((Button) Docker.get("calculateBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("inputParamBtn"), (Button) Docker.get("correctBtn"), (Button) Docker.get("selectTypeBtn"));
 
+        Docker.put("isInputParamNextStep", true);
+        Docker.put("selectedProj", projChooserCB.getValue());
+        Docker.put("selectedVersion", versionChooserCB.getValue());
+
+        FxmlUtile fxmlUtile = new FxmlUtile();
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Calculate.fxml");
+        BorderPane bp = (BorderPane) Docker.get("selectTypeBorderPane");
+        bp.setCenter(loader.load());
+
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                loader.getController();
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+        progressFrom.activateProgressBar();
     }
 
     @FXML
@@ -164,26 +191,23 @@ public class InputParameter {
         paramValueTC.setCellValueFactory(new PropertyValueFactory<>("param_value"));
 
         projChooserCB.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
-        if (Docker.containKey("isCreateProjectNextStep")) {
+        if (Docker.containKey("isCreateProjectNextStep") && (boolean) Docker.get("isCreateProjectNextStep")) {
             projParamValueTV.setPlaceholder(new Label("请选择项目与版本！"));
-            projChooserCB.setValue(Docker.get("comboBoxSelection").toString());
-            projLabel.setText(Docker.get("comboBoxSelection").toString());
-            selectedProjName = Docker.get("comboBoxSelection").toString();
+            projChooserCB.setValue(Docker.get("selectedProj").toString());
+            projLabel.setText(Docker.get("selectedProj").toString());
+            selectedProjName = Docker.get("selectedProj").toString();
             selectedProjId = ProjectDb.getIdByName(selectedProjName);
-            versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(Docker.get("comboBoxSelection").toString()))));
+            versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(Docker.get("selectedProj").toString()))));
         }
-        projChooserCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                selectedProjName = newValue;
-                selectedProjId = ProjectDb.getIdByName(selectedProjName);
-                projLabel.setText(newValue);
-                if (newValue == null) {
-                    versionChooserCB.setItems(null);
-                    versionChooserCB.setValue(null);
-                } else {
-                    versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(newValue))));
-                }
+        projChooserCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedProjName = newValue;
+            selectedProjId = ProjectDb.getIdByName(selectedProjName);
+            projLabel.setText(newValue);
+            if (newValue == null) {
+                versionChooserCB.setItems(null);
+                versionChooserCB.setValue(null);
+            } else {
+                versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(newValue))));
             }
         });
         versionChooserCB.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -199,14 +223,15 @@ public class InputParameter {
                     projParamValueTV.setPlaceholder(new Label("请选择项目与版本！"));
                 } else {// 项目和版本都已选择
                     selectedProjId = ProjectDb.getIdByName(selectedProjName);
-                    VersionData versionData = VersionDb.getOneVersionData(selectedProjId, selectedVersionName);
+                    VersionData versionData = VersionDb.getOneVersionData(selectedProjId, selectedVersionName, 0);
                     versionDescriptionTA.setText(versionData.getVersion_description());
+
                     projParamValueTV.setItems(FXCollections.observableArrayList(versionData.getParam_value_list()));
                 }
             }
         });
 
-        Docker.remove("isCreateProjectNextStep");
+        Docker.set("isCreateProjectNextStep", false);
 
         // 第一种让TableView可双击编辑的方法，但必须回车提交
 //        projParamValueTV.setEditable(true);

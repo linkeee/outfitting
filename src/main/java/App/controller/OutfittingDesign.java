@@ -42,8 +42,8 @@ public class OutfittingDesign {
     }
 
     private void setStyle(Button btn, Button... buttons) {
-        btn.setStyle("-fx-background-size: 25px; -fx-background-color: #646464");
-        for (Button button : buttons) button.setStyle("-fx-background-size: 20px; -fx-background-color: #464646");
+        btn.setStyle("-fx-background-size: 25px; -fx-background-color: rgb(0, 150, 255)");
+        for (Button button : buttons) button.setStyle("-fx-background-size: 20px; -fx-background-color: rgb(0, 100, 255)");
     }
 
     @FXML

@@ -6,7 +6,7 @@
     -fx-background-color: #ffffff;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-radius: 0;
+    -fx-background-radius: 5;
 }
 
 .button:hover{
@@ -28,7 +28,7 @@
 }
 
 #createProjResetBtn, #createProjSaveBtn, #createProjNextBtn {
-    -fx-background-color: #505050;
+    -fx-background-color: #039ed3;
 }
 
 #createProjResetBtn:hover, #createProjSaveBtn:hover, #createProjNextBtn:hover {

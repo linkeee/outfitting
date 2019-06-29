@@ -35,7 +35,7 @@ public class SelectTypeDesign {
 
     @FXML
     void createProjectAction(ActionEvent event) throws IOException {
-        setStyle("#646464", "#505050", "#505050", "#505050", "#505050");
+        setStyle("rgb(0, 180, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)");
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/CreateProject.fxml");
@@ -54,7 +54,7 @@ public class SelectTypeDesign {
 
     @FXML
     void inputParameterAction(ActionEvent event) throws IOException {
-        setStyle("#505050", "#646464", "#505050", "#505050", "#505050");
+        setStyle("rgb(0, 150, 255)", "rgb(0, 180, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)");
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
@@ -73,13 +73,26 @@ public class SelectTypeDesign {
 
     @FXML
     void calculateAction(ActionEvent event) throws IOException {
-        setStyle("#505050", "#505050", "#646464", "#505050", "#505050");
+        setStyle("rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 180, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)");
 
+        FxmlUtile fxmlUtile = new FxmlUtile();
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Calculate.fxml");
+        selectTypeBorderPane.setCenter(loader.load());
+
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                Calculate calculate = loader.getController();
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+        progressFrom.activateProgressBar();
     }
 
     @FXML
     void modifyResultAction(ActionEvent event) throws IOException {
-        setStyle("#505050", "#505050", "#505050", "#646464", "#505050");
+        setStyle("rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 180, 255)", "rgb(0, 150, 255)");
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ModifyResult.fxml");
@@ -98,7 +111,7 @@ public class SelectTypeDesign {
 
     @FXML
     void selectTypeAction(ActionEvent event) throws IOException {
-        setStyle("#505050", "#505050", "#505050", "#505050", "#646464");
+        setStyle("rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 180, 255)");
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/SelectTheType.fxml");

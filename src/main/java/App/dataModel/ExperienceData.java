@@ -1,5 +1,6 @@
 package App.dataModel;
 
+import javafx.beans.DefaultProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
