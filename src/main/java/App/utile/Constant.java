@@ -15,4 +15,14 @@ public class Constant {
      * 数据库中参数参数值表名。
      */
     public static String paramValueTableName = "jproject.paramandvalue";
+
+    /**
+     * 舾装件生产商表的表名
+     */
+    public static String manufacturerTableName = "jproject.manufacturer";
+
+    /**
+     * 已选择的设备型号清单表的表名
+     */
+    public static String selectedTypeTableName = "jproject.selectedtype";
 }

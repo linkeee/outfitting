@@ -100,8 +100,9 @@ public class DBTableCreate {
             "param_id int(100) not null primary key auto_increment," +
             "outfitting_name varchar(100)," +
             "param_name varchar(100) not null," +
-            "param_type tinyint(1) not null," +
+            "param_type int not null," +
             "param_description varchar(100)," +
+            "param_scope varchar(30)," +
             "fulltext key (outfitting_name, param_name, param_description) with parser ngram" +
             ")ENGINE=InnoDB default charset=utf8;";
 
@@ -126,7 +127,7 @@ public class DBTableCreate {
      * 项目自增ID、项目名称（命名规则）、创建时间&修改时间（系统自动确定）、负责人、备注。
      */
     private static String sql10 = "CREATE TABLE IF NOT EXISTS project(" +
-            "proj_id int(100) not null primary key auto_increment," +
+            "proj_id int not null primary key auto_increment," +
             "proj_name varchar(100) not null," +
             "proj_create_time varchar(100) not null," +
             "proj_modify_time varchar(100) not null," +
@@ -149,16 +150,14 @@ public class DBTableCreate {
      * 备注
      */
     private static String sql11 = "CREATE TABLE IF NOT EXISTS paramandvalue(" +
-//            "id int(100) not null primary key auto_increment," +
             "proj_id int(100) not null," +
             "version_name varchar(100) not null," +
-            "param_id int(100) not null," +//
-            "outfitting_name varchar(100)," +//
-            "param_name varchar(100) not null," +//
-            "param_type int not null," +//
-            "param_description varchar(100)," +//
+            "param_id int(100) not null," +
+            "outfitting_name varchar(100)," +
+            "param_name varchar(100) not null," +
+            "param_type int not null," +
+            "param_description varchar(100)," +
             "param_value varchar(100)," +
-//            "remark varchar(1000)," +
             "primary key(proj_id, version_name, param_id)," +
             "fulltext key (version_name, outfitting_name, param_name, param_description, param_value) with parser ngram" +
             ")ENGINE=InnoDB default charset=utf8;";
@@ -167,10 +166,39 @@ public class DBTableCreate {
      * 版本库
      */
     private static String sql12 = "create table if not exists version(" +
-            "id int(100) not null primary key auto_increment," +
+            "id int not null primary key auto_increment," +
             "proj_id int(100) not null," +
             "version_name varchar(100) not null," +
             "version_description varchar(1000)" +
+            ")ENGINE=InnoDB default charset=utf8;";
+
+    /**
+     * 设备供应商库
+     *
+     */
+    private static String sql13 = "create table if not exists manufacturer(" +
+            "id int not null primary key auto_increment," +
+            "outfitting_name varchar(100) not null," +
+            "manufacturer_name varchar(100)," +
+            "outfitting_type varchar(100)," +
+            "param_scope varchar(30)," +
+            "remark varchar(1000)," +
+            "fulltext key (outfitting_name, manufacturer_name, outfitting_type, remark) with parser ngram" +
+            ")ENGINE=InnoDB default charset=utf8;";
+
+    private static String sql14 = "CREATE TABLE IF NOT EXISTS selectedType(" +
+            "proj_id int(100) not null," +
+            "version_name varchar(100) not null," +
+            "outfitting_name varchar(100)," +
+            "param_name varchar(100) not null," +
+            "param_description varchar(100)," +
+            "param_value varchar(100)," +
+            "manufacturer_name varchar(100)," +
+            "outfitting_type varchar(100)," +
+            "param_scope varchar(30)," +
+            "remark varchar(1000)," +
+            "primary key(proj_id, version_name, outfitting_name)," +
+            "fulltext key (outfitting_name, param_name, param_description, manufacturer_name, outfitting_type, remark) with parser ngram" +
             ")ENGINE=InnoDB default charset=utf8;";
 
     public static void main(String[] args) {
@@ -187,6 +215,8 @@ public class DBTableCreate {
         list.add(sql10);
         list.add(sql11);
         list.add(sql12);
+        list.add(sql13);
+        list.add(sql14);
 
         for (String sql : list) {
             executeSql(sql);

@@ -19,7 +19,7 @@ public class ParamAndValueData {
         this(null, null, null, null, null, null, null, null);
     }
 
-    public ParamAndValueData(String proj_id, String version_name, String param_id, String outfitting_name, String param_name, String param_type, String param_description, String param_value) {
+    private ParamAndValueData(String proj_id, String version_name, String param_id, String outfitting_name, String param_name, String param_type, String param_description, String param_value) {
 //        this.param_value_id = new SimpleStringProperty(param_value_id);
         this.proj_id = new SimpleStringProperty(proj_id);
         this.version_name = new SimpleStringProperty(version_name);

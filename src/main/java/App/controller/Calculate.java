@@ -61,8 +61,14 @@ public class Calculate {
     private Button calNextBtn;
 
     @FXML
+    private Label calculateLabel;
+
+    @FXML
     void calculateAction(ActionEvent event) {
         //todo 循环调用计算模块计算待求参数结果
+
+        calculateLabel.setText("请点击保存按钮以保存计算结果" + "\r\n" + "项目: " + projLabel.getText() + "   版本: " + versionLabel.getText());
+        calculateLabel.setStyle("-fx-text-fill: #ff0000");
     }
 
     @FXML
@@ -72,12 +78,19 @@ public class Calculate {
         } else {
             List<ParamAndValueData> list = projParamValueTV.getItems();
             ParamValueDb.insertValue(list);
+            calculateLabel.setText("计算结果已保存" + "\r\n" + "项目: " + projLabel.getText() + "   版本: " + versionLabel.getText());
+            calculateLabel.setStyle("-fx-text-fill: #00c800");
             MyDialog.information("计算结果已保存", "项目: " + projLabel.getText() + "\r\n" + "版本: " + versionLabel.getText());
         }
     }
 
     @FXML
     void calNextAction(ActionEvent event) throws IOException {
+        if (projLabel.getText() == null || projLabel.getText().equals("") || versionLabel.getText() == null || versionLabel.getText().equals("")) {
+            MyDialog.information("未选择相应的项目和版本", "请在“输入参数”中选择相应的项目和版本");
+            return;
+        }
+
         calSaveAction(event);
         FxmlUtile.setStyle((Button) Docker.get("correctBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("inputParamBtn"), (Button) Docker.get("calculateBtn"), (Button) Docker.get("selectTypeBtn"));
 

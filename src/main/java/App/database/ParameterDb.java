@@ -30,6 +30,7 @@ public class ParameterDb extends DatabaseItem {
                 parameterData.setParam_type(String.valueOf(resultSet.getInt("param_type")));
                 parameterData.setOutfitting_name(resultSet.getString("outfitting_name"));
                 parameterData.setParam_description(resultSet.getString("param_description"));
+                parameterData.setParam_scope(resultSet.getString("param_scope"));
 
                 list.add(parameterData);
             }

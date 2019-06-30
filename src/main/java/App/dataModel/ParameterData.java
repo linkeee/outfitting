@@ -8,17 +8,19 @@ public class ParameterData {
     private final SimpleStringProperty param_type;
     private final SimpleStringProperty outfitting_name;
     private final SimpleStringProperty param_description;
+    private final SimpleStringProperty param_scope;
 
     public ParameterData() {
-        this(null, null, null, null, null);
+        this(null, null, null, null, null, null);
     }
 
-    public ParameterData(String param_id, String param_name, String param_type, String outfitting_name, String param_description) {
+    public ParameterData(String param_id, String param_name, String param_type, String outfitting_name, String param_description, String param_scope) {
         this.param_id = new SimpleStringProperty(param_id);
         this.param_name = new SimpleStringProperty(param_name);
         this.param_type = new SimpleStringProperty(param_type);
         this.outfitting_name = new SimpleStringProperty(outfitting_name);
         this.param_description = new SimpleStringProperty(param_description);
+        this.param_scope = new SimpleStringProperty(param_scope);
     }
 
     public String getParam_id() {
@@ -79,5 +81,17 @@ public class ParameterData {
 
     public void setParam_description(String param_description) {
         this.param_description.set(param_description);
+    }
+
+    public String getParam_scope() {
+        return param_scope.get();
+    }
+
+    public SimpleStringProperty param_scopeProperty() {
+        return param_scope;
+    }
+
+    public void setParam_scope(String param_scope) {
+        this.param_scope.set(param_scope);
     }
 }

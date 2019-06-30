@@ -71,6 +71,9 @@ public class InputParameter {
     @FXML
     private TextArea versionDescriptionTA;
 
+    @FXML
+    private Label inputLabel;
+
     private List<ParamAndValueData> paramDataListContainer = new ArrayList<>();
 
     private int selectedProjId = -1;
@@ -118,6 +121,9 @@ public class InputParameter {
 
                 ParamValueDb.insert(paramDataListContainer);
                 projParamValueTV.setItems(FXCollections.observableArrayList(ParamValueDb.getParamOfType(selectedProjId, newVersionName, 0)));
+
+                inputLabel.setText("已在项目：" + projLabel.getText() + "  中增加了版本：" + versionLabel.getText() + "\r\n" + "请双击参数值列单元格为参数赋值");
+                inputLabel.setStyle("-fx-text-fill: #ffc800");
             }
 
         }
@@ -138,6 +144,8 @@ public class InputParameter {
                     MyDialog.information("版本号输入有误", "删除失败");
                 } else {
                     VersionDb.deleteAVersionAndParam(selectedProjId, selectedVersionName);
+                    inputLabel.setText("数据已删除" + "\r\n" + "项目：" + projLabel.getText() + "   版本：" + confirmVersionName);
+                    inputLabel.setStyle("-fx-text-fill: red");
                     versionChooserCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(selectedProjId)));
                     versionChooserCB.setValue(VersionDb.getLargestVersionName(selectedProjId));
                 }
@@ -153,13 +161,25 @@ public class InputParameter {
         } else {
             List<ParamAndValueData> list = projParamValueTV.getItems();
             ParamValueDb.insertValue(list);
+            inputLabel.setText("参数值已保存" + "\r\n" + "项目：" + projLabel.getText() + "   版本：" + versionLabel.getText());
+            inputLabel.setStyle("-fx-text-fill: #00c800");
             MyDialog.information("输入参数已保存", "项目: " + selectedProjName + "\r\n" + "版本: " + selectedVersionName);
         }
     }
 
     @FXML
     void nextStepAction(ActionEvent event) throws IOException {
-        saveAction(event);
+        if (projChooserCB.getValue() == null || versionChooserCB.getValue() == null) {
+            MyDialog.information("未选择相应的项目和版本", "请选择项目和版本后再进行下一步操作");
+            return;
+        } else {
+            saveAction(event);
+            if (!ParamValueDb.isInputParamHaveValue(ProjectDb.getIdByName(projChooserCB.getValue()), versionChooserCB.getValue(), 0)) {
+                MyDialog.information("有已知参数未赋值", "请为所有已知参数赋值后，再进行下一步操作");
+                return;
+            }
+        }
+
         FxmlUtile.setStyle((Button) Docker.get("calculateBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("inputParamBtn"), (Button) Docker.get("correctBtn"), (Button) Docker.get("selectTypeBtn"));
 
         Docker.put("isInputParamNextStep", true);

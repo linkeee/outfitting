@@ -13,10 +13,29 @@ import java.util.List;
 public class ParamValueDb extends DatabaseItem {
 
     /**
+     * 检测输入参数是否都已赋值，是返回true，否返回false。
+     *
+     * @param proj_id    项目id
+     * @param version    版本号
+     * @param param_type 参数类型，0为需要输入的已知参数，1为待求参数
+     * @return
+     */
+    public static boolean isInputParamHaveValue(int proj_id, String version, int param_type) {
+        boolean flag = true;
+        List<ParamAndValueData> list = getParamOfType(proj_id, version, param_type);
+        for (ParamAndValueData pv : list) {
+            if (pv.getParam_value() == null || pv.getParam_value().equals("")) {
+                flag = false;
+            }
+        }
+        return flag;
+    }
+
+    /**
      * 返回特定类型的参数。
      *
-     * @param proj_id 项目id
-     * @param version 版本号
+     * @param proj_id    项目id
+     * @param version    版本号
      * @param param_type 参数类型，0为需要输入的已知参数，1为待求参数
      * @return
      */
@@ -162,7 +181,7 @@ public class ParamValueDb extends DatabaseItem {
         boolean flag = false;
         PreparedStatement ps = null;
         Connection connection = connectDB();
-        String sql = "update " + Constant.paramValueTableName + " set param_value = ? where proj_id = ? and version_name = ? and param_id = ?";
+        String sql = "update " + Constant.paramValueTableName + " set param_value = ? where proj_id = ? and version_name = ? and param_name = ?";
 
         for (ParamAndValueData pvd : list) {
             try {
@@ -170,7 +189,7 @@ public class ParamValueDb extends DatabaseItem {
                 ps.setString(1, pvd.getParam_value());
                 ps.setInt(2, Integer.valueOf(pvd.getProj_id()));
                 ps.setString(3, pvd.getVersion_name());
-                ps.setInt(4, Integer.valueOf(pvd.getParam_id()));
+                ps.setString(4, pvd.getParam_name());
                 int i = ps.executeUpdate();
                 if (i == 1) flag = true;
             } catch (Exception e) {

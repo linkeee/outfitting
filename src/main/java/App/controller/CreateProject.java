@@ -136,27 +136,32 @@ public class CreateProject {
 
     @FXML
     void nextStepAction(ActionEvent event) throws IOException {
-        saveAction(event);
+        if (projectComboBox.getValue() == null) {
+            MyDialog.information("未选择项目", "请新建项目或选择已有项目后再进行下一步操作");
+        } else {
+            saveAction(event);
 
-        FxmlUtile.setStyle((Button) Docker.get("inputParamBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("calculateBtn"), (Button) Docker.get("correctBtn"), (Button) Docker.get("selectTypeBtn"));
+            FxmlUtile.setStyle((Button) Docker.get("inputParamBtn"), (Button) Docker.get("createProjBtn"), (Button) Docker.get("calculateBtn"), (Button) Docker.get("correctBtn"), (Button) Docker.get("selectTypeBtn"));
 
-        Docker.put("isCreateProjectNextStep", true);
-        Docker.put("selectedProj", projectComboBox.getValue());
+            Docker.put("isCreateProjectNextStep", true);
+            Docker.put("selectedProj", projectComboBox.getValue());
 
-        FxmlUtile fxmlUtile = new FxmlUtile();
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
-        BorderPane bp = (BorderPane) Docker.get("selectTypeBorderPane");
-        bp.setCenter(loader.load());
+            FxmlUtile fxmlUtile = new FxmlUtile();
+            FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
+            BorderPane bp = (BorderPane) Docker.get("selectTypeBorderPane");
+            bp.setCenter(loader.load());
 
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
+            Task task = new Task() {
+                @Override
+                protected Object call() throws Exception {
+                    loader.getController();
+                    return null;
+                }
+            };
+            ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+            progressFrom.activateProgressBar();
+        }
+
     }
 
     @FXML
