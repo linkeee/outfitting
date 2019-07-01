@@ -105,14 +105,16 @@ public class OutfittingDesign {
     //用borderpane加载布局设计界面
     private void loadLayoutDesign() throws IOException {
         FxmlUtile fxmlUtile = new FxmlUtile();
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/LayoutDesignSearch.fxml");
+//        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/LayoutDesignSearch.fxml");
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Temp.fxml");
         outfittingDesignBorderPane.setCenter(loader.load());
 
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                OutfittingDesignLayoutDesignSearch controller = loader.getController();
-                controller.refreshLayoutDesignTable();
+//                OutfittingDesignLayoutDesignSearch controller = loader.getController();
+//                controller.refreshLayoutDesignTable();
+                loader.getController();
                 return null;
             }
         };

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@Home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.Home">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@Home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.Home">
    <bottom>
       <Button fx:id="button5" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backLogin" text="返回" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -17,7 +17,7 @@
    <top>
       <VBox alignment="CENTER_LEFT">
          <children>
-            <Button mnemonicParsing="false" onAction="#goTemp" text="Button" />
+            <Button mnemonicParsing="false" onAction="#goTemp" opacity="0.0" text="Button" />
             <Label fx:id="titleLabel" text="舾装智能设计">
                <font>
                   <Font size="18.0" />

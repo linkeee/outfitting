@@ -18,7 +18,6 @@
                      </font>
                   </Label>
                   <Button fx:id="KBButton" mnemonicParsing="false" onAction="#goKbManagement" text="知识库管理" />
-                  <Button fx:id="DBButton" mnemonicParsing="false" onAction="#goDbManagement" text="数值管理" />
                   <Button fx:id="statisticButton" mnemonicParsing="false" onAction="#goStatistic" text="数据库管理" />
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#backHome" text="返回" />
               </items>

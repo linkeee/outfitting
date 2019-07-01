@@ -18,7 +18,7 @@
     -fx-border-width: 2;
     -fx-background-radius: 5;
     -fx-background-color: #1d1d1d;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 1);
+    /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 1);*/
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 12pt;
     -fx-text-fill: #d8d8d8;

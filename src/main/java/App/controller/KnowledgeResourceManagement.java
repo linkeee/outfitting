@@ -21,9 +21,6 @@ public class KnowledgeResourceManagement {
     private BorderPane knowledgeResourceBorderPane;
 
     @FXML
-    private Button DBButton;
-
-    @FXML
     private Button KBButton;
 
     @FXML
@@ -32,11 +29,6 @@ public class KnowledgeResourceManagement {
     @FXML
     void goKbManagement(ActionEvent event) throws IOException {
         loadKbManagement();
-    }
-
-    @FXML
-    void goDbManagement(ActionEvent event) {
-
     }
 
     @FXML
