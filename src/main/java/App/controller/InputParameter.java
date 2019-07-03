@@ -175,6 +175,8 @@ public class InputParameter {
         } else {
             saveAction(event);
             if (!ParamValueDb.isInputParamHaveValue(ProjectDb.getIdByName(projChooserCB.getValue()), versionChooserCB.getValue(), 0)) {
+                inputLabel.setText("有已知参数未赋值，必须为所有已知参数赋值后才能进行下一步操作。" + "\r\n" + "项目: " + selectedProjName + "   版本: " + selectedVersionName);
+                inputLabel.setStyle("-fx-text-fill: red");
                 MyDialog.information("有已知参数未赋值", "请为所有已知参数赋值后，再进行下一步操作");
                 return;
             }

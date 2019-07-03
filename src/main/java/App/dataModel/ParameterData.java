@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 public class ParameterData {
     private final SimpleStringProperty param_id;
     private final SimpleStringProperty param_name;
+    // 已知类型在数据库中存0，待求类型在数据库中存1
     private final SimpleStringProperty param_type;
     private final SimpleStringProperty outfitting_name;
     private final SimpleStringProperty param_description;

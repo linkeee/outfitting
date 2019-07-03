@@ -121,6 +121,13 @@ public class Calculate {
             versionLabel.setText(String.valueOf(Docker.get("selectedVersion")));
             projParamValueTV.setItems(FXCollections.observableArrayList(
                     ParamValueDb.getParamOfType(ProjectDb.getIdByName(projLabel.getText()), versionLabel.getText(), 1)));
+            calculateBtn.setDisable(false); calSaveBtn.setDisable(false); calNextBtn.setDisable(false);
+        }
+
+        if (projLabel.getText().equals("") || projLabel.getText() == null) {
+            calculateBtn.setDisable(true); calSaveBtn.setDisable(true); calNextBtn.setDisable(true);
+            calculateLabel.setText("在“输入参数”模块为所有已知参数赋值后才能进行计算");
+            calculateLabel.setStyle("-fx-text-fill: red");
         }
 
         outfittingNameTC.setCellValueFactory(new PropertyValueFactory<>("outfitting_name"));
