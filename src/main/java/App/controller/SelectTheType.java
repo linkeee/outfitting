@@ -5,8 +5,6 @@ import App.dataModel.ParamAndValueData;
 import App.dataModel.SelectedTypeData;
 import App.database.*;
 import App.utile.Docker;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -93,14 +91,14 @@ public class SelectTheType {
     @FXML
     private ComboBox<String> versionCB;
 
+    private ParamAndValueData selectedPv;
+    private ManufacturerData selectedMf;
+
     @FXML
     void addAction(ActionEvent event) {
         SelectedTypeDb.insert(selectedPv, selectedMf);
         TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
     }
-
-    private ParamAndValueData selectedPv;
-    private ManufacturerData selectedMf;
 
     @FXML
     void initialize() {
@@ -129,28 +127,25 @@ public class SelectTheType {
         TV3TCType.setCellValueFactory(new PropertyValueFactory<>("outfitting_type"));
         TV3TCParamScope.setCellValueFactory(new PropertyValueFactory<>("param_scope"));
         TV3TCRemark.setCellValueFactory(new PropertyValueFactory<>("remark"));
-        TV3TCDeleteBtn.setCellFactory(delCol -> {
-            TableCell<SelectedTypeData, String> cell = new TableCell<SelectedTypeData, String>() {
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty) {
-                        this.setText(null);
-                        this.setGraphic(null);
-                    } else {
-                        ImageView view = new ImageView(new Image("App/appView/images/used/垃圾桶.png"));
-                        Button delBtn = new Button("", view);
-                        delBtn.setStyle("-fx-pref-height: 10px; -fx-pref-width: 10px; -fx-background-size: 5px, 5px; -fx-background-radius: 5; -fx-background-color: #ffa500");
-                        this.setGraphic(delBtn);
-                        delBtn.setOnMouseClicked(click -> {
-                            SelectedTypeData std = this.getTableView().getItems().get(this.getIndex());
-                            SelectedTypeDb.delete(std);
-                            TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
-                        });
-                    }
+        TV3TCDeleteBtn.setCellFactory(delCol -> new TableCell<SelectedTypeData, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    this.setText(null);
+                    this.setGraphic(null);
+                } else {
+                    ImageView view = new ImageView(new Image("App/appView/images/used/垃圾桶.png"));
+                    Button delBtn = new Button("", view);
+                    delBtn.setStyle("-fx-pref-height: 10px; -fx-pref-width: 10px; -fx-background-size: 5px, 5px; -fx-background-radius: 5; -fx-background-color: #ffa500");
+                    this.setGraphic(delBtn);
+                    delBtn.setOnMouseClicked(click -> {
+                        SelectedTypeData std = this.getTableView().getItems().get(this.getIndex());
+                        SelectedTypeDb.delete(std);
+                        TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
+                    });
                 }
-            };
-            return cell;
+            }
         });
 
         TVParam.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
