@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -37,6 +38,12 @@ public class OutfittingDesign {
 
     @FXML
     void initialize() throws IOException {
+        outfittingItemSelectionButton.setTooltip(new Tooltip("舾装件智能选型"));
+        layoutDesignButton.setTooltip(new Tooltip("智能布局设计"));
+        designReviewButton.setTooltip(new Tooltip("设计校审"));
+        exportButton.setTooltip(new Tooltip("导出文件"));
+        backHomeBtn.setTooltip(new Tooltip("返回上一级"));
+
         loadSelectType();
         setStyle(outfittingItemSelectionButton, layoutDesignButton, designReviewButton, exportButton);
     }
