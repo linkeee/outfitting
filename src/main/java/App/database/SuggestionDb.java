@@ -9,8 +9,51 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SuggestionDb extends DatabaseItem {
+
+    public static List<String> getShipTypeList() {
+        List<String> list = new ArrayList<>();
+
+        Connection connection = connectDB();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement("select distinct sugShipType from suggestion");
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String temp = resultSet.getString("sugShipType");
+                if (!list.contains(temp))
+                    list.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return list;
+    }
+
+    public static List<String> getChuandongCompanyList() {
+        List<String> list = new ArrayList<>();
+
+        Connection connection = connectDB();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement("select distinct sugShipCompany from suggestion");
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String temp = resultSet.getString("sugShipCompany");
+                if (!list.contains(temp))
+                    list.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return list;
+    }
 
     /**
      * Return all of the sugData in a list way.
@@ -21,9 +64,10 @@ public class SuggestionDb extends DatabaseItem {
         ArrayList<SuggestionData> sugList = new ArrayList<>();
 
         Connection connection = connectDB();
+        PreparedStatement ps = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from suggestion order by sugId+0");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ps = connection.prepareStatement("select * from suggestion order by sugId+0");
+            ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 SuggestionData suggestionData = new SuggestionData();
                 suggestionData.setSugId(resultSet.getString("sugId"));
@@ -38,6 +82,8 @@ public class SuggestionDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
         }
         return FXCollections.observableArrayList(sugList);
     }
@@ -98,18 +144,17 @@ public class SuggestionDb extends DatabaseItem {
         Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
 
-        String sql = "insert into suggestion (sugId, sugShipCompany, sugShipType, sugOutfittingRegion, sugProblemDescribe, sugSolutionDescribe, sugContent, sugFilePath) value(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into suggestion (sugShipCompany, sugShipType, sugOutfittingRegion, sugProblemDescribe, sugSolutionDescribe, sugContent, sugFilePath) value(?, ?, ?, ?, ?, ?, ?)";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, sug.getSugId());
-            preparedStatement.setString(2, sug.getSugShipCompany());
-            preparedStatement.setString(3, sug.getSugShipType());
-            preparedStatement.setString(4, sug.getSugOutfittingRegion());
-            preparedStatement.setString(5, sug.getSugProblemDescribe());
-            preparedStatement.setString(6, sug.getSugSolutionDescribe());
-            preparedStatement.setString(7, sug.getSugContent());
-            preparedStatement.setString(8, sug.getSugFilePath());
+            preparedStatement.setString(1, sug.getSugShipCompany());
+            preparedStatement.setString(2, sug.getSugShipType());
+            preparedStatement.setString(3, sug.getSugOutfittingRegion());
+            preparedStatement.setString(4, sug.getSugProblemDescribe());
+            preparedStatement.setString(5, sug.getSugSolutionDescribe());
+            preparedStatement.setString(6, sug.getSugContent());
+            preparedStatement.setString(7, sug.getSugFilePath());
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;
@@ -126,29 +171,27 @@ public class SuggestionDb extends DatabaseItem {
      * Update the content of the selected item.
      *
      * @param sugData
-     * @param editSugDataId
      * @return
      */
-    public static boolean update(SuggestionData sugData, String editSugDataId) {
+    public static boolean update(SuggestionData sugData, String editSugId) {
         boolean flag = true;
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "update suggestion set sugId=?, sugShipCompany=?, sugShipType=?, sugOutfittingRegion=?, sugProblemDescribe=?, sugSolutionDescribe=?, sugContent=?, sugFilePath=? where sugId=?";
+        String sql = "update suggestion set sugShipCompany=?, sugShipType=?, sugOutfittingRegion=?, sugProblemDescribe=?, sugSolutionDescribe=?, sugContent=?, sugFilePath=? where sugId=?";
         Connection connection = connectDB();
 
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, sugData.getSugId());
-            preparedStatement.setString(2, sugData.getSugShipCompany());
-            preparedStatement.setString(3, sugData.getSugShipType());
-            preparedStatement.setString(4, sugData.getSugOutfittingRegion());
-            preparedStatement.setString(5, sugData.getSugProblemDescribe());
-            preparedStatement.setString(6, sugData.getSugSolutionDescribe());
-            preparedStatement.setString(7, sugData.getSugContent());
-            preparedStatement.setString(8, sugData.getSugFilePath());
-            preparedStatement.setString(9, editSugDataId);
+            preparedStatement.setString(1, sugData.getSugShipCompany());
+            preparedStatement.setString(2, sugData.getSugShipType());
+            preparedStatement.setString(3, sugData.getSugOutfittingRegion());
+            preparedStatement.setString(4, sugData.getSugProblemDescribe());
+            preparedStatement.setString(5, sugData.getSugSolutionDescribe());
+            preparedStatement.setString(6, sugData.getSugContent());
+            preparedStatement.setString(7, sugData.getSugFilePath());
+            preparedStatement.setString(8, editSugId);
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;

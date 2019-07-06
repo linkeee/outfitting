@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SelectTypeDesign {
@@ -35,7 +37,7 @@ public class SelectTypeDesign {
 
     @FXML
     void createProjectAction(ActionEvent event) throws IOException {
-        setStyle("rgb(0, 180, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)");
+        setStyle(createProjBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/CreateProject.fxml");
@@ -54,7 +56,7 @@ public class SelectTypeDesign {
 
     @FXML
     void inputParameterAction(ActionEvent event) throws IOException {
-        setStyle("rgb(0, 150, 255)", "rgb(0, 180, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)");
+        setStyle(inputParamBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
@@ -73,7 +75,7 @@ public class SelectTypeDesign {
 
     @FXML
     void calculateAction(ActionEvent event) throws IOException {
-        setStyle("rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 180, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)");
+        setStyle(calculateBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Calculate.fxml");
@@ -92,7 +94,7 @@ public class SelectTypeDesign {
 
     @FXML
     void modifyResultAction(ActionEvent event) throws IOException {
-        setStyle("rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 180, 255)", "rgb(0, 150, 255)");
+        setStyle(correctBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ModifyResult.fxml");
@@ -111,7 +113,7 @@ public class SelectTypeDesign {
 
     @FXML
     void selectTypeAction(ActionEvent event) throws IOException {
-        setStyle("rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 150, 255)", "rgb(0, 180, 255)");
+        setStyle(selectTypeBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/SelectTheType.fxml");
@@ -128,12 +130,14 @@ public class SelectTypeDesign {
         progressFrom.activateProgressBar();
     }
 
-    private void setStyle(String btn1Style, String btn2Style, String btn3Strle, String btn4Style, String btn5Style) {
-        createProjBtn.setStyle("-fx-background-color: " + btn1Style);
-        inputParamBtn.setStyle("-fx-background-color: " + btn2Style);
-        calculateBtn.setStyle("-fx-background-color: " + btn3Strle);
-        correctBtn.setStyle("-fx-background-color: " + btn4Style);
-        selectTypeBtn.setStyle("-fx-background-color: " + btn5Style);
+    private void setStyle(Button selectedButton) {
+        List<Button> buttons = new ArrayList<>();
+        buttons.add(createProjBtn); buttons.add(inputParamBtn); buttons.add(calculateBtn); buttons.add(correctBtn); buttons.add(selectTypeBtn);
+        selectedButton.setStyle("-fx-background-color: white; -fx-text-fill: black");
+        buttons.remove(selectedButton);
+        for (Button button : buttons) {
+            button.setStyle("-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white");
+        }
     }
 
 }

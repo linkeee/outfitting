@@ -9,8 +9,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExperienceDb extends DatabaseItem {
+
+    public static List<String> getShipTypeList() {
+        List<String> list = new ArrayList<>();
+
+        Connection connection = connectDB();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement("select distinct expShipType from experience");
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String temp = resultSet.getString("expShipType");
+                if (!list.contains(temp))
+                    list.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return list;
+    }
 
     /**
      * Return all of the sugData in a list way.
@@ -95,16 +117,15 @@ public class ExperienceDb extends DatabaseItem {
         Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
 
-        String sql = "insert into experience (expId, expShipType, expOutfittingRegion, expName, expContent, expFilePath) value(?, ?, ?, ?, ?, ?)";
+        String sql = "insert into experience (expShipType, expOutfittingRegion, expName, expContent, expFilePath) value(?, ?, ?, ?, ?)";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, exp.getExpId());
-            preparedStatement.setString(2, exp.getExpShipType());
-            preparedStatement.setString(3, exp.getExpOutfittingRegion());
-            preparedStatement.setString(4, exp.getExpName());
-            preparedStatement.setString(5, exp.getExpContent());
-            preparedStatement.setString(6, exp.getExpFilePath());
+            preparedStatement.setString(1, exp.getExpShipType());
+            preparedStatement.setString(2, exp.getExpOutfittingRegion());
+            preparedStatement.setString(3, exp.getExpName());
+            preparedStatement.setString(4, exp.getExpContent());
+            preparedStatement.setString(5, exp.getExpFilePath());
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;
@@ -129,19 +150,18 @@ public class ExperienceDb extends DatabaseItem {
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "update experience set expId=?, expShipType=?, expOutfittingRegion=?, expName=?, expContent=?, expFilePath=? where expId=?";
+        String sql = "update experience set expShipType=?, expOutfittingRegion=?, expName=?, expContent=?, expFilePath=? where expId=?";
         Connection connection = connectDB();
 
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, expData.getExpId());
-            preparedStatement.setString(2, expData.getExpShipType());
-            preparedStatement.setString(3, expData.getExpOutfittingRegion());
-            preparedStatement.setString(4, expData.getExpName());
-            preparedStatement.setString(5, expData.getExpContent());
-            preparedStatement.setString(6, expData.getExpFilePath());
-            preparedStatement.setString(7, editExpDataId);
+            preparedStatement.setString(1, expData.getExpShipType());
+            preparedStatement.setString(2, expData.getExpOutfittingRegion());
+            preparedStatement.setString(3, expData.getExpName());
+            preparedStatement.setString(4, expData.getExpContent());
+            preparedStatement.setString(5, expData.getExpFilePath());
+            preparedStatement.setString(6, editExpDataId);
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;

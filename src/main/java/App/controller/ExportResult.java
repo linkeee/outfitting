@@ -121,29 +121,6 @@ public class ExportResult {
             resultFileLabel.setText(String.valueOf(Docker.get("newTemplateFileName")));
         }
 
-//        if (fileName == null || filePath == null) selectDirectoryAction(event);
-//
-//        Map<String, String> paramAndValueMap = new HashMap<>();
-//        for (ParamAndValueData i : paramAndValueList) {
-//            paramAndValueMap.put(i.getParam_name(), i.getParam_value());
-//        }
-//        try {
-//            Task task = new Task() {
-//                @Override
-//                protected Object call() throws Exception {
-//                    String newName = CopyFile.copyFile(filePath + fileName);
-//                    System.out.println(newName);
-//                    ExcelFiller.filler(filePath + newName, paramAndValueMap);
-//
-//                    resultFileLabel.setText(newName);
-//                    return null;
-//                }
-//            };
-//            ProgressFrom progressFrom = new ProgressFrom(task, "正在导出估算书，请稍后...");
-//            progressFrom.activateProgressBar();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     private String selectedProjName;

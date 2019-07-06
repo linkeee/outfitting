@@ -8,9 +8,11 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -21,18 +23,22 @@ public class KnowledgeResourceManagement {
     private BorderPane knowledgeResourceBorderPane;
 
     @FXML
-    private Button KBButton;
+    private Button KBBtn;
 
     @FXML
-    private Button statisticButton;
+    private Button DBBtn;
 
     @FXML
-    void goKbManagement(ActionEvent event) throws IOException {
+    private Button backHomeBtn;
+
+    @FXML
+    void goKBMana(ActionEvent event) throws IOException {
         loadKbManagement();
     }
 
     @FXML
-    void goStatistic(ActionEvent event) {
+    void goDBMana(ActionEvent event) throws IOException {
+        loadDBMana();
     }
 
     @FXML
@@ -45,6 +51,9 @@ public class KnowledgeResourceManagement {
     @FXML
     void initialize() throws IOException {
         loadKbManagement();
+        KBBtn.setTooltip(new Tooltip("知识库管理"));
+        DBBtn.setTooltip(new Tooltip("数据库管理"));
+        backHomeBtn.setTooltip(new Tooltip("返回上一级"));
     }
 
     static Stage stage = new Stage();
@@ -56,7 +65,7 @@ public class KnowledgeResourceManagement {
         BorderPane borderPane = loader.load();
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
-        stage.setTitle("Enterprise knowledge resource management!");
+        stage.setTitle("企业数据与知识管理");
         stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
         stage.show();
     }
@@ -69,14 +78,29 @@ public class KnowledgeResourceManagement {
     //用borderpane加载知识库管理界面
     private void loadKbManagement() throws IOException {
         FxmlUtile fxmlUtile = new FxmlUtile();
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KnowledgeBaseManage.fxml");
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KnowledgeBaseMana.fxml");
         knowledgeResourceBorderPane.setCenter(loader.load());
 
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                KnowledgeBaseManage controller = loader.getController();
-                controller.refreshAllTable();
+                loader.getController();
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "数据加载中，请稍后...");
+        progressFrom.activateProgressBar();
+    }
+
+    private void loadDBMana() throws IOException {
+        FxmlUtile fxmlUtile = new FxmlUtile();
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/DatabaseMana.fxml");
+        knowledgeResourceBorderPane.setCenter(loader.load());
+
+        Task task = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                loader.getController();
                 return null;
             }
         };

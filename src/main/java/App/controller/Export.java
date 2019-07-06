@@ -33,8 +33,7 @@ public class Export {
 
     @FXML
     void exportResultAction(ActionEvent event) throws IOException {
-        setStyle("rgb(0, 180, 255)", "rgb(0, 150, 255)");
-
+        setStyle("-fx-background-color: white; -fx-text-fill: black", "-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white");
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ExportResult.fxml");
         exportBorderPane.setCenter(loader.load());
@@ -52,7 +51,7 @@ public class Export {
 
     @FXML
     void exportItemListAction(ActionEvent event) {
-        setStyle("rgb(0, 150, 255)", "rgb(0, 180, 255)");
+        setStyle("-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white", "-fx-background-color: white; -fx-text-fill: black");
 
     }
 
@@ -62,7 +61,9 @@ public class Export {
     }
 
     private void setStyle(String btn1Style, String btn2Style) {
-        exportResultBtn.setStyle("-fx-background-color: " + btn1Style);
-        exportItemListBtn.setStyle("-fx-background-color: " + btn2Style);
+        exportResultBtn.setStyle(btn1Style);
+//        exportResultBtn.setStyle("-fx-background-color: white; -fx-text-fill: black");
+
+        exportItemListBtn.setStyle(btn2Style);
     }
 }

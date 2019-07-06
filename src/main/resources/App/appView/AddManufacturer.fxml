@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.AddManufacturer">
+    <children>
+        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+            <Label fx:id="addManuLabel">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+                <GridPane VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="舾装件名称">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <Label text="设备供应商" GridPane.rowIndex="1">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="manuTF" prefWidth="1200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                            <GridPane.margin>
+                                <Insets left="10.0" />
+                            </GridPane.margin>
+                        </TextField>
+                        <Label text="设备型号" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="itemTypeTF" prefWidth="1200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+                            <GridPane.margin>
+                                <Insets left="10.0" />
+                            </GridPane.margin>
+                        </TextField>
+                        <Label text="参数范围" GridPane.rowIndex="3">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <Label text="备注" GridPane.rowIndex="4">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                        </Label>
+                        <TextArea fx:id="remarkTA" prefWidth="1200.0" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
+                            <GridPane.margin>
+                                <Insets left="10.0" top="15.0" />
+                            </GridPane.margin>
+                        </TextArea>
+                        <ComboBox fx:id="outfittingNameCB" prefWidth="1200.0" GridPane.columnIndex="1">
+                            <GridPane.margin>
+                                <Insets left="10.0" />
+                            </GridPane.margin>
+                        </ComboBox>
+                        <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <children>
+                                <Label minWidth="-Infinity" text="下限">
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <TextField fx:id="lowerTF" HBox.hgrow="ALWAYS" />
+                                <Label minWidth="-Infinity" text="上限">
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <TextField fx:id="upperTF" HBox.hgrow="ALWAYS" />
+                            </children>
+                        </HBox>
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" />
+                        <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="273.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="60.0" minHeight="30.0" valignment="BOTTOM" />
+                        <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+                    <padding>
+                        <Insets right="30.0" />
+                    </padding>
+                </GridPane>
+                <HBox alignment="BOTTOM_CENTER" spacing="20.0">
+                    <children>
+                        <Button fx:id="okBtn" mnemonicParsing="false" onAction="#okAction" text="确认">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelAction" text="取消">
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" top="10.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,5 +1,12 @@
 package App.utile;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Constant {
     /**
      * TableView可双击修改列为空时的提示信息。
@@ -25,4 +32,14 @@ public class Constant {
      * 已选择的设备型号清单表的表名
      */
     public static String selectedTypeTableName = "jproject.selectedtype";
+
+    /**
+     * 船舶类型List
+     */
+    public static List<String> shipTypeList = new ArrayList<>(Arrays.asList(null, "油轮", "散货船", "集装箱船", "平台", "豪华游轮"));
+
+    /**
+     * 船级社List
+     */
+    public static List<String> chuanjisheList = new ArrayList<>(Arrays.asList(null, "CCS", "BV", "ABS", "DNV-GL", "LR"));
 }

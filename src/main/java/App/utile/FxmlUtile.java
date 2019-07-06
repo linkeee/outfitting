@@ -9,6 +9,13 @@ import java.io.IOException;
  * 返回一个FXMLLoader。
  */
 public class FxmlUtile {
+
+    private final static FxmlUtile Instance = new FxmlUtile();
+
+    public static FxmlUtile getInstance() {
+        return Instance;
+    }
+
     public FXMLLoader getFxmlLoader(String fxmlUrl) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource(fxmlUrl));
@@ -16,7 +23,7 @@ public class FxmlUtile {
     }
 
     public static void setStyle(Button btn, Button... buttons) {
-        btn.setStyle("-fx-background-color: rgb(0, 180, 255)");
-        for (Button button : buttons) button.setStyle("-fx-background-color: rgb(0, 150, 255)");
+        btn.setStyle("-fx-background-color: white; -fx-text-fill: black");
+        for (Button button : buttons) button.setStyle("-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white");
     }
 }

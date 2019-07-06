@@ -5,6 +5,7 @@ import java.io.IOException;
 import App.dataModel.SuggestionData;
 import App.database.SuggestionDb;
 import App.function.FileReader;
+import App.utile.Constant;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,10 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -36,9 +34,6 @@ public class AddSuggestion {
     private ComboBox<String> shipTypeChoiceBox;
 
     @FXML
-    private TextField suggestionIDTextFiled;
-
-    @FXML
     private ComboBox<String> shipCompanyChoiceBox;
 
     @FXML
@@ -50,16 +45,26 @@ public class AddSuggestion {
     @FXML
     private TextArea sugFileContentTextArea;
 
+    @FXML
+    private Label addSugLabel;
+
+    private static class AddSuggestionInstance {
+        private static final AddSuggestion Instance = new AddSuggestion();
+    }
+
+    public static AddSuggestion getInstance() {
+        return AddSuggestionInstance.Instance;
+    }
+
     private SuggestionData suggestionData = new SuggestionData();
     private String editSuggestionId;
 
-    private ObservableList<String> shipTypeList = FXCollections.observableArrayList(null, "油轮", "散货船", "集装箱船", "平台", "豪华游轮");
     private ObservableList<String> classificationSocietyList = FXCollections.observableArrayList(null, "CCS", "BV", "ABS", "DNV-GL", "LR");
 
     @FXML
     void initialize() {
-        shipTypeChoiceBox.setItems(shipTypeList);
-        shipCompanyChoiceBox.setItems(classificationSocietyList);
+        shipTypeChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getShipTypeList()));
+        shipCompanyChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getChuandongCompanyList()));
     }
 
     //将选择的船东意见信息添加到修改界面中
@@ -67,7 +72,7 @@ public class AddSuggestion {
         this.editSuggestionId = suggestionData.getSugId();
 
         if (editSuggestionId != null) {
-            suggestionIDTextFiled.setText(suggestionData.getSugId());
+            addSugLabel.setText("修改");
             outfittingTextField.setText(suggestionData.getSugOutfittingRegion());
             problemDescribeTextArea.setText(suggestionData.getSugProblemDescribe());
             solutionDescribeTextArea.setText(suggestionData.getSugSolutionDescribe());
@@ -75,13 +80,14 @@ public class AddSuggestion {
             shipCompanyChoiceBox.setValue(suggestionData.getSugShipCompany());
             sugFilePathHyperLink.setText(suggestionData.getSugFilePath());
             sugFileContentTextArea.setText(suggestionData.getSugContent());
+        } else {
+            addSugLabel.setText("添加");
         }
     }
 
     @FXML
     public void handleOk(ActionEvent event) throws IOException {
 
-        suggestionData.setSugId(suggestionIDTextFiled.getText());
         suggestionData.setSugShipCompany(shipCompanyChoiceBox.getValue());
         suggestionData.setSugShipType(shipTypeChoiceBox.getValue());
         suggestionData.setSugOutfittingRegion(outfittingTextField.getText());
@@ -134,11 +140,11 @@ public class AddSuggestion {
         BorderPane borderPane = loader.load();
         Scene scene = new Scene(borderPane);
         Stage stage = new Stage();
-        stage.setTitle("Add/Edit SuggestionData");
         stage.initModality(Modality.APPLICATION_MODAL);//WINDOW_MODAL表示一次只能打开一个窗口进行操作
         stage.setScene(scene);
 
         AddSuggestion addSuggestion = loader.getController();
+        editSuggestionId = suggestionData.getSugId();
         addSuggestion.setSuggestionData(suggestionData);
 
         stage.showAndWait();

@@ -61,4 +61,25 @@ public class ParameterDb extends DatabaseItem {
         }
         return list;
     }
+
+    public static List<String> getOutfittingItems() {
+        List<String> list = new ArrayList<>();
+
+        PreparedStatement ps = null;
+        Connection connection = connectDB();
+
+        String sql = "select distinct outfitting_name from parameter";
+        try {
+            ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getString("outfitting_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return list;
+    }
 }

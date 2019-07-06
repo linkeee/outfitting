@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="DBManaBorderPane" stylesheets="@DatabaseMana.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.DatabaseMana">
+    <left>
+        <VBox fx:id="DBManaVbox" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="DBManaLabel" prefHeight="40.0" prefWidth="170.0" text="数据库管理" />
+                <Button fx:id="manufacturerBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goManufacturerAction" prefHeight="40.0" prefWidth="170.0" text="设备厂商数据" />
+            </children>
+        </VBox>
+    </left>
+</BorderPane>

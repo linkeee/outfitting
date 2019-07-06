@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.web.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.AddSuggestion">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.AddSuggestion">
     <center>
         <VBox BorderPane.alignment="CENTER">
             <children>
-                <Label text="船东/船检意见添加/修改" VBox.vgrow="ALWAYS">
+                <Label fx:id="addSugLabel" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets left="10.0" />
                     </VBox.margin>
@@ -21,7 +18,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-            <Separator prefWidth="200.0" />
+                <Separator prefWidth="200.0" />
                 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="94.0" prefWidth="342.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="233.0" minWidth="0.0" prefWidth="82.0" />
@@ -34,20 +31,18 @@
                         <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <TextField fx:id="outfittingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="船舶类型" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label text="船东/船检公司" GridPane.columnIndex="2" />
-                        <Label text="舾装区域" GridPane.rowIndex="1" />
-                        <Label text="意见ID" />
-                        <TextField fx:id="suggestionIDTextFiled" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="179.0" GridPane.columnIndex="1" />
-                        <ComboBox fx:id="shipCompanyChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
-                        <ComboBox fx:id="shipTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <TextField fx:id="outfittingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="177.0" GridPane.columnIndex="3" />
+                        <Label text="船舶类型" GridPane.rowIndex="1" />
+                        <Label text="船东公司" />
+                        <Label text="舾装区域" GridPane.columnIndex="2" />
+                        <ComboBox fx:id="shipCompanyChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="shipTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
                     <VBox.margin>
                         <Insets left="10.0" />
                     </VBox.margin>
                 </GridPane>
-            <Separator prefWidth="200.0" />
+                <Separator prefWidth="200.0" />
                 <VBox alignment="CENTER" spacing="10.0" VBox.vgrow="ALWAYS">
                     <children>
                         <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
@@ -71,34 +66,35 @@
                         <Separator prefWidth="200.0" />
                         <VBox alignment="CENTER_LEFT" spacing="5.0">
                             <children>
-                                  <Label text="文件内容" wrapText="true">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                                  <TextArea fx:id="sugFileContentTextArea" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" wrapText="true" />
+                                <Label text="文件内容" wrapText="true">
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
+                                <TextArea fx:id="sugFileContentTextArea" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" wrapText="true" />
                                 <Label text="请将意见文件拖放于上方框内以添加/修改内容" />
                             </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
                         </VBox>
-                          <HBox alignment="CENTER_LEFT">
-                              <padding>
-                                  <Insets left="20.0" right="20.0" />
-                              </padding>
-                     <children>
-                        <Label text="文件地址：">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
+                        <HBox alignment="CENTER_LEFT">
+                            <padding>
+                                <Insets left="20.0" right="20.0" />
+                            </padding>
+                            <children>
+                                <Label text="文件地址：">
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Label>
                                 <Hyperlink fx:id="sugFilePathHyperLink" text="文件地址">
-                           <font>
-                              <Font size="15.0" />
-                           </font></Hyperlink>
-                     </children>
-                          </HBox>
+                                    <font>
+                                        <Font size="15.0" />
+                                    </font>
+                                </Hyperlink>
+                            </children>
+                        </HBox>
                         <Separator prefWidth="200.0" />
                         <HBox alignment="CENTER" spacing="50.0">
                             <children>

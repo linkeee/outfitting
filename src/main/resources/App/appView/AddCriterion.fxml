@@ -9,105 +9,97 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.AddCriterion">
-    <center>
-        <AnchorPane fx:id="anchorpane">
-            <children>
-                <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <Label fx:id="lbl" prefHeight="25.0" text="舾装设计规范添加/修改">
-                            <VBox.margin>
-                                <Insets left="10.0" />
-                            </VBox.margin>
-                        </Label>
-                        <Separator fx:id="separator1" />
-                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="821.0">
-                            <columnConstraints>
-                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="233.0" minWidth="-Infinity" prefWidth="57.0" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="332.0" minWidth="10.0" prefWidth="201.0" />
-                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="192.93234252929688" minWidth="-Infinity" prefWidth="64.0" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="303.8369140625" minWidth="10.0" prefWidth="199.0" />
-                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="302.7701416015625" minWidth="-Infinity" prefWidth="63.0" />
-                                <ColumnConstraints hgrow="ALWAYS" maxWidth="302.7701416015625" minWidth="10.0" prefWidth="278.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Label text="船舶类型" GridPane.columnIndex="2" />
-                                <Label text="舾装区域" GridPane.columnIndex="4" />
-                                <Label text="规范名称" GridPane.rowIndex="1" />
-                                <Label text="规范ID" />
-                                <Label text="船级社" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                <TextField fx:id="critIDTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" GridPane.columnIndex="1" />
-                                <TextField fx:id="critNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <TextField fx:id="outfittingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" GridPane.columnIndex="5" />
-                        <ComboBox fx:id="chuanboTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
-                        <ComboBox fx:id="critClassificationSocietyChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                            </children>
-                            <VBox.margin>
-                                <Insets left="10.0" />
-                            </VBox.margin>
-                        </GridPane>
-                        <Separator />
-                  <VBox spacing="5.0" VBox.vgrow="ALWAYS">
-                     <children>
-                                <Label alignment="CENTER" text="规范内容" textAlignment="CENTER">
-                                    <font>
-                                        <Font size="15.0" />
-                                    </font>
-                                </Label>
-                                <TextArea fx:id="critTextArea" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="383.0" prefWidth="821.0" wrapText="true" VBox.vgrow="ALWAYS" />
-                        <Label text="请将规范文件拖放于上方框内以添加/修改内容" />
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </VBox>
-                        <HBox alignment="CENTER_LEFT">
-                            <children>
-                                <Label text="文件地址：">
-                                    <font>
-                                        <Font size="15.0" />
-                                    </font>
-                                </Label>
-                                <Hyperlink fx:id="pathNameHyperlink" text="文件绝对路径名称">
-                                    <font>
-                                        <Font size="15.0" />
-                                    </font>
-                                </Hyperlink>
-                            </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="35.0" spacing="30.0">
-                            <children>
-                                <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="确定">
-                                    <font>
-                                        <Font size="13.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Button>
-                                <Button mnemonicParsing="false" onAction="#handleCancel" text="取消">
-                                    <font>
-                                        <Font size="13.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
-                    </children>
-                </VBox>
-            </children>
-        </AnchorPane>
-    </center>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.AddCriterion">
+   <center>
+          <VBox BorderPane.alignment="CENTER">
+              <children>
+                  <Label fx:id="addCriterionLabel" prefHeight="25.0">
+                      <VBox.margin>
+                          <Insets left="10.0" />
+                      </VBox.margin>
+                  </Label>
+                  <Separator fx:id="separator1" />
+                  <GridPane>
+                      <columnConstraints>
+                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="233.0" minWidth="-Infinity" prefWidth="57.0" />
+                          <ColumnConstraints hgrow="ALWAYS" maxWidth="332.0" minWidth="10.0" prefWidth="201.0" />
+                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="192.93234252929688" minWidth="-Infinity" prefWidth="64.0" />
+                          <ColumnConstraints hgrow="ALWAYS" maxWidth="303.8369140625" minWidth="10.0" prefWidth="199.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
+                          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                          <Label text="船舶类型" GridPane.columnIndex="2" />
+                          <Label text="舾装区域" GridPane.rowIndex="1" />
+                          <Label text="规范名称" />
+                          <Label text="船级社" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                          <TextField fx:id="critNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" GridPane.columnIndex="1" />
+                          <TextField fx:id="outfittingTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="chuanboTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
+                  <ComboBox fx:id="critClassificationSocietyChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                      </children>
+                      <VBox.margin>
+                          <Insets left="10.0" />
+                      </VBox.margin>
+                  </GridPane>
+                  <Separator />
+            <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+               <children>
+                          <Label alignment="CENTER" text="规范内容" textAlignment="CENTER">
+                              <font>
+                                  <Font size="15.0" />
+                              </font>
+                          </Label>
+                          <TextArea fx:id="critTextArea" onDragDropped="#handleDragDropped" onDragOver="#handleDragOver" prefHeight="350.0" prefWidth="600.0" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <Label text="请将规范文件拖放于上方框内以添加/修改内容" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+                  <HBox alignment="CENTER_LEFT">
+                      <children>
+                          <Label text="文件地址：">
+                              <font>
+                                  <Font size="15.0" />
+                              </font>
+                          </Label>
+                          <Hyperlink fx:id="pathNameHyperlink" text="文件绝对路径名称">
+                              <font>
+                                  <Font size="15.0" />
+                              </font>
+                          </Hyperlink>
+                      </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="35.0" spacing="30.0">
+                      <children>
+                          <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="确定">
+                              <font>
+                                  <Font size="13.0" />
+                              </font>
+                              <HBox.margin>
+                                  <Insets />
+                              </HBox.margin>
+                          </Button>
+                          <Button mnemonicParsing="false" onAction="#handleCancel" text="取消">
+                              <font>
+                                  <Font size="13.0" />
+                              </font>
+                              <HBox.margin>
+                                  <Insets />
+                              </HBox.margin>
+                          </Button>
+                      </children>
+                  </HBox>
+              </children>
+          </VBox>
+   </center>
 </BorderPane>

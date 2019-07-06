@@ -9,13 +9,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.AddExperience">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.AddExperience">
     <center>
         <AnchorPane fx:id="anchorpane">
             <children>
-                <VBox prefHeight="550.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Label fx:id="lbl" text="舾装设计经验知识添加/修改">
+                        <Label fx:id="addExperienceLabel">
                             <VBox.margin>
                                 <Insets left="10.0" />
                             </VBox.margin>
@@ -23,30 +23,26 @@
                         <Separator fx:id="separator2" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.4" />
                         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
                             <columnConstraints>
-                                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" prefWidth="95.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="206.0" />
                                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="192.93234252929688" minWidth="10.0" prefWidth="107.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.8369140625" minWidth="10.0" prefWidth="198.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" />
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="302.7701416015625" minWidth="0.0" prefWidth="76.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.7701416015625" minWidth="10.0" prefWidth="208.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="302.7701416015625" minWidth="10.0" prefWidth="84.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.7701416015625" minWidth="10.0" prefWidth="191.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                        <Label text="船舶类型" GridPane.columnIndex="4" />
-                        <TextField fx:id="outfittingTextField" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="7" />
-                        <Label text="舾装区域" GridPane.columnIndex="6" />
-                        <Label text="经验知识名称" GridPane.columnIndex="2" />
-                        <TextField fx:id="experienceNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="3" />
-                        <TextField fx:id="experienceIDTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" />
-                        <Label fx:id="禁忌ID" text="经验知识ID" />
-                        <ComboBox fx:id="chuanboTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="5" />
+                        <Label text="船舶类型" GridPane.columnIndex="2" />
+                        <TextField fx:id="outfittingTextField" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="5" />
+                        <Label text="舾装区域" GridPane.columnIndex="4" />
+                        <Label text="经验知识名称" />
+                        <TextField fx:id="experienceNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="chuanboTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
                             </children>
                             <VBox.margin>
-                                <Insets left="10.0" />
+                                <Insets left="10.0" right="10.0" />
                             </VBox.margin>
                         </GridPane>
                         <Separator prefWidth="200.0" />
@@ -84,14 +80,14 @@
                         <Insets left="5.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <HBox>
+                  <HBox alignment="CENTER" spacing="50.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" text="确定">
                            <font>
                               <Font size="14.0" />
                            </font>
                            <HBox.margin>
-                              <Insets left="450.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
                         <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancel" text="取消">
@@ -99,7 +95,7 @@
                               <Font size="14.0" />
                            </font>
                            <HBox.margin>
-                              <Insets left="100.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
                      </children>

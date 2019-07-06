@@ -34,9 +34,6 @@ public class AddCriterion {
     private ComboBox<String> critClassificationSocietyChoiceBox;
 
     @FXML
-    private TextField critIDTextField;
-
-    @FXML
     private ComboBox<String> chuanboTypeChoiceBox;
 
     @FXML
@@ -51,16 +48,21 @@ public class AddCriterion {
     @FXML
     private HBox criterionContentHBox;
 
+    private static class AddCriterionInstance {
+        private static final AddCriterion Instance = new AddCriterion();
+    }
+
+    public static AddCriterion getInstance() {
+        return AddCriterionInstance.Instance;
+    }
+
     private CriterionData criterion = new CriterionData();
     private String editCriterionId;
 
-    private ObservableList<String> shipTypeList = FXCollections.observableArrayList(null, "油轮", "散货船", "集装箱船", "平台", "豪华游轮");
-    private ObservableList<String> classificationSocietyList = FXCollections.observableArrayList(null, "CCS", "BV", "ABS", "DNV-GL", "LR");
-
     @FXML
     void initialize() {
-        critClassificationSocietyChoiceBox.setItems(classificationSocietyList);
-        chuanboTypeChoiceBox.setItems(shipTypeList);
+        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getChuanJiSheList()));
+        chuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getShipTypeList()));
     }
 
     //将选择的人员信息添加到修改界面中
@@ -68,7 +70,6 @@ public class AddCriterion {
         this.editCriterionId = criterion.getCriId();
 
         if (editCriterionId != null) {
-            critIDTextField.setText(criterion.getCriId());
             critNameTextField.setText(criterion.getCriName());
             chuanboTypeChoiceBox.setValue(criterion.getCriShipType());
             outfittingTextField.setText(criterion.getCriOutfittingRegion());
@@ -81,14 +82,13 @@ public class AddCriterion {
     @FXML
     public void handleOk(ActionEvent event) throws IOException {
 
-        criterion.setCriId(critIDTextField.getText());
         criterion.setCriName(critNameTextField.getText());
         criterion.setCriShipType(chuanboTypeChoiceBox.getValue());
         criterion.setCriOutfittingRegion(outfittingTextField.getText());
         criterion.setCriShipCompany(critClassificationSocietyChoiceBox.getValue());
         criterion.setCriContent(critTextArea.getText());
-        String[] temp = pathNameHyperlink.toString().split("'");
-        criterion.setCriFilePath(temp[1]);
+//        String[] temp = pathNameHyperlink.toString().split("'");
+        criterion.setCriFilePath(pathNameHyperlink.getText());
 
         if (editCriterionId != null) {
             CriterionDb.update(criterion, editCriterionId);

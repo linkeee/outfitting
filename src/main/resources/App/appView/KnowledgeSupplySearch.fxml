@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="585.0" prefWidth="1190.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxmlUtile/1" fx:controller="App.controller.KnowledgeSupplySearch">
+<TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="585.0" prefWidth="1190.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KnowledgeSupplySearch">
     <tabs>
         <Tab closable="false" text="规范检索">
             <content>
@@ -196,7 +196,87 @@
                 </AnchorPane>
             </content>
         </Tab>
-        <Tab closable="false" text="质量案例检索">
+        <Tab closable="false" text="经验知识检索">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <VBox prefHeight="550.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" spacing="20.0">
+                                    <children>
+                                        <TextField fx:id="experienceSearchTextField" prefWidth="300.0">
+                                            <HBox.margin>
+                                                <Insets />
+                                            </HBox.margin>
+                                        </TextField>
+                                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleExperienceSearch" text="检索" />
+                                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetExperience" text="重置" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="30.0" top="10.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT">
+                                    <children>
+                                        <Label prefHeight="15.0" prefWidth="54.0" text="船舶类型" />
+                                        <ComboBox fx:id="experienceShipTypeCB" editable="true" prefWidth="150.0" />
+                                        <Label prefHeight="19.0" prefWidth="90.0" text="经验知识名称">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="30.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <TextField fx:id="experienceNameTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" />
+                                        <Label prefHeight="15.0" prefWidth="55.0" text="舾装区域">
+                                            <HBox.margin>
+                                                <Insets left="30.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <TextField fx:id="experienceOutfittingTypeTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets left="30.0" top="10.0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <Separator prefWidth="200.0" />
+                                <HBox VBox.vgrow="ALWAYS">
+                                    <children>
+                              <VBox spacing="5.0">
+                                 <children>
+                                              <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="81.0" text="经验知识内容" />
+                                              <TextArea fx:id="experienceContentTextArea" wrapText="true" VBox.vgrow="ALWAYS" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
+                                        <TableView fx:id="experienceTable" fixedCellSize="25.0" prefHeight="419.0" prefWidth="600.0" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
+                                            <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                            </columnResizePolicy>
+                                            <columns>
+                                                <TableColumn fx:id="experienceIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验ID" />
+                                                <TableColumn fx:id="experienceShipTypeColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="船舶类型" />
+                                                <TableColumn fx:id="experienceOutfittingRegionColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="舾装区域" />
+                                                <TableColumn fx:id="experienceNameColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验知识名称" />
+                                                <TableColumn fx:id="experienceContentColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验知识内容" />
+                                    <TableColumn fx:id="expFilePathTC" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验文件路径" />
+                                            </columns>
+                                            <HBox.margin>
+                                                <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
+                                            </HBox.margin>
+                                        </TableView>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab closable="false" disable="true" text="质量案例检索">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
@@ -273,86 +353,6 @@
                                                 <TableColumn fx:id="c47" prefWidth="274.3929443359375" text="关键词2" visible="false" />
                                                 <TableColumn fx:id="c48" prefWidth="274.3929443359375" text="关键词3" visible="false" />
                                                 <TableColumn fx:id="c49" prefWidth="274.3929443359375" text="禁忌级别" visible="false" />
-                                            </columns>
-                                            <HBox.margin>
-                                                <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />
-                                            </HBox.margin>
-                                        </TableView>
-                                    </children>
-                                </HBox>
-                            </children>
-                        </VBox>
-                    </children>
-                </AnchorPane>
-            </content>
-        </Tab>
-        <Tab closable="false" text="经验知识检索">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                    <children>
-                        <VBox prefHeight="550.0" prefWidth="1180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-                            <children>
-                                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" spacing="20.0">
-                                    <children>
-                                        <TextField fx:id="experienceSearchTextField" prefWidth="300.0">
-                                            <HBox.margin>
-                                                <Insets />
-                                            </HBox.margin>
-                                        </TextField>
-                                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleExperienceSearch" text="检索" />
-                                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetExperience" text="重置" />
-                                    </children>
-                                    <VBox.margin>
-                                        <Insets left="30.0" top="10.0" />
-                                    </VBox.margin>
-                                </HBox>
-                                <HBox alignment="CENTER_LEFT">
-                                    <children>
-                                        <Label prefHeight="15.0" prefWidth="54.0" text="船舶类型" />
-                                        <ComboBox fx:id="experienceShipTypeCB" editable="true" prefWidth="150.0" />
-                                        <Label prefHeight="19.0" prefWidth="90.0" text="经验知识名称">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                            <HBox.margin>
-                                                <Insets left="30.0" />
-                                            </HBox.margin>
-                                        </Label>
-                                        <TextField fx:id="experienceNameTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" />
-                                        <Label prefHeight="15.0" prefWidth="55.0" text="舾装区域">
-                                            <HBox.margin>
-                                                <Insets left="30.0" />
-                                            </HBox.margin>
-                                        </Label>
-                                        <TextField fx:id="experienceOutfittingTypeTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" />
-                                    </children>
-                                    <VBox.margin>
-                                        <Insets left="30.0" top="10.0" />
-                                    </VBox.margin>
-                                </HBox>
-                                <Separator prefWidth="200.0" />
-                                <HBox VBox.vgrow="ALWAYS">
-                                    <children>
-                              <VBox spacing="5.0">
-                                 <children>
-                                              <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="81.0" text="经验知识内容" />
-                                              <TextArea fx:id="experienceContentTextArea" wrapText="true" VBox.vgrow="ALWAYS" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" top="5.0" />
-                                 </padding>
-                              </VBox>
-                                        <TableView fx:id="experienceTable" fixedCellSize="25.0" prefHeight="419.0" prefWidth="600.0" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
-                                            <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                            </columnResizePolicy>
-                                            <columns>
-                                                <TableColumn fx:id="experienceIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验ID" />
-                                                <TableColumn fx:id="experienceShipTypeColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="船舶类型" />
-                                                <TableColumn fx:id="experienceOutfittingRegionColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="舾装区域" />
-                                                <TableColumn fx:id="experienceNameColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验知识名称" />
-                                                <TableColumn fx:id="experienceContentColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验知识内容" />
-                                    <TableColumn fx:id="expFilePathTC" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验文件路径" />
                                             </columns>
                                             <HBox.margin>
                                                 <Insets bottom="5.0" left="20.0" right="5.0" top="5.0" />

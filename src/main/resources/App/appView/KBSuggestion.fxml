@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KBSuggestion">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane>
+               <children>
+                  <TextField fx:id="soutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                  <Label text="船舶类型" />
+                  <Label prefHeight="20.0" text="船东公司" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="舾装区域" GridPane.columnIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="schuanboTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="schuanDongChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="332.0" minWidth="10.0" prefWidth="113.0" />
+                  <ColumnConstraints halignment="RIGHT" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="438.0" minWidth="10.0" prefWidth="147.0" />
+                  <ColumnConstraints halignment="RIGHT" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" />
+               </rowConstraints>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </GridPane>
+            <Separator VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" spacing="20.0">
+               <children>
+                  <TextField fx:id="suggestionQueryTextField" prefWidth="300.0">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSuggestionQuery" text="搜索" />
+                  <Button mnemonicParsing="false" onAction="#showAddSuggestion" text="添加" />
+                  <Button mnemonicParsing="false" onAction="#handleEditSuggestion" text="修改" />
+                  <Button mnemonicParsing="false" onAction="#handleDeleteSuggestion" text="删除" />
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetSuggestion" text="重置" />
+               </children>
+            </HBox>
+            <Separator VBox.vgrow="ALWAYS" />
+            <HBox VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="suggestionTable" fixedCellSize="25.0" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <columns>
+                        <TableColumn fx:id="c37" prefWidth="75.0" text="船舶类型" />
+                        <TableColumn fx:id="c35" prefWidth="75.0" text="船东公司" />
+                        <TableColumn fx:id="c38" prefWidth="75.0" text="舾装区域" />
+                        <TableColumn fx:id="c39" prefWidth="75.0" text="问题描述" visible="false" />
+                        <TableColumn fx:id="c30" prefWidth="75.0" text="解决方案" visible="false" />
+                        <TableColumn fx:id="sugContentTC" prefWidth="75.0" text="意见内容" visible="false" />
+                        <TableColumn fx:id="sugFilePathTC" prefWidth="75.0" text="文件地址" />
+                     </columns>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </TableView>
+                  <VBox>
+                     <children>
+                        <Label minHeight="-Infinity" minWidth="-Infinity" text="问题描述">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="sproblemDescribeTextArea" promptText="问题描述" wrapText="true" />
+                        <Label minHeight="-Infinity" minWidth="-Infinity" text="方法描述">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="ssolutionDecribeTextArea" promptText="方法描述" wrapText="true" />
+                        <Label minHeight="-Infinity" minWidth="-Infinity" text="意见内容">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="sugContentTA" promptText="意见内容" wrapText="true" />
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="5.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

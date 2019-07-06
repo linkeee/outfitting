@@ -1,10 +1,5 @@
-.root {
-    /*-fx-background-image: url("images/蓝绿色时尚动感线条背景.png");*/
-    /*-fx-background-size: stretch stretch;*/
-    /*-fx-background-position: center;*/
-}
-
 #outfittingDesignBorderPane {
+    -fx-background-color: white;
 }
 
 #buttonVBox {
@@ -12,7 +7,7 @@
 }
 
 .button {
-    -fx-background-color: rgb(160, 191, 255);
+    -fx-background-color: rgb(0, 100, 255);
     /*设置圆角大小*/
     -fx-background-radius: 0;
     -fx-background-size: 20px;
@@ -21,32 +16,73 @@
 }
 
 .button:hover{
-    /*-fx-background-color: rgb(0, 130, 255);*/
+    -fx-background-color: rgb(174, 170, 255);
+}
+
+.combo-box {
+    -fx-background-radius: 0;
+}
+
+.text-field, .text-area {
+    -fx-background-radius: 0;
 }
 
 #outfittingItemSelectionButton {
-    -fx-background-color: rgb(0, 100, 255);
     /*设置背景图片*/
     -fx-background-image: url("images/used/设计.png");
 }
 
 #layoutDesignButton {
-    -fx-background-color: rgb(0, 100, 255);
     -fx-background-image: url("images/used/icon_deploy_layout.png");
 }
 
 #designReviewButton {
-    -fx-background-color: rgb(0, 100, 255);
     -fx-background-image: url("images/used/审批.png");
 }
 
 #exportButton {
-    -fx-background-color: rgb(0, 100, 255);
     -fx-background-image: url("images/used/excel导出.png");
 }
 
 #backHomeBtn {
-    -fx-background-color: rgb(0, 100, 255);
     -fx-background-image: url("images/used/首页.png");
     -fx-background-size: 25px;
+}
+
+/*设置表格头居中、字体大小，字体颜色*/
+.table-view .column-header .label{
+    -fx-alignment: center;
+    -fx-font-family: "Arial";
+    -fx-text-fill: rgba(0, 0, 0, 1);
+    -fx-font-size: 15;
+    -fx-background-color: #00a0ff;
+}
+
+/*设置表格头高度*/
+.table-view > .column-header-background{
+    -fx-pref-height: 25px;
+}
+
+/*设置每一列内容居中，每一行高度*/
+.table-view .table-row-cell{
+    -fx-background-insets: 0px;
+    -fx-cell-size: 25px;
+    -fx-alignment: center;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+
+.table-view:focused > .virtual-flow > .clipped-container > .sheet > .table-row-cell:filled:selected {
+    -fx-background: -fx-selection-bar;
+    -fx-table-cell-border-color: derive(-fx-selection-bar, 20%);
+    -fx-background-color: #6fbfff;
+}
+
+/*Selected when control is not focused*/
+.table-row-cell:filled > .table-cell:selected {
+    -fx-background: -fx-selection-bar-non-focused;
+    -fx-table-cell-border-color: derive(-fx-selection-bar-non-focused, 20%);
 }

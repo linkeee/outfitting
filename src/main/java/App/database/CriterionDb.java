@@ -6,8 +6,51 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CriterionDb extends DatabaseItem {
+
+    public static List<String> getShipTypeList() {
+        List<String> list = new ArrayList<>();
+
+        Connection connection = connectDB();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement("select distinct criShipType from criterion");
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String temp = resultSet.getString("criShipType");
+                if (!list.contains(temp))
+                    list.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return list;
+    }
+
+    public static List<String> getChuanJiSheList() {
+        List<String> list = new ArrayList<>();
+
+        Connection connection = connectDB();
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement("select distinct criShipCompany from criterion");
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                String temp = resultSet.getString("criShipCompany");
+                if (!list.contains(temp))
+                    list.add(temp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return list;
+    }
 
     /**
      * Return all of the criterionData in a list way.
@@ -18,10 +61,10 @@ public class CriterionDb extends DatabaseItem {
         ArrayList<CriterionData> criterionList = new ArrayList<>();
 
         Connection connection = connectDB();
-
+        PreparedStatement ps = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from criterion order by criId+0");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ps = connection.prepareStatement("select * from criterion order by criId+0");
+            ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 CriterionData criterion = new CriterionData();
                 criterion.setCriId(resultSet.getString("criId"));
@@ -36,39 +79,8 @@ public class CriterionDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return FXCollections.observableArrayList(criterionList);
-    }
-
-    /**
-     * search the criterion table to management.
-     *
-     * @param keyword
-     * @return
-     * @throws SQLException
-     */
-    public static ObservableList<CriterionData> search(String keyword) throws SQLException {
-        ArrayList<CriterionData> criterionList = new ArrayList<>();
-
-        Connection connection = connectDB();
-        PreparedStatement preparedStatement;
-
-        String sql = "select * from criterion where match (criId, criShipType, criShipCompany, criOutfittingRegion, criName, criContent, criFilePath) against (?)";
-        preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, keyword);
-
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            CriterionData criterionData = new CriterionData();
-            criterionData.setCriId(resultSet.getString("criId"));
-            criterionData.setCriShipType(resultSet.getString("criShipType"));
-            criterionData.setCriShipCompany(resultSet.getString("criShipCompany"));
-            criterionData.setCriOutfittingRegion(resultSet.getString("criOutfittingRegion"));
-            criterionData.setCriName(resultSet.getString("criName"));
-            criterionData.setCriContent(resultSet.getString("criContent"));
-            criterionData.setCriFilePath(resultSet.getString("criFilePath"));
-
-            criterionList.add(criterionData);
+        } finally {
+            closeDatabase(ps, null, connection);
         }
         return FXCollections.observableArrayList(criterionList);
     }
@@ -132,17 +144,16 @@ public class CriterionDb extends DatabaseItem {
         Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
 
-        String sql = "insert into criterion (criId, criShipType, criShipCompany, criOutfittingRegion, criName, criContent, criFilePath) value(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into criterion (criShipType, criShipCompany, criOutfittingRegion, criName, criContent, criFilePath) value (?, ?, ?, ?, ?, ?)";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, criterionData.getCriId());
-            preparedStatement.setString(2, criterionData.getCriShipType());
-            preparedStatement.setString(3, criterionData.getCriShipCompany());
-            preparedStatement.setString(4, criterionData.getCriOutfittingRegion());
-            preparedStatement.setString(5, criterionData.getCriName());
-            preparedStatement.setString(6, criterionData.getCriContent());
-            preparedStatement.setString(7, criterionData.getCriFilePath());
+            preparedStatement.setString(1, criterionData.getCriShipType());
+            preparedStatement.setString(2, criterionData.getCriShipCompany());
+            preparedStatement.setString(3, criterionData.getCriOutfittingRegion());
+            preparedStatement.setString(4, criterionData.getCriName());
+            preparedStatement.setString(5, criterionData.getCriContent());
+            preparedStatement.setString(6, criterionData.getCriFilePath());
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;
@@ -167,20 +178,19 @@ public class CriterionDb extends DatabaseItem {
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "update criterion set criId=?, criShipType=?, criShipCompany=?, criOutfittingRegion=?, criName=?, criContent=?, criFilePath=? where criId=?";
+        String sql = "update criterion set criShipType=?, criShipCompany=?, criOutfittingRegion=?, criName=?, criContent=?, criFilePath=? where criId=?";
         Connection connection = connectDB();
 
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setString(1, criterionData.getCriId());
-            preparedStatement.setString(2, criterionData.getCriShipType());
-            preparedStatement.setString(3, criterionData.getCriShipCompany());
-            preparedStatement.setString(4, criterionData.getCriOutfittingRegion());
-            preparedStatement.setString(5, criterionData.getCriName());
-            preparedStatement.setString(6, criterionData.getCriContent());
-            preparedStatement.setString(7, criterionData.getCriFilePath());
-            preparedStatement.setString(8, editCriterionDataId);
+            preparedStatement.setString(1, criterionData.getCriShipType());
+            preparedStatement.setString(2, criterionData.getCriShipCompany());
+            preparedStatement.setString(3, criterionData.getCriOutfittingRegion());
+            preparedStatement.setString(4, criterionData.getCriName());
+            preparedStatement.setString(5, criterionData.getCriContent());
+            preparedStatement.setString(6, criterionData.getCriFilePath());
+            preparedStatement.setString(7, editCriterionDataId);
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;

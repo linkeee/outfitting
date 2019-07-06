@@ -111,7 +111,6 @@ public class ModifyResult {
 
             String tempScope = scopeMap.get(pName);
             String leftScope = tempScope.split("[,， ]")[0];
-            System.out.println(leftScope);
 
             if (pv.getParam_value() == null || pv.getParam_value().equals("") || Integer.valueOf(pv.getParam_value()) < Integer.valueOf(leftScope)) {
                 pv.setParam_value(leftScope);
