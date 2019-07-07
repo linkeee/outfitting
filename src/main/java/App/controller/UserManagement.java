@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -63,11 +64,11 @@ public class UserManagement {
     void initialize() {
         positionComboBox.setItems(positionList);
         roleComboBox.setItems(roleList);
-        jobNumColumn.setCellValueFactory(cellData -> cellData.getValue().jobNumProperty());
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        telColumn.setCellValueFactory(cellData -> cellData.getValue().telProperty());
-        positionColumn.setCellValueFactory(cellData -> cellData.getValue().positionProperty());
-        roleColumn.setCellValueFactory(cellData -> cellData.getValue().roleProperty());
+        jobNumColumn.setCellValueFactory(new PropertyValueFactory<>("jobNum"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        telColumn.setCellValueFactory(new PropertyValueFactory<>("tel"));
+        positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
+        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
         personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showUserDetail(newValue));
     }
 
@@ -122,7 +123,7 @@ public class UserManagement {
             userNameTextField.setText(userData.getName());
             roleComboBox.setValue(userData.getRole());
             positionComboBox.setValue(userData.getPosition());
-            telTextField.setText(userData.getTelNum());
+            telTextField.setText(userData.getTel());
         } else {
             jobNumTextField.setText("");
             userNameTextField.setText("");

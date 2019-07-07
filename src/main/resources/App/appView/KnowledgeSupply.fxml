@@ -14,13 +14,13 @@
          <children>
             <ToolBar fx:id="topToolBar" prefHeight="40.0" prefWidth="200.0">
                <items>
-                  <Label alignment="BOTTOM_LEFT" contentDisplay="TOP" prefHeight="40.0" prefWidth="170.0" text="知识供应" textFill="WHITE">
+                  <Label fx:id="KSLabel" alignment="BOTTOM_LEFT" contentDisplay="TOP" prefHeight="40.0" prefWidth="170.0" text="知识供应" textFill="WHITE">
                      <font>
                         <Font name="Microsoft YaHei Bold" size="27.0" />
                      </font>
                   </Label>
                   <Button mnemonicParsing="false" onAction="#goKnowledgeSearch" text="知识检索" />
-                  <Button mnemonicParsing="false" onAction="#goKnowledgeActiveSupply" text="知识主动供应" />
+                  <Button mnemonicParsing="false" onAction="#goKnowledgeActiveSupply" text="知识主动供应" visible="false" />
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#backHome" text="返回" />
                </items>
             </ToolBar>

@@ -42,4 +42,8 @@ public class Constant {
      * 船级社List
      */
     public static List<String> chuanjisheList = new ArrayList<>(Arrays.asList(null, "CCS", "BV", "ABS", "DNV-GL", "LR"));
+
+    public static List<String> positionList = new ArrayList<>(Arrays.asList(null, "部长", "主任", "主管", "设计人员"));
+    public static List<String> roleList = new ArrayList<>(Arrays.asList(null, "超级管理员", "管理员", "用户"));
+
 }

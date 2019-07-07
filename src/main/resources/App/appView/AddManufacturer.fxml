@@ -27,21 +27,11 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="manuTF" prefWidth="1200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-                            <GridPane.margin>
-                                <Insets left="10.0" />
-                            </GridPane.margin>
-                        </TextField>
                         <Label text="设备型号" GridPane.rowIndex="2">
                             <font>
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="itemTypeTF" prefWidth="1200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
-                            <GridPane.margin>
-                                <Insets left="10.0" />
-                            </GridPane.margin>
-                        </TextField>
                         <Label text="参数范围" GridPane.rowIndex="3">
                             <font>
                                 <Font size="19.0" />
@@ -52,16 +42,21 @@
                                 <Font size="19.0" />
                             </font>
                         </Label>
-                        <TextArea fx:id="remarkTA" prefWidth="1200.0" wrapText="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS">
-                            <GridPane.margin>
-                                <Insets left="10.0" top="15.0" />
-                            </GridPane.margin>
-                        </TextArea>
-                        <ComboBox fx:id="outfittingNameCB" prefWidth="1200.0" GridPane.columnIndex="1">
-                            <GridPane.margin>
-                                <Insets left="10.0" />
-                            </GridPane.margin>
+                        <ComboBox fx:id="outfittingNameCB" editable="true" prefWidth="1200.0" promptText="舾装件名称" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                         </ComboBox>
+                        <TextField fx:id="manuTF" prefWidth="1200.0" promptText="设备供应商" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="itemTypeTF" prefWidth="1200.0" promptText="设备型号" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                        </TextField>
                         <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
                             <children>
                                 <Label minWidth="-Infinity" text="下限">
@@ -69,22 +64,27 @@
                                         <Insets left="10.0" />
                                     </HBox.margin>
                                 </Label>
-                                <TextField fx:id="lowerTF" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="lowerTF" promptText="下限" HBox.hgrow="ALWAYS" />
                                 <Label minWidth="-Infinity" text="上限">
                                     <HBox.margin>
                                         <Insets left="10.0" />
                                     </HBox.margin>
                                 </Label>
-                                <TextField fx:id="upperTF" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="upperTF" promptText="上限" HBox.hgrow="ALWAYS" />
                             </children>
                         </HBox>
+                        <TextArea fx:id="remarkTA" prefWidth="1200.0" promptText="备注" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                        </TextArea>
                     </children>
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" />
                         <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="273.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="60.0" minHeight="30.0" valignment="BOTTOM" />
+                        <RowConstraints minHeight="60.0" valignment="CENTER" />
                         <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
                         <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
                         <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
@@ -96,12 +96,12 @@
                 </GridPane>
                 <HBox alignment="BOTTOM_CENTER" spacing="20.0">
                     <children>
-                        <Button fx:id="okBtn" mnemonicParsing="false" onAction="#okAction" text="确认">
+                        <Button fx:id="okBtn" defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="确认">
                             <font>
                                 <Font size="13.0" />
                             </font>
                         </Button>
-                        <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelAction" text="取消">
+                        <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="取消">
                             <font>
                                 <Font size="13.0" />
                             </font>

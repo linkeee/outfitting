@@ -4,6 +4,7 @@ import App.dataModel.ManufacturerData;
 import App.database.ManufacturerDb;
 import App.database.ParamValueDb;
 import App.database.ParameterDb;
+import App.utile.MyDialog;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,6 +52,23 @@ public class AddManufacturer {
 
     @FXML
     void okAction(ActionEvent event) {
+
+        if (outfittingNameCB.getValue() == null) {
+            MyDialog.information("舾装件名称为空", "请选择舾装件名称");
+            return;
+        }
+
+        if (!lowerTF.getText().matches("^[0-9]+\\.{0,1}[0-9]{0,2}$") ||
+        !upperTF.getText().matches("^[0-9]+\\.{0,1}[0-9]{0,2}$")) {
+            MyDialog.error("参数范围输入非法", "参数范围只能包含数字和小数点");
+            return;
+        }
+
+        if (Integer.valueOf(lowerTF.getText()) > Integer.valueOf(upperTF.getText())) {
+            MyDialog.error("参数范围输入非法", "下限大于上限");
+            return;
+        }
+
         ManufacturerData manufacturerData = new ManufacturerData();
         manufacturerData.setOutfitting_name(outfittingNameCB.getValue());
         manufacturerData.setManufacturer_name(manuTF.getText());

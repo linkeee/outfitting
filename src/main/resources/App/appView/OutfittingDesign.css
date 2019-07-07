@@ -33,7 +33,7 @@
 }
 
 #layoutDesignButton {
-    -fx-background-image: url("images/used/icon_deploy_layout.png");
+    /*-fx-background-image: url("images/used/icon_deploy_layout.png");*/
 }
 
 #designReviewButton {

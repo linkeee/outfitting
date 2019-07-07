@@ -10,17 +10,18 @@ import javafx.beans.property.StringProperty;
  */
 public class UserData {
 
-    private final StringProperty name;
-    private final StringProperty tel;
-    private final StringProperty jobNum;
-    private final StringProperty position;
-    private final StringProperty role;
+    private final SimpleStringProperty name;
+    private final SimpleStringProperty tel;
+    private final SimpleStringProperty jobNum;
+    private final SimpleStringProperty position;
+    private final SimpleStringProperty role;
+    private final SimpleStringProperty password;
 
     /**
      * Default constructor.
      */
     public UserData(){
-        this(null,null,null,null,null);
+        this(null,null,null,null,null, null);
     }
 
 
@@ -32,75 +33,86 @@ public class UserData {
      * @param jobNum
      * @param position
      * @param role
+     * @param password
      */
-    public UserData(String name, String accountNum, String jobNum, String position, String role) {
+    public UserData(String name, String accountNum, String jobNum, String position, String role, String password) {
         this.name = new SimpleStringProperty(name);
         this.tel = new SimpleStringProperty(accountNum);
-
-        // Some initial dummy data, just for convenient testing.
         this.jobNum = new SimpleStringProperty(jobNum);
         this.position = new SimpleStringProperty(position);
         this.role = new SimpleStringProperty(role);
+        this.password = new SimpleStringProperty(password);
     }
 
-  public String getName() {
+    public String getName() {
         return name.get();
+    }
+
+    public SimpleStringProperty nameProperty() {
+        return name;
     }
 
     public void setName(String name) {
         this.name.set(name);
     }
-    
-    public StringProperty nameProperty() {
-        return name;
-    }
 
-    public String getTelNum() {
+    public String getTel() {
         return tel.get();
     }
 
-    public void setTelNum(String telNum) {
-        this.tel.set(telNum);
+    public SimpleStringProperty telProperty() {
+        return tel;
     }
 
-    public StringProperty telProperty() {
-        return tel;
+    public void setTel(String tel) {
+        this.tel.set(tel);
     }
 
     public String getJobNum() {
         return jobNum.get();
     }
 
+    public SimpleStringProperty jobNumProperty() {
+        return jobNum;
+    }
+
     public void setJobNum(String jobNum) {
         this.jobNum.set(jobNum);
     }
 
-    public StringProperty jobNumProperty() {
-        return jobNum;
-    }
-    
     public String getPosition() {
         return position.get();
+    }
+
+    public SimpleStringProperty positionProperty() {
+        return position;
     }
 
     public void setPosition(String position) {
         this.position.set(position);
     }
 
-    public StringProperty positionProperty() {
-        return position;
-    }
-
     public String getRole() {
         return role.get();
+    }
+
+    public SimpleStringProperty roleProperty() {
+        return role;
     }
 
     public void setRole(String role) {
         this.role.set(role);
     }
 
-    public StringProperty roleProperty() {
-        return role;
+    public String getPassword() {
+        return password.get();
     }
 
+    public SimpleStringProperty passwordProperty() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password.set(password);
+    }
 }

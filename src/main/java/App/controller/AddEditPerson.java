@@ -44,7 +44,7 @@ public class AddEditPerson {
     @FXML
     void handleOk(ActionEvent event) {
         userData.setName(nameText.getText());
-        userData.setTelNum(telText.getText());
+        userData.setTel(telText.getText());
         userData.setJobNum(jobText.getText());
         userData.setPosition(positionComboBox.getValue());
         userData.setRole(roleComboBox.getValue());
@@ -77,7 +77,7 @@ public class AddEditPerson {
         if (editJobNum != null) {
             this.userData = editUserData;
             nameText.setText(userData.getName());
-            telText.setText(userData.getTelNum());
+            telText.setText(userData.getTel());
             jobText.setText(userData.getJobNum());
             positionComboBox.setValue(userData.getPosition());
             roleComboBox.setValue(userData.getRole());

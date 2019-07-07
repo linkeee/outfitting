@@ -83,6 +83,7 @@ public class KBCriterion {
     private void handleResetGuiFan() {
         guifanTable.setItems(CriterionDb.getCriterionDataList());
         showGuiFanDetails(null);
+        refreshCB();
     }
 
     @FXML
@@ -91,6 +92,7 @@ public class KBCriterion {
         String deletedCritId = deletedCrit.getCriId();
         CriterionDb.delete(deletedCritId);
         guifanTable.setItems(CriterionDb.getCriterionDataList());
+        refreshCB();
     }
 
     @FXML
@@ -98,6 +100,7 @@ public class KBCriterion {
         CriterionData tempCriterionData = new CriterionData();
         acc.showAddGuiFan(tempCriterionData);
         guifanTable.setItems(CriterionDb.getCriterionDataList());
+        refreshCB();
     }
 
     @FXML
@@ -105,13 +108,18 @@ public class KBCriterion {
         CriterionData selectedCrit = guifanTable.getSelectionModel().getSelectedItem();
         acc.showAddGuiFan(selectedCrit);
         guifanTable.setItems(CriterionDb.getCriterionDataList());
+        refreshCB();
+    }
+
+    private void refreshCB() {
+        critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getShipTypeList()));
+        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getChuanJiSheList()));
     }
 
     @FXML
     void initialize() {
         //添加规范
-        critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getShipTypeList()));
-        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getChuanJiSheList()));
+        refreshCB();
         g32.setCellValueFactory(new PropertyValueFactory<>("criShipType"));
         criterionClassificationSocietyTC.setCellValueFactory(new PropertyValueFactory<>("criShipCompany"));
         g33.setCellValueFactory(new PropertyValueFactory<>("criOutfittingRegion"));

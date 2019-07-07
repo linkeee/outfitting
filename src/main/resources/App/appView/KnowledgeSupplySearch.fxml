@@ -87,7 +87,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                             </columnResizePolicy>
                                             <columns>
-                                                <TableColumn fx:id="criterionIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="规范ID" />
+                                                <TableColumn fx:id="criterionIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="规范ID" visible="false" />
                                                 <TableColumn fx:id="criterionShipTypeColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="船舶类型" />
                                                 <TableColumn fx:id="criterionClassificationSocietyTC" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="船级社" />
                                                 <TableColumn fx:id="criterionOutfittingRegionColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="舾装区域" />
@@ -175,7 +175,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                             </columnResizePolicy>
                                             <columns>
-                                                <TableColumn fx:id="suggestionIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="意见ID" />
+                                                <TableColumn fx:id="suggestionIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="意见ID" visible="false" />
                                                 <TableColumn fx:id="suggestionShipTypeColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="船舶类型" />
                                                 <TableColumn fx:id="c35" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="船东船检公司" />
                                                 <TableColumn fx:id="suggestionOutfittingRegionColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="舾装区域" />
@@ -257,7 +257,7 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                             </columnResizePolicy>
                                             <columns>
-                                                <TableColumn fx:id="experienceIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验ID" />
+                                                <TableColumn fx:id="experienceIdColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验ID" visible="false" />
                                                 <TableColumn fx:id="experienceShipTypeColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="船舶类型" />
                                                 <TableColumn fx:id="experienceOutfittingRegionColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="舾装区域" />
                                                 <TableColumn fx:id="experienceNameColumn" maxWidth="2000.0" minWidth="0.0" prefWidth="0.0" text="经验知识名称" />

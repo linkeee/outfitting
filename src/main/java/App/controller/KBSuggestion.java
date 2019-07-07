@@ -75,6 +75,7 @@ public class KBSuggestion {
         SuggestionData tempSuggestion = new SuggestionData();
         asc.showAddSuggestion(tempSuggestion);
         suggestionTable.setItems(SuggestionDb.getSugDataList());
+        refreshCB();
     }
 
     @FXML
@@ -82,6 +83,7 @@ public class KBSuggestion {
         SuggestionData selectedSuggestion = suggestionTable.getSelectionModel().getSelectedItem();
         asc.showAddSuggestion(selectedSuggestion);
         suggestionTable.setItems(SuggestionDb.getSugDataList());
+        refreshCB();
     }
 
     @FXML
@@ -90,19 +92,25 @@ public class KBSuggestion {
         String deletedSugDataId = deletedSugData.getSugId();
         SuggestionDb.delete(deletedSugDataId);
         suggestionTable.setItems(SuggestionDb.getSugDataList());
+        refreshCB();
     }
 
     @FXML
     private void handleResetSuggestion() {
         suggestionTable.setItems(SuggestionDb.getSugDataList());
         showSugDetails(null);
+        refreshCB();
+    }
+
+    private void refreshCB() {
+        schuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getShipTypeList()));
+        schuanDongChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getChuandongCompanyList()));
     }
 
     @FXML
     void initialize() {
         //船东船检意见表显示内容
-        schuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getShipTypeList()));
-        schuanDongChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getChuandongCompanyList()));
+        refreshCB();
         c37.setCellValueFactory(new PropertyValueFactory<>("sugShipType"));
         c38.setCellValueFactory(new PropertyValueFactory<>("sugOutfittingRegion"));
         c39.setCellValueFactory(new PropertyValueFactory<>("sugProblemDescribe"));

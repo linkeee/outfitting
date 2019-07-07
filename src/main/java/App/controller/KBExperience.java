@@ -77,6 +77,7 @@ public class KBExperience {
     private void handleResetExperience() {
         experienceTable1.setItems(ExperienceDb.getExpDataList());
         showExperienceDetails(null);
+        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
     }
 
     @FXML
@@ -85,6 +86,7 @@ public class KBExperience {
         String deletedExpId = deletedExp.getExpId();
         ExperienceDb.delete(deletedExpId);
         experienceTable1.setItems(ExperienceDb.getExpDataList());
+        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
     }
 
     @FXML
@@ -92,6 +94,7 @@ public class KBExperience {
         ExperienceData tempExperienceData = new ExperienceData();
         aec.showAddExperience(tempExperienceData);
         experienceTable1.setItems(ExperienceDb.getExpDataList());
+        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
     }
 
     @FXML
@@ -99,6 +102,7 @@ public class KBExperience {
         ExperienceData selectedExperience = experienceTable1.getSelectionModel().getSelectedItem();
         aec.showAddExperience(selectedExperience);
         experienceTable1.setItems(ExperienceDb.getExpDataList());
+        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
     }
 
     @FXML

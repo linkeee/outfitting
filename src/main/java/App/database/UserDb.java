@@ -6,8 +6,48 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserDb extends DatabaseItem {
+
+    public static String getPasswordOfUser(String userName) {
+        String ret = null;
+        Connection connection = connectDB();
+        PreparedStatement ps = null;
+        String sql = "select user_password from jproject.user where user_name = ?";
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+                ret = rs.getString("user_password");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return ret;
+    }
+
+    public static List<String> getUserNameList() {
+        List<String> list = new ArrayList<>();
+        Connection connection = connectDB();
+        PreparedStatement preparedStatement = null;
+        String sql = "select * from user order by id";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                list.add(resultSet.getString("user_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(preparedStatement, null, connection);
+        }
+        return list;
+    }
 
     /**
      * The getter and setter methods of variable userDataList.
@@ -24,13 +64,13 @@ public class UserDb extends DatabaseItem {
         Connection connection = connectDB();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from user order by jobNum+0");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from user order by id");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 UserData userData = new UserData();
                 userData.setJobNum(resultSet.getString(1));
                 userData.setName(resultSet.getString(2));
-                userData.setTelNum(resultSet.getString(3));
+                userData.setTel(resultSet.getString(3));
                 userData.setPosition(resultSet.getString(4));
                 userData.setRole(resultSet.getString(5));
 
@@ -54,7 +94,7 @@ public class UserDb extends DatabaseItem {
         Connection connection = connectDB();
         PreparedStatement preparedStatement;
 
-        String sql = "select * from user where match (jobNum, name, tel, position, role) against (?)";
+        String sql = "select * from user where match (user_jobNum, user_name, user_tel, user_position, user_role) against (?)";
         preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, keyword);
 
@@ -63,7 +103,7 @@ public class UserDb extends DatabaseItem {
             UserData userData = new UserData();
             userData.setJobNum(resultSet.getString(1));
             userData.setName(resultSet.getString(2));
-            userData.setTelNum(resultSet.getString(3));
+            userData.setTel(resultSet.getString(3));
             userData.setPosition(resultSet.getString(4));
             userData.setRole(resultSet.getString(5));
 
@@ -83,13 +123,13 @@ public class UserDb extends DatabaseItem {
         Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
 
-        String sql = "insert into user (jobNum, name, tel, position, role) value(?, ?, ?, ?, ?)";
+        String sql = "insert into user (user_jobNum, user_name, user_tel, user_position, user_role) value(?, ?, ?, ?, ?)";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, userData.getJobNum());
             preparedStatement.setString(2, userData.getName());
-            preparedStatement.setString(3, userData.getTelNum());
+            preparedStatement.setString(3, userData.getTel());
             preparedStatement.setString(4, userData.getPosition());
             preparedStatement.setString(5, userData.getRole());
 
@@ -114,14 +154,14 @@ public class UserDb extends DatabaseItem {
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "update user set jobNum=?, name=?, tel=?, position=?, role=? where jobNum=?";
+        String sql = "update user set user_jobNum=?, user_name=?, user_tel=?, user_position=?, user_role=? where user_jobNum=?";
         Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, userData.getJobNum());
             preparedStatement.setString(2, userData.getName());
-            preparedStatement.setString(3, userData.getTelNum());
+            preparedStatement.setString(3, userData.getTel());
             preparedStatement.setString(4, userData.getPosition());
             preparedStatement.setString(5, userData.getRole());
             preparedStatement.setString(6, editUserJobNum);
@@ -147,7 +187,7 @@ public class UserDb extends DatabaseItem {
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "delete from user where jobNum = ?";
+        String sql = "delete from user where user_jobNum = ?";
         Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
