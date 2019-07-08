@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.AddParameter">
+   <children>
+      <VBox>
+         <children>
+            <Label fx:id="addManuLabel">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <GridPane VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="舾装件名称">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label text="参数名称" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label text="参数类型" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label text="参数范围" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label text="参数描述" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="outfittingNameCB" editable="true" prefWidth="1200.0" promptText="舾装件名称" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ComboBox>
+                  <TextField fx:id="paramNameTF" prefWidth="1200.0" promptText="参数名称" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <Label minWidth="-Infinity" text="下限">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="lowerTF" promptText="下限" HBox.hgrow="ALWAYS" />
+                        <Label minWidth="-Infinity" text="上限">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="upperTF" promptText="上限" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="paramDescTA" prefWidth="1200.0" promptText="参数描述" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </TextArea>
+                  <ComboBox fx:id="paramTypeCB" editable="true" prefWidth="1200.0" promptText="参数类型：{已知；待求}" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ComboBox>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" />
+                  <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="273.0" />
+               </columnConstraints>
+               <padding>
+                  <Insets right="30.0" />
+               </padding>
+               <rowConstraints>
+                  <RowConstraints minHeight="60.0" valignment="CENTER" />
+                  <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="60.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints vgrow="ALWAYS" />
+               </rowConstraints>
+            </GridPane>
+            <HBox alignment="BOTTOM_CENTER" spacing="20.0">
+               <children>
+                  <Button fx:id="okBtn" defaultButton="true" mnemonicParsing="false" onAction="#okAction" text="确认">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelAction" text="取消">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

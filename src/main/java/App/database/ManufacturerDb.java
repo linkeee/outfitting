@@ -113,14 +113,11 @@ public class ManufacturerDb {
         try {
             preparedStatement = connection.prepareStatement(sql);
 
-            System.out.println(manufacturerData.getOutfitting_name());
             preparedStatement.setString(1, manufacturerData.getOutfitting_name());
             preparedStatement.setString(2, manufacturerData.getManufacturer_name());
             preparedStatement.setString(3, manufacturerData.getOutfitting_type());
-            System.out.println(manufacturerData.getParam_scope());
             preparedStatement.setString(4, manufacturerData.getParam_scope());
             preparedStatement.setString(5, manufacturerData.getRemark());
-            System.out.println(selectedManuId);
             preparedStatement.setInt(6, Integer.valueOf(selectedManuId));
 
             int i = preparedStatement.executeUpdate();

@@ -8,7 +8,7 @@
 
 <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="585.0" prefWidth="1190.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KnowledgeSupplySearch">
     <tabs>
-        <Tab closable="false" text="规范检索">
+        <Tab closable="false" text="设计规范">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
@@ -107,7 +107,7 @@
                 </AnchorPane>
             </content>
         </Tab>
-        <Tab closable="false" text="船东/船检意见检索">
+        <Tab closable="false" text="船东/船检意见">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
@@ -196,7 +196,7 @@
                 </AnchorPane>
             </content>
         </Tab>
-        <Tab closable="false" text="经验知识检索">
+        <Tab closable="false" text="经验知识">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>

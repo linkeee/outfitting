@@ -66,7 +66,10 @@ public class Calculate {
     @FXML
     void calculateAction(ActionEvent event) {
         //todo 循环调用计算模块计算待求参数结果
-
+        List<ParamAndValueData> list = projParamValueTV.getItems();
+        for (ParamAndValueData p : list) {
+            
+        }
         calculateLabel.setText("请点击保存按钮以保存计算结果" + "\r\n" + "项目: " + projLabel.getText() + "   版本: " + versionLabel.getText());
         calculateLabel.setStyle("-fx-text-fill: #ff0000");
     }

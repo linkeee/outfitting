@@ -123,7 +123,7 @@ public class UserDb extends DatabaseItem {
         Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
 
-        String sql = "insert into user (user_jobNum, user_name, user_tel, user_position, user_role) value(?, ?, ?, ?, ?)";
+        String sql = "insert into user (user_jobNum, user_name, user_tel, user_position, user_role, user_password) value(?, ?, ?, ?, ?, ?)";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -132,6 +132,7 @@ public class UserDb extends DatabaseItem {
             preparedStatement.setString(3, userData.getTel());
             preparedStatement.setString(4, userData.getPosition());
             preparedStatement.setString(5, userData.getRole());
+            preparedStatement.setString(6, userData.getPassword());
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;

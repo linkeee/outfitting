@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.SignUp">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane VBox.vgrow="ALWAYS">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="92.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="-Infinity" prefHeight="45.0" valignment="CENTER" vgrow="ALWAYS" />
+                <RowConstraints minHeight="-Infinity" prefHeight="45.0" valignment="CENTER" vgrow="ALWAYS" />
+                <RowConstraints minHeight="-Infinity" prefHeight="45.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="-Infinity" prefHeight="45.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="45.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="45.0" valignment="CENTER" vgrow="ALWAYS" />
+              </rowConstraints>
+               <children>
+                  <Label text="用户名：">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="密码：" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="确认密码：" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="工号：" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label text="职位：" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="userNameTF" GridPane.columnIndex="1" />
+                  <PasswordField fx:id="pwdPF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="pwdConfirmPF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="jobNumTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="电话：" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="telTF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="positionCB" prefWidth="3000.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS" />
+                  <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2">
+                     <image>
+                        <Image url="@images/used/星.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <image>
+                        <Image url="@images/used/星.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@images/used/星.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@images/used/星.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <image>
+                        <Image url="@images/used/星.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <VBox.margin>
+                  <Insets right="10.0" />
+               </VBox.margin>
+            </GridPane>
+            <HBox alignment="CENTER" spacing="30.0">
+               <children>
+                  <Button fx:id="okBtn" mnemonicParsing="false" onAction="#okAction" text="确认" />
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelAction" text="取消" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

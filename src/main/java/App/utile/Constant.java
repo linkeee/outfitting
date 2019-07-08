@@ -46,4 +46,6 @@ public class Constant {
     public static List<String> positionList = new ArrayList<>(Arrays.asList(null, "部长", "主任", "主管", "设计人员"));
     public static List<String> roleList = new ArrayList<>(Arrays.asList(null, "超级管理员", "管理员", "用户"));
 
+    public static List<String> paramType = new ArrayList<>(Arrays.asList("已知", "待求"));
+    public static String parameterTableName = "jproject.parameter";
 }

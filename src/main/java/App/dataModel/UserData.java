@@ -29,15 +29,15 @@ public class UserData {
      * Constructor with some initial data.
      *
      * @param name
-     * @param accountNum
+     * @param tel
      * @param jobNum
      * @param position
      * @param role
      * @param password
      */
-    public UserData(String name, String accountNum, String jobNum, String position, String role, String password) {
+    public UserData(String name, String tel, String jobNum, String position, String role, String password) {
         this.name = new SimpleStringProperty(name);
-        this.tel = new SimpleStringProperty(accountNum);
+        this.tel = new SimpleStringProperty(tel);
         this.jobNum = new SimpleStringProperty(jobNum);
         this.position = new SimpleStringProperty(position);
         this.role = new SimpleStringProperty(role);

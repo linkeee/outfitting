@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="App.formulalib.Consoler">
+    <children>
+        <TitledPane collapsible="false" layoutX="30.0" layoutY="21.0" text="公式编辑" AnchorPane.topAnchor="21.0">
+            <content>
+                <StackPane prefWidth="788.0">
+                    <children>
+                        <VBox prefHeight="250.0" spacing="30.0">
+                            <children>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                    <children>
+                                        <VBox spacing="10.0">
+                                            <children>
+                                                <Label text="待求变量"/>
+                                                <TextField fx:id="tfStringNewVariable" prefHeight="30.0"
+                                                           prefWidth="100.0" promptText="请输入待求变量名"/>
+                                            </children>
+                                        </VBox>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="=">
+                                            <font>
+                                                <Font size="46.0"/>
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets top="5.0"/>
+                                            </HBox.margin>
+                                        </Text>
+                                        <VBox spacing="10.0">
+                                            <children>
+                                                <Label text="计算代数式"/>
+                                                <TextField fx:id="tfStringNewAlgebraic" prefHeight="30.0"
+                                                           prefWidth="300.0" promptText="请输入计算代数式"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox layoutX="10.0" layoutY="10.0" spacing="10.0">
+                                            <children>
+                                                <Label text="公式备注"/>
+                                                <TextField fx:id="tfStringNewFormulaRemark" prefHeight="30.0"
+                                                           prefWidth="161.0" promptText="请输入备注"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                                <VBox spacing="20.0"
+                                      style="-fx-border-style: solid inside; -fx-border-color: black; -fx-border-insets: 0; -fx-border-radius: 3; -fx-border-width: 2; -fx-padding: 15; -fx-background-color: e4e4e4;">
+                                    <children>
+                                        <FlowPane prefHeight="200.0" prefWidth="200.0">
+                                            <children>
+                                                <Label text="是否使用规则："/>
+                                                <CheckBox fx:id="cbNewIsRuled" mnemonicParsing="false"/>
+                                            </children>
+                                        </FlowPane>
+                                        <HBox spacing="40.0">
+                                            <children>
+                                                <VBox spacing="10.0">
+                                                    <children>
+                                                        <Label text="规则变量"/>
+                                                        <TextField fx:id="tfStringNewRestrictedVariable"
+                                                                   prefWidth="100.0"/>
+                                                    </children>
+                                                </VBox>
+                                                <HBox alignment="BOTTOM_LEFT" spacing="10.0">
+                                                    <children>
+                                                        <Label text="下限值"/>
+                                                        <TextField fx:id="tfDoubleNewLowerBound"/>
+                                                    </children>
+                                                </HBox>
+                                                <HBox alignment="BOTTOM_LEFT" spacing="10.0">
+                                                    <children>
+                                                        <Label text="上限值"/>
+                                                        <TextField fx:id="tfDoubleNewUpperBound"/>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </HBox>
+                                        <VBox spacing="10.0">
+                                            <children>
+                                                <Label text="公式备注"/>
+                                                <TextField fx:id="tfStringNewRuleDescription"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                                <StackPane prefHeight="150.0" prefWidth="200.0">
+                                    <children>
+                                        <Button fx:id="submitFormula" mnemonicParsing="false" text="添加公式"/>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets/>
+                                    </VBox.margin>
+                                </StackPane>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0"/>
+                    </padding>
+                </StackPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" collapsible="false" layoutX="30.0" layoutY="451.0" text="公式查询">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0">
+                    <children>
+                        <StackPane>
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                    <children>
+                                        <VBox spacing="10.0">
+                                            <children>
+                                                <HBox spacing="50.0">
+                                                    <children>
+                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                            <children>
+                                                                <Label text="查询条件类型"/>
+                                                                <ComboBox fx:id="choiceQueryType" prefWidth="150.0">
+                                                                </ComboBox>
+                                                            </children>
+                                                        </HBox>
+                                                        <TextField fx:id="tfStringQuery" promptText="输入查询条件内容">
+                                                            <HBox.margin>
+                                                                <Insets/>
+                                                            </HBox.margin>
+                                                        </TextField>
+                                                        <Button fx:id="btQueryFormula" mnemonicParsing="false"
+                                                                text="立即查询"/>
+                                                    </children>
+                                                </HBox>
+                                                <StackPane>
+                                                    <children>
+                                                        <TableView fx:id="tvTableFormula" editable="true"
+                                                                   prefHeight="140.0" prefWidth="933.0">
+                                                            <columns>
+                                                                <TableColumn fx:id="tcTableFormulaCol1" editable="false"
+                                                                             prefWidth="64.0" resizable="false"
+                                                                             text="公式ID"/>
+                                                                <TableColumn fx:id="tcTableFormulaCol2" editable="false"
+                                                                             prefWidth="122.0" resizable="false"
+                                                                             text="待求变量名"/>
+                                                                <TableColumn fx:id="tcTableFormulaCol3" editable="false"
+                                                                             prefWidth="121.0" resizable="false"
+                                                                             text="待求变量ID"/>
+                                                                <TableColumn fx:id="tcTableFormulaCol4" editable="false"
+                                                                             minWidth="0.0" prefWidth="201.0"
+                                                                             text="计算代数式"/>
+                                                                <TableColumn fx:id="tcTableFormulaCol5" editable="false"
+                                                                             minWidth="1.0" prefWidth="88.0"
+                                                                             resizable="false" text="判断规则"/>
+                                                                <TableColumn fx:id="tcTableFormulaCol6" editable="false"
+                                                                             prefWidth="205.0" text="规则表达式"/>
+                                                                <TableColumn fx:id="tcFormulaLastColumn"
+                                                                             editable="false" prefWidth="131.0"
+                                                                             resizable="false" text="公式说明"/>
+                                                            </columns>
+                                                        </TableView>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                            <HBox.margin>
+                                                <Insets bottom="10.0" top="10.0"/>
+                                            </HBox.margin>
+                                        </VBox>
+                                        <VBox alignment="CENTER" prefWidth="100.0" spacing="60.0">
+                                            <children>
+                                                <Button fx:id="btEditFormula" contentDisplay="CENTER"
+                                                        mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0"
+                                                        text="编辑公式"/>
+                                                <Button fx:id="btDeleteFormula" contentDisplay="CENTER"
+                                                        mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0"
+                                                        text="删除公式"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                    <StackPane.margin>
+                                        <Insets left="20.0"/>
+                                    </StackPane.margin>
+                                </HBox>
+                            </children>
+                        </StackPane>
+                    </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+        <TitledPane animated="false" collapsible="false" layoutX="852.0" layoutY="21.0" pickOnBounds="false"
+                    prefHeight="416.0" prefWidth="400.0" text="变量查询">
+            <content>
+                <StackPane pickOnBounds="false">
+                    <children>
+                        <VBox pickOnBounds="false" StackPane.alignment="CENTER">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" pickOnBounds="false" spacing="10.0">
+                                    <children>
+                                        <GridPane alignment="CENTER_LEFT" maxWidth="-Infinity" minWidth="-Infinity"
+                                                  pickOnBounds="false" prefWidth="280.0" vgap="8.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0"
+                                                                   prefWidth="108.0"/>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0"
+                                                                   prefWidth="147.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="变量名"/>
+                                                <TextField fx:id="tfStringQueryVariable" prefHeight="30.0"
+                                                           prefWidth="104.0" promptText="输入变量名"
+                                                           GridPane.columnIndex="1"/>
+                                                <Label text="变量描述" GridPane.rowIndex="1"/>
+                                                <Label text="是否为中间变量" GridPane.rowIndex="2"/>
+                                                <TextField fx:id="tfStringQueryDescription" prefWidth="200.0"
+                                                           promptText="输入变量描述" GridPane.columnIndex="1"
+                                                           GridPane.rowIndex="1"/>
+                                                <CheckBox fx:id="cbIsCalculated" contentDisplay="CENTER"
+                                                          mnemonicParsing="false" GridPane.columnIndex="1"
+                                                          GridPane.rowIndex="2"/>
+                                            </children>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                        </GridPane>
+                                        <Button fx:id="btQueryVariable" mnemonicParsing="false" prefHeight="35.0"
+                                                prefWidth="80.0" text="查询">
+                                            <HBox.margin>
+                                                <Insets/>
+                                            </HBox.margin>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                                <StackPane pickOnBounds="false">
+                                    <children>
+                                        <TableView fx:id="tvTableVariable" prefHeight="180.0" prefWidth="380.0">
+                                            <columns>
+                                                <TableColumn fx:id="tcTableVariableCol1" editable="false"
+                                                             resizable="false" text="变量ID"/>
+                                                <TableColumn fx:id="tcTableVariableCol2" editable="false"
+                                                             prefWidth="60.0" resizable="false" text="变量名"/>
+                                                <TableColumn fx:id="tcTableVariableCol3" editable="false"
+                                                             prefWidth="70.0" resizable="false" text="变量类型"/>
+                                                <TableColumn fx:id="tcTableVariableCol4" maxWidth="170.0"
+                                                             prefWidth="170.0" resizable="false" text="变量描述"/>
+                                            </columns>
+                                            <StackPane.margin>
+                                                <Insets/>
+                                            </StackPane.margin>
+                                        </TableView>
+                                    </children>
+                                </StackPane>
+                                <HBox alignment="CENTER" pickOnBounds="false" spacing="50.0">
+                                    <children>
+                                        <Button fx:id="btNewVariable" mnemonicParsing="false" prefHeight="35.0"
+                                                prefWidth="80.0" text="新增变量"/>
+                                        <Button fx:id="btDeleteVariable" mnemonicParsing="false" prefHeight="35.0"
+                                                prefWidth="80.0" text="删除变量"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="20.0" top="20.0"/>
+                                    </padding>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </StackPane>
+            </content>
+        </TitledPane>
+        <VBox alignment="CENTER" layoutX="1146.0" layoutY="451.0" prefHeight="255.0" prefWidth="112.0" spacing="50.0">
+            <children>
+                <Button fx:id="btCheckAlteration" defaultButton="true" mnemonicParsing="false" prefHeight="60.0"
+                        prefWidth="120.0" text="检测公式修改"/>
+                <Button fx:id="exitWindow" cancelButton="true" mnemonicParsing="false" prefHeight="60.0"
+                        prefWidth="120.0" text="退出管理系统"/>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

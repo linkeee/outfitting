@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+            fx:controller="App.formulalib.NewVarPane">
+    <children>
+        <TitledPane animated="false" collapsible="false" contentDisplay="CENTER" prefHeight="380.0" prefWidth="600.0"
+                    text="新增变量定义">
+            <content>
+                <VBox alignment="CENTER" spacing="42.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="50.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="45.0">
+                                    <children>
+                                        <Label text="变量名"/>
+                                        <TextField fx:id="tfStringNewVariable" prefWidth="120.0"
+                                                   promptText="以大小写字母开头，不超过3位的大小写字母与数字"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                                    <children>
+                                        <Label text="变量类型"/>
+                                        <VBox alignment="CENTER_LEFT" spacing="6.0">
+                                            <children>
+                                                <RadioButton fx:id="rbBooleanVariableType1" mnemonicParsing="false"
+                                                             text="人工赋值变量"/>
+                                                <RadioButton fx:id="rbBooleanVariableType2" mnemonicParsing="false"
+                                                             text="中间变量"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                        <FlowPane alignment="CENTER_LEFT">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="30.0">
+                                    <children>
+                                        <Label text="变量描述"/>
+                                        <TextField fx:id="tfStringNewDescription" prefWidth="400.0"
+                                                   promptText="请输入变量描述，如果没有请留空"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </FlowPane>
+                        <FlowPane alignment="CENTER_LEFT">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="30.0">
+                                    <children>
+                                        <Label text="设备说明"/>
+                                        <TextField fx:id="tfStringNewDevice" prefWidth="400.0"
+                                                   promptText="请输入设备说明，如果没有请留空"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </FlowPane>
+                        <HBox alignment="CENTER" spacing="100.0">
+                            <children>
+                                <Button fx:id="btCheckNewVariable" defaultButton="true" mnemonicParsing="false"
+                                        prefHeight="40.0" prefWidth="90.0" text="检查"/>
+                                <Button fx:id="btAddNewVariable" mnemonicParsing="false" prefHeight="40.0"
+                                        prefWidth="90.0" text="执行添加"/>
+                                <Button fx:id="btCancel" cancelButton="true" mnemonicParsing="false" prefHeight="40.0"
+                                        prefWidth="90.0" text="取消"/>
+                            </children>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets left="50.0" right="50.0" top="30.0"/>
+                    </padding>
+                </VBox>
+            </content>
+            <font>
+                <Font name="System Italic" size="18.0"/>
+            </font>
+        </TitledPane>
+    </children>
+</AnchorPane>

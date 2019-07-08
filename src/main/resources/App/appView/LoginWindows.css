@@ -8,6 +8,20 @@
     -fx-background-position: center center;
 }
 
+#forgetPwdBtn {
+    -fx-text: "忘记密码？";
+    -fx-text-fill: #0098ff;
+    -fx-font-size: 13px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#forgetPwdBtn:hover {
+    -fx-text-fill: "重置";
+    -fx-font-style: #ff8a13;
+    -fx-font-size: 15px;
+}
+
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira

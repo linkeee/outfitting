@@ -170,6 +170,7 @@ public class ModifyResult {
     void initialize() {
         scopeParamNameTC.setCellValueFactory(new PropertyValueFactory<>("param_name"));
         scopeParamScopeTC.setCellValueFactory(new PropertyValueFactory<>("param_scope"));
+
         outfittingNameTC.setCellValueFactory(new PropertyValueFactory<>("outfitting_name"));
         paramNameTC.setCellValueFactory(new PropertyValueFactory<>("param_name"));
         paramTypeTC.setCellValueFactory(new PropertyValueFactory<>("param_type"));
