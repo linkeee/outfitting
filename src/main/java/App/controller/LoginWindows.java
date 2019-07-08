@@ -1,6 +1,7 @@
 package App.controller;
 
 import App.Main;
+import App.dataModel.UserData;
 import App.database.UserDb;
 import App.utile.FxmlUtile;
 import App.utile.MyDialog;
@@ -94,7 +95,9 @@ public class LoginWindows {
         stage.setScene(scene);
         stage.setTitle("重置密码");
         stage.getIcons().add(new Image("App/appView/images/used/重置密码.png"));
+
+        SignUp controller = loader.getController();
+        controller.setDisable();
         stage.showAndWait();
     }
-
 }

@@ -39,34 +39,76 @@ public class SignUp {
     @FXML
     private Button okBtn;
 
+    private boolean isForget = false;
+
     @FXML
     void okAction(ActionEvent event) {
-        System.out.println(userNameTF.getText());
-        System.out.println(pwdPF.getText());
-        System.out.println(positionCB.getValue());
-        System.out.println("-----------------");
+        if (isForget) {
+            if (userNameTF.getText().trim().length() < 1 ||
+            pwdPF.getText().trim().length() < 1 ||
+            pwdConfirmPF.getText().trim().length() < 1) {
+                MyDialog.warning("警告", "有必填项未填写");
+                return;
+            }
 
-        if (userNameTF.getText().trim().length() < 1 ||
-                pwdPF.getText().trim().length() < 1 ||
-                pwdConfirmPF.getText().trim().length() < 1 ||
-                jobNumTF.getText().trim().length() < 1 ||
-                positionCB.getValue().trim().length() < 1) {
-            MyDialog.warning("警告", "有必填项未填写");
-            return;
+            if (!UserDb.getUserNameList().contains(userNameTF.getText().trim())) {
+                MyDialog.warning("警告", "用户 “" + userNameTF.getText().trim() + "” 不存在");
+                return;
+            }
+
+            if (!pwdPF.getText().trim().matches("^[a-zA-Z_]{1}([a-zA-Z0-9]|_){5,17}$") ||
+                    !pwdConfirmPF.getText().trim().matches("^[a-zA-Z_]{1}([a-zA-Z0-9]|_){5,17}$")) {
+                MyDialog.warning("警告", "输入密码格式错误");
+                return;
+            }
+
+            if (!pwdPF.getText().trim().equals(pwdConfirmPF.getText().trim())) {
+                MyDialog.warning("警告", "两次密码输入不一致");
+                return;
+            }
+
+            UserDb.updatePwd(userNameTF.getText().trim(), pwdConfirmPF.getText().trim());
+
+        } else {
+            if (userNameTF.getText().trim().length() < 1 ||
+                    pwdPF.getText().trim().length() < 1 ||
+                    pwdConfirmPF.getText().trim().length() < 1 ||
+                    jobNumTF.getText().trim().length() < 1 ||
+                    positionCB.getValue().trim().length() < 1) {
+                MyDialog.warning("警告", "有必填项未填写");
+                return;
+            }
+
+            if (UserDb.getUserNameList().contains(userNameTF.getText().trim())) {
+                MyDialog.warning("警告", "用户名 “" + "” 已存在");
+                return;
+            }
+
+            if (!pwdPF.getText().trim().matches("^[a-zA-Z_]{1}([a-zA-Z0-9]|_){5,17}$") ||
+            !pwdConfirmPF.getText().trim().matches("^[a-zA-Z_]{1}([a-zA-Z0-9]|_){5,17}$")) {
+                MyDialog.warning("警告", "输入密码格式错误");
+                return;
+            }
+
+            if (!pwdPF.getText().trim().equals(pwdConfirmPF.getText().trim())) {
+                MyDialog.warning("警告", "两次密码输入不一致");
+                return;
+            }
+
+            if (!jobNumTF.getText().trim().matches("^[0-9]*$")) {
+                MyDialog.warning("警告", "工号只能包含数字");
+                return;
+            }
+
+            UserData userData = new UserData(
+                    userNameTF.getText(),
+                    telTF.getText().trim().length() < 1 ? null : telTF.getText().trim(),
+                    jobNumTF.getText(),
+                    positionCB.getValue(),
+                    null,
+                    pwdPF.getText().trim());
+            UserDb.insert(userData);
         }
-
-        if (!pwdPF.getText().trim().equals(pwdConfirmPF.getText().trim())) {
-            MyDialog.warning("警告", "两次密码输入不一致");
-            return;
-        }
-
-        if (!jobNumTF.getText().trim().matches("^[0-9]*$")) {
-            MyDialog.warning("警告", "工号只能包含数字");
-            return;
-        }
-
-        UserData userData = new UserData(userNameTF.getText(), telTF.getText().trim().length() < 1 ? null : telTF.getText().trim(), jobNumTF.getText(), positionCB.getValue(), null, pwdPF.getText().trim());
-        UserDb.insert(userData);
         close(event);
     }
 
@@ -82,5 +124,12 @@ public class SignUp {
 
     private void close(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();
+    }
+
+    void setDisable() {
+        isForget = true;
+        jobNumTF.setDisable(true);
+        telTF.setDisable(true);
+        positionCB.setDisable(true);
     }
 }

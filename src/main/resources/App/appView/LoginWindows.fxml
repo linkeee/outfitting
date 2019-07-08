@@ -47,7 +47,10 @@
                         <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="170.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
-            <Button fx:id="forgetPwdBtn" mnemonicParsing="false" onAction="#forgetPwdAction" />
+            <Button fx:id="forgetPwdBtn" mnemonicParsing="false" onAction="#forgetPwdAction" text="忘记密码">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
                 <HBox alignment="CENTER">
                     <children>
                         <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#signUpAction" prefHeight="30.0" prefWidth="70.0" text="注册">

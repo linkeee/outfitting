@@ -204,4 +204,28 @@ public class UserDb extends DatabaseItem {
         if (flag) System.out.println("操作成功！");
         return flag;
     }
+
+    public static boolean updatePwd(String userName, String pwd) {
+        boolean flag = true;
+
+        PreparedStatement preparedStatement = null;
+
+        String sql = "update user set user_password=? where user_name=?";
+        Connection connection = connectDB();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, pwd);
+            preparedStatement.setString(2, userName);
+
+            int i = preparedStatement.executeUpdate();
+            if (i == 0) flag = false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(preparedStatement, null, connection);
+        }
+        if (flag) System.out.println("操作成功！");
+        return flag;
+    }
 }

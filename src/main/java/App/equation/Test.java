@@ -4,11 +4,9 @@ import java.util.*;
 
 public class Test {
     public static void main(String[] args) throws MyException {
-        String expression = "7.5*(-y)";
-        List<String> list = ExpressionParser.wordAnalysis(expression);
-        for (String str : list) {
-            System.out.print(str+"  ");
-        }
+        String expression = "^[a-zA-Z_]{1}([a-zA-Z0-9]|_){5,17}$";
+        String s = "_qqq12";
+        System.out.println(s.matches(expression));
     }
 }
 

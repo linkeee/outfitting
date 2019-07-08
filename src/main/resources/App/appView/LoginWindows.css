@@ -9,7 +9,6 @@
 }
 
 #forgetPwdBtn {
-    -fx-text: "忘记密码？";
     -fx-text-fill: #0098ff;
     -fx-font-size: 13px;
     -fx-background-color: transparent;
@@ -17,8 +16,7 @@
 }
 
 #forgetPwdBtn:hover {
-    -fx-text-fill: "重置";
-    -fx-font-style: #ff8a13;
+    -fx-text-fill: #ff8a13;
     -fx-font-size: 15px;
 }
 
@@ -51,7 +49,6 @@
 .button:focused {
     -fx-border-color: white, white;
     -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
     -fx-border-insets: 1 1 1 1, 0;
 }
