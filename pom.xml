@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <!-- 模型版本。maven2.0必须是这样写，现在是maven2唯一支持的版本 -->
@@ -50,9 +50,9 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.apache.poi</groupId>-->
-            <!--<artifactId>poi</artifactId>-->
-            <!--<version_name>3.15</version_name>-->
+        <!--<groupId>org.apache.poi</groupId>-->
+        <!--<artifactId>poi</artifactId>-->
+        <!--<version_name>3.15</version_name>-->
         <!--</dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
@@ -63,9 +63,9 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.apache.poi</groupId>-->
-            <!--<artifactId>poi-ooxml</artifactId>-->
-            <!--<version_name>3.15</version_name>-->
+        <!--<groupId>org.apache.poi</groupId>-->
+        <!--<artifactId>poi-ooxml</artifactId>-->
+        <!--<version_name>3.15</version_name>-->
         <!--</dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad -->
@@ -76,9 +76,9 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.apache.poi</groupId>-->
-            <!--<artifactId>poi-scratchpad</artifactId>-->
-            <!--<version_name>3.15</version_name>-->
+        <!--<groupId>org.apache.poi</groupId>-->
+        <!--<artifactId>poi-scratchpad</artifactId>-->
+        <!--<version_name>3.15</version_name>-->
         <!--</dependency>-->
 
         <dependency>
@@ -127,6 +127,13 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>17.0.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.huaban/jieba-analysis -->
+        <dependency>
+            <groupId>com.huaban</groupId>
+            <artifactId>jieba-analysis</artifactId>
+            <version>1.0.2</version>
         </dependency>
 
     </dependencies>

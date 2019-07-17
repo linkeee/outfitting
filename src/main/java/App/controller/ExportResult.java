@@ -35,9 +35,6 @@ public class ExportResult {
     private TableColumn<ParamAndValueData, String> paramDescriptionTC;
 
     @FXML
-    private TextArea tipsTA;
-
-    @FXML
     private ComboBox<String> projCB;
 
     @FXML
@@ -87,10 +84,11 @@ public class ExportResult {
         fileChooser.setTitle("请选择模板文件...");
         fileChooser.setInitialDirectory(new File("D:\\"));
         File selectedFile = fileChooser.showOpenDialog(null);
-        this.filePath = selectedFile.getParent();
-        this.fileName = selectedFile.getName();
-
-        templeteFileLabel.setText(fileName);
+        if (selectedFile != null) {
+            this.filePath = selectedFile.getParent();
+            this.fileName = selectedFile.getName();
+            templeteFileLabel.setText(fileName);
+        }
     }
 
     @FXML
@@ -128,11 +126,6 @@ public class ExportResult {
 
     @FXML
     void initialize() {
-        tipsTA.setText("导出估算书步骤如下:\n" +
-                "1.点击右上方区域的‘选择’按钮选择模板文件。\n" +
-                "2.右键单击左下角项目表中的某一个项目，然后点击导出。\n" +
-                "3.估算书将导出到模板所在文件夹。");
-
         projCB.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
         projCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> displayProj(newValue));
         versionCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> displayVersionDesc(newValue));

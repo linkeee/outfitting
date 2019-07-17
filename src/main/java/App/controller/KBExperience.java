@@ -77,7 +77,7 @@ public class KBExperience {
     private void handleResetExperience() {
         experienceTable1.setItems(ExperienceDb.getExpDataList());
         showExperienceDetails(null);
-        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
+        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
     }
 
     @FXML
@@ -86,7 +86,7 @@ public class KBExperience {
         String deletedExpId = deletedExp.getExpId();
         ExperienceDb.delete(deletedExpId);
         experienceTable1.setItems(ExperienceDb.getExpDataList());
-        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
+        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
     }
 
     @FXML
@@ -94,7 +94,7 @@ public class KBExperience {
         ExperienceData tempExperienceData = new ExperienceData();
         aec.showAddExperience(tempExperienceData);
         experienceTable1.setItems(ExperienceDb.getExpDataList());
-        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
+        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
     }
 
     @FXML
@@ -102,13 +102,13 @@ public class KBExperience {
         ExperienceData selectedExperience = experienceTable1.getSelectionModel().getSelectedItem();
         aec.showAddExperience(selectedExperience);
         experienceTable1.setItems(ExperienceDb.getExpDataList());
-        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
+        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
     }
 
     @FXML
     void initialize() {
         //经验表里添加经验内容
-        experienceshipType1.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
+        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         e52.setCellValueFactory(new PropertyValueFactory<>("expShipType"));
         e53.setCellValueFactory(new PropertyValueFactory<>("expOutfittingRegion"));
         e54.setCellValueFactory(new PropertyValueFactory<>("expName"));
@@ -116,54 +116,35 @@ public class KBExperience {
         expFilePathTC.setCellValueFactory(new PropertyValueFactory<>("expFilePath"));
         expFilePathTC.setCellFactory(param -> new HyperlinkTableCell<>());
 
-        experienceTable1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ExperienceData>() {
-            @Override
-            public void changed(ObservableValue<? extends ExperienceData> observable, ExperienceData oldValue, ExperienceData newValue) {
-                if (newValue != null) {
-                    showExperienceDetails(newValue);
-                    expFile = newValue.getExpFilePath();
-                }
+        experienceTable1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showExperienceDetails(newValue);
+                expFile = newValue.getExpFilePath();
             }
         });
 
         experienceTable1.setItems(ExperienceDb.getExpDataList());
 
         MenuItem expItem1 = new MenuItem("打开文件");
-        expItem1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Desktop.getDesktop().open(new File(expFile));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        expItem1.setOnAction(event -> {
+            try {
+                Desktop.getDesktop().open(new File(expFile));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         MenuItem expItem2 = new MenuItem("打开文件夹");
-        expItem2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Desktop.getDesktop().open(new File(new File(expFile).getParent()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        expItem2.setOnAction(event -> {
+            try {
+                Desktop.getDesktop().open(new File(new File(expFile).getParent()));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         ContextMenu expMenu = new ContextMenu();
         expMenu.getItems().addAll(expItem1, expItem2);
-        experienceTable1.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-            @Override
-            public void handle(ContextMenuEvent event) {
-                expMenu.show(experienceTable1, event.getScreenX(), event.getScreenY());
-            }
-        });
-        experienceTable1.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                expMenu.hide();
-            }
-        });
+        experienceTable1.setOnContextMenuRequested(event -> expMenu.show(experienceTable1, event.getScreenX(), event.getScreenY()));
+        experienceTable1.setOnMouseClicked(event -> expMenu.hide());
     }
 
     //在对应格子中显示选择的属性

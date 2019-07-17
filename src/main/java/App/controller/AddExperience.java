@@ -3,6 +3,7 @@ package App.controller;
 import App.dataModel.ExperienceData;
 import App.database.ExperienceDb;
 import App.function.FileReader;
+import App.utile.Constant;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,7 +50,7 @@ public class AddExperience {
 
     @FXML
     void initialize() {
-        chuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(ExperienceDb.getShipTypeList()));
+        chuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
     }
 
     private void setExperience(ExperienceData experience) {

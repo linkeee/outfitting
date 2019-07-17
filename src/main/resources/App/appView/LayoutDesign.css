@@ -1,0 +1,8 @@
+#titleLabel{
+    -fx-background-color: rgb(0, 120, 255);
+    -fx-font-family: "仿宋";
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 7;
+}

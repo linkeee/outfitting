@@ -1,210 +1,182 @@
 package App.dataModel;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
-/**
- * Model class for a LayoutData.
- *
- */
 public class LayoutData {
 
-    private final StringProperty layoutDesignID;
-    private final StringProperty layoutDesignName;
-    private final StringProperty layoutDesignType;
-    private final StringProperty layoutShipType;
-    private final StringProperty layoutShipNum;
-    private final StringProperty layoutDesignContent;
-    private final StringProperty shipLength;
-    private final StringProperty shipWidth;
-    private final StringProperty shipDepth;
-    private final StringProperty shipDraught;
-    private final StringProperty shipCoefficients;
-    private final StringProperty shipWeight;
+    private final SimpleStringProperty id;
+    private final SimpleStringProperty outfitting_name;
+    private final SimpleStringProperty shipType;
+    private final SimpleStringProperty shipNum;
+    private final SimpleStringProperty shipTypeCoefficient;
+    private final SimpleStringProperty shipLoad;
+    private final SimpleStringProperty shipLength;
+    private final SimpleStringProperty shipWidth;
+    private final SimpleStringProperty shipDepth;
+    private final SimpleStringProperty shipDraught;
+    private final SimpleStringProperty layoutContent;
+    private final SimpleStringProperty filePath;
 
-    /**
-     * Default constructor.
-     */
-    public LayoutData(){
-        this(null,null,null,null,null,null,null,null,null,null,null,null);
+    public LayoutData() {
+        this(null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
-
-    /**
-     * Constructor.
-     * @param layoutDesignID
-     * @param layoutDesignName
-     * @param layoutDesignType
-     * @param layoutShipType
-     * @param layoutShipNum
-     * @param shipLength
-     * @param shipWidth
-     * @param shipDepth
-     * @param shipDraught
-     * @param shipCoefficients
-     * @param shipWeight
-     * @param layoutDesignContent
-     */
-    public LayoutData(String layoutDesignID, String layoutDesignName, String layoutDesignType, String layoutShipType, String layoutShipNum, String shipLength, String shipWidth, String shipDepth, String shipDraught, String shipCoefficients, String shipWeight, String layoutDesignContent) {
-        this.layoutDesignID = new SimpleStringProperty(layoutDesignID);
-        this.layoutShipType = new SimpleStringProperty(layoutShipType);
-
-        // Some initial dummy data, just for convenient testing.
-        this.layoutDesignName = new SimpleStringProperty(layoutDesignName);
-        this.layoutDesignType = new SimpleStringProperty(layoutDesignType);
-        this.layoutShipNum = new SimpleStringProperty(layoutShipNum);
-
-        this.shipLength=new SimpleStringProperty(shipLength);
-        this.shipWidth=new SimpleStringProperty(shipWidth);
-        this.shipDepth=new SimpleStringProperty(shipDepth);
-        this.shipDraught=new SimpleStringProperty(shipDraught);
-        this.shipCoefficients=new SimpleStringProperty(shipCoefficients);
-        this.shipWeight=new SimpleStringProperty(shipWeight);
-        this.layoutDesignContent=new SimpleStringProperty(layoutDesignContent);
-
+    private LayoutData(String id, String outfitting_name, String shipType, String shipNum, String shipTypeCoefficient, String shipLoad, String shipLength, String shipWidth, String shipDepth, String shipDraught, String layoutContent, String filePath) {
+        this.id = new SimpleStringProperty(id);
+        this.outfitting_name = new SimpleStringProperty(outfitting_name);
+        this.shipType = new SimpleStringProperty(shipType);
+        this.shipNum = new SimpleStringProperty(shipNum);
+        this.shipTypeCoefficient = new SimpleStringProperty(shipTypeCoefficient);
+        this.shipLoad = new SimpleStringProperty(shipLoad);
+        this.shipLength = new SimpleStringProperty(shipLength);
+        this.shipWidth = new SimpleStringProperty(shipWidth);
+        this.shipDepth = new SimpleStringProperty(shipDepth);
+        this.shipDraught = new SimpleStringProperty(shipDraught);
+        this.layoutContent = new SimpleStringProperty(layoutContent);
+        this.filePath = new SimpleStringProperty(filePath);
     }
 
-    public String getLayoutDesignID() {
-        return layoutDesignID.get();
+    public String getId() {
+        return id.get();
     }
 
-    public StringProperty layoutDesignIDProperty() {
-        return layoutDesignID;
+    public void setId(String id) {
+        this.id.set(id);
     }
 
-    public void setLayoutDesignID(String layoutDesignID) {
-        this.layoutDesignID.set(layoutDesignID);
+    public SimpleStringProperty idProperty() {
+        return id;
     }
 
-    public String getLayoutDesignName() {
-        return layoutDesignName.get();
+    public String getOutfitting_name() {
+        return outfitting_name.get();
     }
 
-    public StringProperty layoutDesignNameProperty() {
-        return layoutDesignName;
+    public void setOutfitting_name(String outfitting_name) {
+        this.outfitting_name.set(outfitting_name);
     }
 
-    public void setLayoutDesignName(String layoutDesignName) {
-        this.layoutDesignName.set(layoutDesignName);
+    public SimpleStringProperty outfitting_nameProperty() {
+        return outfitting_name;
     }
 
-    public String getLayoutDesignType() {
-        return layoutDesignType.get();
+    public String getShipType() {
+        return shipType.get();
     }
 
-    public StringProperty layoutDesignTypeProperty() {
-        return layoutDesignType;
+    public void setShipType(String shipType) {
+        this.shipType.set(shipType);
     }
 
-    public void setLayoutDesignType(String layoutDesignType) {
-        this.layoutDesignType.set(layoutDesignType);
+    public SimpleStringProperty shipTypeProperty() {
+        return shipType;
     }
 
-    public String getLayoutShipType() {
-        return layoutShipType.get();
+    public String getShipNum() {
+        return shipNum.get();
     }
 
-    public StringProperty layoutShipTypeProperty() {
-        return layoutShipType;
+    public void setShipNum(String shipNum) {
+        this.shipNum.set(shipNum);
     }
 
-    public void setLayoutShipType(String layoutShipType) {
-        this.layoutShipType.set(layoutShipType);
+    public SimpleStringProperty shipNumProperty() {
+        return shipNum;
     }
 
-    public String getLayoutShipNum() {
-        return layoutShipNum.get();
+    public String getShipTypeCoefficient() {
+        return shipTypeCoefficient.get();
     }
 
-    public StringProperty layoutShipNumProperty() {
-        return layoutShipNum;
+    public void setShipTypeCoefficient(String shipTypeCoefficient) {
+        this.shipTypeCoefficient.set(shipTypeCoefficient);
     }
 
-    public void setLayoutShipNum(String layoutShipNum) {
-        this.layoutShipNum.set(layoutShipNum);
+    public SimpleStringProperty shipTypeCoefficientProperty() {
+        return shipTypeCoefficient;
     }
 
-    public String getLayoutDesignContent() {
-        return layoutDesignContent.get();
+    public String getShipLoad() {
+        return shipLoad.get();
     }
 
-    public StringProperty layoutDesignContentProperty() {
-        return layoutDesignContent;
+    public void setShipLoad(String shipLoad) {
+        this.shipLoad.set(shipLoad);
     }
 
-    public void setLayoutDesignContent(String layoutDesignContent) {
-        this.layoutDesignContent.set(layoutDesignContent);
+    public SimpleStringProperty shipLoadProperty() {
+        return shipLoad;
     }
 
     public String getShipLength() {
         return shipLength.get();
     }
 
-    public StringProperty shipLengthProperty() {
-        return shipLength;
-    }
-
     public void setShipLength(String shipLength) {
         this.shipLength.set(shipLength);
+    }
+
+    public SimpleStringProperty shipLengthProperty() {
+        return shipLength;
     }
 
     public String getShipWidth() {
         return shipWidth.get();
     }
 
-    public StringProperty shipWidthProperty() {
-        return shipWidth;
-    }
-
     public void setShipWidth(String shipWidth) {
         this.shipWidth.set(shipWidth);
+    }
+
+    public SimpleStringProperty shipWidthProperty() {
+        return shipWidth;
     }
 
     public String getShipDepth() {
         return shipDepth.get();
     }
 
-    public StringProperty shipDepthProperty() {
-        return shipDepth;
-    }
-
     public void setShipDepth(String shipDepth) {
         this.shipDepth.set(shipDepth);
+    }
+
+    public SimpleStringProperty shipDepthProperty() {
+        return shipDepth;
     }
 
     public String getShipDraught() {
         return shipDraught.get();
     }
 
-    public StringProperty shipDraughtProperty() {
-        return shipDraught;
-    }
-
     public void setShipDraught(String shipDraught) {
         this.shipDraught.set(shipDraught);
     }
 
-    public String getShipCoefficients() {
-        return shipCoefficients.get();
+    public SimpleStringProperty shipDraughtProperty() {
+        return shipDraught;
     }
 
-    public StringProperty shipCoefficientsProperty() {
-        return shipCoefficients;
+    public String getLayoutContent() {
+        return layoutContent.get();
     }
 
-    public void setShipCoefficients(String shipCoefficients) {
-        this.shipCoefficients.set(shipCoefficients);
+    public void setLayoutContent(String layoutContent) {
+        this.layoutContent.set(layoutContent);
     }
 
-    public String getShipWeight() {
-        return shipWeight.get();
+    public SimpleStringProperty layoutContentProperty() {
+        return layoutContent;
     }
 
-    public StringProperty shipWeightProperty() {
-        return shipWeight;
+    public String getFilePath() {
+        return filePath.get();
     }
 
-    public void setShipWeight(String shipWeight) {
-        this.shipWeight.set(shipWeight);
+    public void setFilePath(String filePath) {
+        this.filePath.set(filePath);
+    }
+
+    public SimpleStringProperty filePathProperty() {
+        return filePath;
     }
 }

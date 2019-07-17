@@ -85,7 +85,7 @@ public class AddParameter {
 
     @FXML
     void initialize() {
-        outfittingNameCB.setItems(FXCollections.observableArrayList(ParameterDb.getOutfittingItems()));
+        outfittingNameCB.setItems(FXCollections.observableArrayList(Constant.getOutfittingName()));
         paramTypeCB.setItems(FXCollections.observableArrayList(Constant.paramType));
     }
 

@@ -4,6 +4,7 @@ import App.dataModel.CriterionData;
 
 import App.database.CriterionDb;
 import App.function.FileReader;
+import App.utile.Constant;
 import App.utile.FxmlUtile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,8 +62,8 @@ public class AddCriterion {
 
     @FXML
     void initialize() {
-        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getChuanJiSheList()));
-        chuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getShipTypeList()));
+        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(Constant.getChuanjisheList()));
+        chuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
     }
 
     //将选择的人员信息添加到修改界面中

@@ -63,8 +63,8 @@ public class AddSuggestion {
 
     @FXML
     void initialize() {
-        shipTypeChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getShipTypeList()));
-        shipCompanyChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getChuandongCompanyList()));
+        shipTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        shipCompanyChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipOwnerCompany()));
     }
 
     //将选择的船东意见信息添加到修改界面中

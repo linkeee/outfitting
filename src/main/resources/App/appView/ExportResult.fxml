@@ -10,38 +10,6 @@
     <children>
         <VBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox alignment="CENTER_LEFT" minHeight="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
-                    <children>
-                        <TextArea fx:id="tipsTA" prefWidth="300.0" />
-                        <VBox alignment="CENTER" spacing="20.0" HBox.hgrow="ALWAYS">
-                            <children>
-                                <Label fx:id="templeteFileLabel" text="未选择Excel模板文件" wrapText="true">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Label>
-                                <Button fx:id="selectDirectoryBtn" mnemonicParsing="false" onAction="#selectDirectoryAction" />
-                            </children>
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </VBox>
-                        <VBox alignment="CENTER" spacing="20.0" HBox.hgrow="ALWAYS">
-                            <children>
-                                <Label fx:id="resultFileLabel" text="未导出Excel文件" wrapText="true">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Label>
-                                <Button fx:id="exportBtn" mnemonicParsing="false" onAction="#exportAction" />
-                            </children>
-                        </VBox>
-                    </children>
-                    <padding>
-                        <Insets left="30.0" top="20.0" />
-                    </padding>
-                </HBox>
-                <Separator />
                 <HBox spacing="30.0">
                     <children>
                         <VBox maxWidth="1.7976931348623157E308" minWidth="200.0" spacing="30.0" HBox.hgrow="ALWAYS">
@@ -56,7 +24,7 @@
                                         <ComboBox fx:id="projCB" prefWidth="250.0" />
                                     </children>
                                 </HBox>
-                                <GridPane>
+                                <GridPane VBox.vgrow="ALWAYS">
                                     <children>
                                         <Label text="项目名称">
                                             <font>
@@ -103,7 +71,7 @@
                                                 <Font size="14.0" />
                                             </font>
                                         </Label>
-                                        <TextArea fx:id="projRemarkTA" prefHeight="500.0" prefWidth="1200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <TextArea fx:id="projRemarkTA" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets left="10.0" top="30.0" />
                                             </GridPane.margin>
@@ -146,6 +114,33 @@
                                         <TableColumn fx:id="paramDescriptionTC" prefWidth="180.0" text="参数描述" />
                                     </columns>
                                 </TableView>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                                    <VBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label fx:id="templeteFileLabel" text="未选择Excel模板文件" wrapText="true">
+                                                <font>
+                                                    <Font size="14.0" />
+                                                </font>
+                                            </Label>
+                                            <Button fx:id="selectDirectoryBtn" mnemonicParsing="false" onAction="#selectDirectoryAction" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                        <HBox.margin>
+                                            <Insets />
+                                        </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label fx:id="resultFileLabel" text="未导出Excel文件" wrapText="true">
+                                                <font>
+                                                    <Font size="14.0" />
+                                                </font>
+                                            </Label>
+                                            <Button fx:id="exportBtn" mnemonicParsing="false" onAction="#exportAction" VBox.vgrow="ALWAYS" />
+                                        </children>
+                                    </VBox>
+                           </children>
+                        </HBox>
                             </children>
                             <padding>
                                 <Insets right="20.0" />
@@ -157,6 +152,9 @@
                     </padding>
                 </HBox>
             </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
         </VBox>
     </children>
 </AnchorPane>

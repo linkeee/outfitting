@@ -4,6 +4,7 @@ import App.dataModel.ManufacturerData;
 import App.database.ManufacturerDb;
 import App.database.ParamValueDb;
 import App.database.ParameterDb;
+import App.utile.Constant;
 import App.utile.MyDialog;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -101,7 +102,7 @@ public class AddManufacturer {
 
     @FXML
     void initialize() {
-        outfittingNameCB.setItems(FXCollections.observableArrayList(ParameterDb.getOutfittingItems()));
+        outfittingNameCB.setItems(FXCollections.observableArrayList(Constant.getOutfittingName()));
     }
 
     public void showModify(ManufacturerData manufacturerData, String selectedManuId) {

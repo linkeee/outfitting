@@ -27,9 +27,9 @@
     -fx-background-image: url("images/used/打开.png");
     -fx-cursor: hand;
     -fx-background-color: rgba(255, 0, 0, 0);
-    -fx-pref-width: 80px;
-    -fx-pref-height: 80px;
-    -fx-background-size: 80px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-background-size: 40px;
     -fx-background-position: center;
 }
 
@@ -37,9 +37,9 @@
     -fx-background-image: url("images/used/导出.png");
     -fx-cursor: open-hand;
     -fx-background-color: rgba(255, 0, 0, 0);
-    -fx-pref-width: 60px;
-    -fx-pref-height: 60px;
-    -fx-background-size: 60px;
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-background-size: 30px;
     -fx-background-position: center;
 }
 

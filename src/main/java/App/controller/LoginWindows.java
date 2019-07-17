@@ -10,10 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -37,6 +34,11 @@ public class LoginWindows {
 
     @FXML
     private Button signInButton;
+
+    @FXML
+    void initialize() {
+        password.setTooltip(new Tooltip("密码由6~18位字母、数字和下划线组成，区分大小写，且必须以字母开头。"));
+    }
 
     @FXML
     void goHome(ActionEvent event) throws IOException {

@@ -6,6 +6,7 @@ public class DatabaseItem {
 
     /**
      * 初始化数据库
+     *
      * @return
      */
     public static Connection connectDB() {
@@ -17,7 +18,6 @@ public class DatabaseItem {
             String user = "root";
             String password = "sa";
             conn = DriverManager.getConnection(url, user, password);
-//            System.out.println("Database has been connected successfully!!!");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -26,6 +26,7 @@ public class DatabaseItem {
 
     /**
      * 关闭数据库
+     *
      * @param ps
      * @param sm
      * @param conn
@@ -51,6 +52,5 @@ public class DatabaseItem {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-//        System.out.println("Database has been shutdown successfully!!!");
     }
 }

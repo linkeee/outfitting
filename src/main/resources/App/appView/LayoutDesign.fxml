@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.LayoutDesign">
+    <right>
+        <Accordion>
+            <panes>
+                <TitledPane fx:id="titledPane" text="船舶参数">
+                    <content>
+                        <AnchorPane style="-fx-background-color: white;">
+                            <children>
+                                <GridPane layoutX="-73.0" layoutY="79.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="75.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="120.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="船舶编号" />
+                                        <Label text="船型系数" GridPane.rowIndex="1" />
+                                        <Label text="载重量(吨)" GridPane.rowIndex="2" />
+                                        <Label text="船长(m)" GridPane.rowIndex="3" />
+                                        <Label text="型宽(m)" GridPane.rowIndex="4" />
+                                        <Label text="型深(m)" GridPane.rowIndex="5" />
+                                        <Label text="吃水(m)" GridPane.rowIndex="6" />
+                                        <TextField fx:id="shipNumTF" promptText="船舶编号" GridPane.columnIndex="1" />
+                                        <TextField fx:id="coefTF" promptText="船型系数" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="loadTF" promptText="载重量" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <TextField fx:id="lengthTF" promptText="船长" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <TextField fx:id="widthTF" promptText="型宽" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <TextField fx:id="depthTF" promptText="型深" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        <TextField fx:id="draughtTF" promptText="吃水" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+            </panes>
+            <BorderPane.margin>
+                <Insets bottom="5.0" right="5.0" />
+            </BorderPane.margin>
+        </Accordion>
+    </right>
+    <left>
+        <TableView fx:id="table" editable="true" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="itemNameTC" minWidth="-Infinity" prefWidth="75.0" text="舾装件" />
+                <TableColumn fx:id="shipTypeTC" minWidth="-Infinity" prefWidth="75.0" text="船舶类型" />
+                <TableColumn fx:id="shipNumTC" minWidth="-Infinity" prefWidth="75.0" text="船舶编号" />
+                <TableColumn fx:id="filePathTC" minWidth="-Infinity" prefWidth="100.0" text="文件地址" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" />
+            </BorderPane.margin>
+        </TableView>
+    </left>
+    <center>
+        <VBox spacing="5.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="布局方案" />
+                <TextArea fx:id="contentTA" editable="false" prefWidth="300.0" promptText="布局方案内容" wrapText="true" VBox.vgrow="ALWAYS" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </BorderPane.margin>
+        </VBox>
+    </center>
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+            <Label fx:id="titleLabel" text="布局设计" />
+            <Separator prefWidth="200.0" />
+                <HBox alignment="CENTER_LEFT" spacing="20.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <TextField fx:id="searchTF" prefHeight="23.0" prefWidth="291.0" promptText="输入自然语言进行检索" />
+                        <Button fx:id="searchBtn" defaultButton="true" mnemonicParsing="false" onAction="#searchAction" text="搜索" />
+                        <Button fx:id="resetBtn" cancelButton="true" mnemonicParsing="false" onAction="#resetAction" text="重置" />
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <Separator prefWidth="200.0" />
+                <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="舾装件" />
+                        <ComboBox fx:id="itemNameCB" editable="true" prefWidth="150.0" promptText="舾装件名称" />
+                        <Label text="船舶类型">
+                            <padding>
+                                <Insets left="30.0" />
+                            </padding>
+                        </Label>
+                        <ComboBox fx:id="shipTypeCB" editable="true" prefWidth="150.0" promptText="船舶类型" />
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <Separator prefWidth="200.0" />
+            </children>
+            <BorderPane.margin>
+                <Insets top="5.0" />
+            </BorderPane.margin>
+        </VBox>
+    </top>
+</BorderPane>

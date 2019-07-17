@@ -2,6 +2,7 @@ package App.controller;
 
 import App.dataModel.SuggestionData;
 import App.database.SuggestionDb;
+import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -103,8 +104,8 @@ public class KBSuggestion {
     }
 
     private void refreshCB() {
-        schuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getShipTypeList()));
-        schuanDongChoiceBox.setItems(FXCollections.observableArrayList(SuggestionDb.getChuandongCompanyList()));
+        schuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        schuanDongChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipOwnerCompany()));
     }
 
     @FXML

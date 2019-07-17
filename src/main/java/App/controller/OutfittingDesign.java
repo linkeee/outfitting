@@ -36,6 +36,8 @@ public class OutfittingDesign {
     @FXML
     private Button backHomeBtn;
 
+    FxmlUtile fxmlUtile = FxmlUtile.getInstance();
+
     @FXML
     void initialize() throws IOException {
         outfittingItemSelectionButton.setTooltip(new Tooltip("舾装件智能选型"));
@@ -86,7 +88,6 @@ public class OutfittingDesign {
 
     //显示舾装智能设计界面
     void showOutfittingDesign() throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/OutfittingDesign.fxml");
         BorderPane borderPane = loader.load();
         Scene scene = new Scene(borderPane);
@@ -104,29 +105,14 @@ public class OutfittingDesign {
 
     //用borderpane加载选型界面
     private void loadSelectType() throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/SelectTypeDesign.fxml");
         outfittingDesignBorderPane.setCenter(loader.load());
     }
 
     //用borderpane加载布局设计界面
     private void loadLayoutDesign() throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
-//        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/LayoutDesignSearch.fxml");
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Temp.fxml");
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/LayoutDesign.fxml");
         outfittingDesignBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-//                OutfittingDesignLayoutDesignSearch controller = loader.getController();
-//                controller.refreshLayoutDesignTable();
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "数据加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     //用borderpane加载设计校审界面
@@ -136,19 +122,7 @@ public class OutfittingDesign {
 
     //用borderpane加载导出界面
     private void loadExport() throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Export.fxml");
         outfittingDesignBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                Export controller = loader.getController();
-//                controller.refreshProjectTable();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "数据加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 }

@@ -1,10 +1,14 @@
 package App.controller;
 
-import App.dataModel.*;
+import App.dataModel.CriterionData;
+import App.dataModel.ExperienceData;
+import App.dataModel.SuggestionData;
+import App.dataModel.TabooData;
 import App.database.CriterionDb;
 import App.database.ExperienceDb;
 import App.database.SuggestionDb;
 import App.database.TabooDb;
+import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.beans.value.ChangeListener;
@@ -14,10 +18,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
@@ -31,9 +35,12 @@ public class KnowledgeSupplySearch {
 
     @FXML
     private TableColumn<?, ?> c35;
-    @FXML private TableColumn<?, ?> sugContentTC;
-    @FXML private TableColumn<SuggestionData, String> sugFilePathTC;
-    @FXML private TextArea sugContentTA;
+    @FXML
+    private TableColumn<?, ?> sugContentTC;
+    @FXML
+    private TableColumn<SuggestionData, String> sugFilePathTC;
+    @FXML
+    private TextArea sugContentTA;
 
     @FXML
     private TableColumn<?, ?> suggestionOutfittingRegionColumn;
@@ -118,7 +125,8 @@ public class KnowledgeSupplySearch {
 
     @FXML
     private TableColumn<?, ?> experienceShipTypeColumn;
-    @FXML private TableColumn<ExperienceData, String> expFilePathTC;
+    @FXML
+    private TableColumn<ExperienceData, String> expFilePathTC;
 
     @FXML
     private ComboBox<String> tabooShipTypeCB;
@@ -194,6 +202,12 @@ public class KnowledgeSupplySearch {
 
     @FXML
     private TableColumn<?, ?> experienceOutfittingRegionColumn;
+    private ObservableList<String> jinjiLevelList = FXCollections.observableArrayList(null, "公司级", "部门级", "船级社级");
+    private ObservableList<String> shipTypeList = FXCollections.observableArrayList(Constant.getShipTypeList());
+    private ObservableList<String> classificationSocietyList = FXCollections.observableArrayList(null, "CCS", "BV", "ABS", "DNV-GL", "LR");
+    private String criFile;
+    private String sugFile;
+    private String expFile;
 
     @FXML
     void handleCriterionSearch(ActionEvent event) {
@@ -283,14 +297,6 @@ public class KnowledgeSupplySearch {
         experienceSearchTextField.setText(null);
         experienceTable.setItems(ExperienceDb.getExpDataList());
     }
-
-    private ObservableList<String> jinjiLevelList = FXCollections.observableArrayList(null, "公司级", "部门级", "船级社级");
-    private ObservableList<String> shipTypeList = FXCollections.observableArrayList(null, "油轮", "散货船", "集装箱船", "平台", "豪华游轮");
-    private ObservableList<String> classificationSocietyList = FXCollections.observableArrayList(null, "CCS", "BV", "ABS", "DNV-GL", "LR");
-
-    private String criFile;
-    private String sugFile;
-    private String expFile;
 
     @FXML
     void initialize() {

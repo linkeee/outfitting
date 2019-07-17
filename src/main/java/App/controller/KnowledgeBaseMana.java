@@ -49,15 +49,15 @@ public class KnowledgeBaseMana {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBExperience.fxml");
         kbManaBorderPane.setCenter(loader.load());
 
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
+//        Task task = new Task() {
+//            @Override
+//            protected Object call() throws Exception {
+//                loader.getController();
+//                return null;
+//            }
+//        };
+//        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+//        progressFrom.activateProgressBar();
     }
 
     @FXML
@@ -65,15 +65,15 @@ public class KnowledgeBaseMana {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBSuggestion.fxml");
         kbManaBorderPane.setCenter(loader.load());
 
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
+//        Task task = new Task() {
+//            @Override
+//            protected Object call() throws Exception {
+//                loader.getController();
+//                return null;
+//            }
+//        };
+//        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+//        progressFrom.activateProgressBar();
     }
 
     @FXML
@@ -81,15 +81,31 @@ public class KnowledgeBaseMana {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBCriterion.fxml");
         kbManaBorderPane.setCenter(loader.load());
 
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
+//        Task task = new Task() {
+//            @Override
+//            protected Object call() throws Exception {
+//                loader.getController();
+//                return null;
+//            }
+//        };
+//        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+//        progressFrom.activateProgressBar();
+    }
+
+    @FXML
+    void layoutAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBLayout.fxml");
+        kbManaBorderPane.setCenter(loader.load());
+
+//        Task task = new Task() {
+//            @Override
+//            protected Object call() throws Exception {
+//                loader.getController();
+//                return null;
+//            }
+//        };
+//        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+//        progressFrom.activateProgressBar();
     }
 
     @FXML
@@ -97,15 +113,15 @@ public class KnowledgeBaseMana {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/consoler.fxml");
         kbManaBorderPane.setCenter(loader.load());
 
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
+//        Task task = new Task() {
+//            @Override
+//            protected Object call() throws Exception {
+//                loader.getController();
+//                return null;
+//            }
+//        };
+//        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+//        progressFrom.activateProgressBar();
     }
 
     @FXML
@@ -113,15 +129,15 @@ public class KnowledgeBaseMana {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBParameter.fxml");
         kbManaBorderPane.setCenter(loader.load());
 
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
+//        Task task = new Task() {
+//            @Override
+//            protected Object call() throws Exception {
+//                loader.getController();
+//                return null;
+//            }
+//        };
+//        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
+//        progressFrom.activateProgressBar();
     }
 
     @FXML
@@ -132,4 +148,5 @@ public class KnowledgeBaseMana {
     @FXML
     void initialize() {
     }
+
 }

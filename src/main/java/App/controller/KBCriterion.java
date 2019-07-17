@@ -112,8 +112,8 @@ public class KBCriterion {
     }
 
     private void refreshCB() {
-        critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getShipTypeList()));
-        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(CriterionDb.getChuanJiSheList()));
+        critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(Constant.getChuanjisheList()));
     }
 
     @FXML
