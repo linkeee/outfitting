@@ -4,29 +4,40 @@ import App.dataModel.UserData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDb extends DatabaseItem {
 
-    public static String getPasswordOfUser(String userName) {
-        String ret = null;
+    public static UserData getUserByName(String userName) {
+        UserData userData = null;
         Connection connection = connectDB();
         PreparedStatement ps = null;
-        String sql = "select user_password from jproject.user where user_name = ?";
+        String sql = "select * from jproject.user where user_name = ?";
         try {
             ps = connection.prepareStatement(sql);
             ps.setString(1, userName);
             ResultSet rs = ps.executeQuery();
-            while (rs.next())
-                ret = rs.getString("user_password");
+            while (rs.next()) {
+                userData = new UserData();
+                userData.setId(String.valueOf(rs.getInt("id")));
+                userData.setName(rs.getString("user_name"));
+                userData.setJobNum(rs.getString("user_jobNum"));
+                userData.setPosition(rs.getString("user_position"));
+                userData.setRole(rs.getString("user_role"));
+                userData.setTel(rs.getString("user_tel"));
+                userData.setPassword(rs.getString("user_password"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeDatabase(ps, null, connection);
         }
-        return ret;
+        return userData;
     }
 
     public static List<String> getUserNameList() {
@@ -49,17 +60,18 @@ public class UserDb extends DatabaseItem {
         return list;
     }
 
-    /**
-     * The getter and setter methods of variable userDataList.
-     * @return
-     */
-    public static ObservableList<UserData> getUserDataList() {
-        ArrayList<UserData> list = getAllUser();
-        return FXCollections.observableArrayList(list);
+    public static int getSuperAdminNum() {
+        int count = 0;
+        List<UserData> list = getAllUser();
+        for (UserData userData : list) {
+            if (userData.getRole().equals("超级管理员"))
+                count++;
+        }
+        return count;
     }
 
-    private static ArrayList<UserData> getAllUser() {
-        ArrayList<UserData> userDataList = new ArrayList<>();
+    public static List<UserData> getAllUser() {
+        List<UserData> userDataList = new ArrayList<>();
 
         Connection connection = connectDB();
 
@@ -68,11 +80,13 @@ public class UserDb extends DatabaseItem {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 UserData userData = new UserData();
-                userData.setJobNum(resultSet.getString(1));
-                userData.setName(resultSet.getString(2));
-                userData.setTel(resultSet.getString(3));
-                userData.setPosition(resultSet.getString(4));
-                userData.setRole(resultSet.getString(5));
+                userData.setId(String.valueOf(resultSet.getInt("id")));
+                userData.setJobNum(resultSet.getString("user_jobNum"));
+                userData.setName(resultSet.getString("user_name"));
+                userData.setTel(resultSet.getString("user_tel"));
+                userData.setPosition(resultSet.getString("user_position"));
+                userData.setRole(resultSet.getString("user_role"));
+                userData.setPassword(resultSet.getString("user_password"));
 
                 userDataList.add(userData);
             }
@@ -84,6 +98,7 @@ public class UserDb extends DatabaseItem {
 
     /**
      * query the userTable and return the result of query in observableList way.
+     *
      * @param keyword
      * @return
      * @throws SQLException
@@ -114,6 +129,7 @@ public class UserDb extends DatabaseItem {
 
     /**
      * 向users数据库中添加人员信息
+     *
      * @param userData
      * @return
      */
@@ -147,15 +163,16 @@ public class UserDb extends DatabaseItem {
 
     /**
      * 修改users数据库中的人员信息
+     *
      * @param userData
      * @return
      */
-    public static boolean update(UserData userData, String editUserJobNum) {
+    public static boolean update(UserData userData, int editUserId) {
         boolean flag = true;
 
         PreparedStatement preparedStatement = null;
 
-        String sql = "update user set user_jobNum=?, user_name=?, user_tel=?, user_position=?, user_role=? where user_jobNum=?";
+        String sql = "update user set user_jobNum=?, user_name=?, user_tel=?, user_position=?, user_role=? where id=?";
         Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -165,7 +182,7 @@ public class UserDb extends DatabaseItem {
             preparedStatement.setString(3, userData.getTel());
             preparedStatement.setString(4, userData.getPosition());
             preparedStatement.setString(5, userData.getRole());
-            preparedStatement.setString(6, editUserJobNum);
+            preparedStatement.setInt(6, editUserId);
 
             int i = preparedStatement.executeUpdate();
             if (i == 0) flag = false;
@@ -180,6 +197,7 @@ public class UserDb extends DatabaseItem {
 
     /**
      * 删除users数据库中的人员条目
+     *
      * @param jobNum
      * @return
      */
@@ -227,5 +245,18 @@ public class UserDb extends DatabaseItem {
         }
         if (flag) System.out.println("操作成功！");
         return flag;
+    }
+
+    public static void setRoleToLow(String userId) {
+        PreparedStatement ps = null;
+        Connection connection = connectDB();
+        try {
+            ps = connection.prepareStatement("update user set user_role = ? where id = ?");
+            ps.setString(1, "用户");
+            ps.setInt(2, Integer.valueOf(userId));
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

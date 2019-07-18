@@ -24,7 +24,7 @@ public class JxlFromDbToExcel {
             wwb = Workbook.createWorkbook(file);
 
             // 创建工作表
-            WritableSheet ws = wwb.createSheet("Test Shee 1", 0);
+            WritableSheet ws = wwb.createSheet("App.utile.Test Shee 1", 0);
 
             //查询数据库中所有的数据
             List<ParameterData> list = ParameterDb.getParameterList();

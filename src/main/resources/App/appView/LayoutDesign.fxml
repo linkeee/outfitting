@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.LayoutDesign">
+<BorderPane xmlns="http://javafx.com/javafx/8" stylesheets="@LayoutDesign.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.LayoutDesign">
     <right>
         <Accordion>
             <panes>

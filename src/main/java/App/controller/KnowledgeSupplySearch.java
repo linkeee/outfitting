@@ -11,6 +11,7 @@ import App.database.TabooDb;
 import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,12 +50,6 @@ public class KnowledgeSupplySearch {
     private TextField experienceOutfittingTypeTextField1;
 
     @FXML
-    private TableColumn<?, ?> tabooOutfittingRegionColumn;
-
-    @FXML
-    private TextField tabooSearchTextField;
-
-    @FXML
     private ComboBox<String> criterionShipTypeCB;
 
     @FXML
@@ -62,9 +57,6 @@ public class KnowledgeSupplySearch {
 
     @FXML
     private TextField guifanOutfittingTypeTextField;
-
-    @FXML
-    private ComboBox<String> tabooLevelCB;
 
     @FXML
     private TextArea suggestionProblemTextArea;
@@ -76,34 +68,13 @@ public class KnowledgeSupplySearch {
     private TableColumn<?, ?> suggestionIdColumn;
 
     @FXML
-    private TableColumn<?, ?> tabooIdColumn;
-
-    @FXML
     private ComboBox<String> suggestionChuandongCompanyCB;
-
-    @FXML
-    private TableColumn<?, ?> tabooNameColumn;
-
-    @FXML
-    private TableColumn<?, ?> c46;
 
     @FXML
     private ComboBox<String> criterionChuanjisheCB;
 
     @FXML
     private TableColumn<?, ?> criterionShipTypeColumn;
-
-    @FXML
-    private TableColumn<?, ?> c48;
-
-    @FXML
-    private TableColumn<?, ?> c47;
-
-    @FXML
-    private TableColumn<?, ?> c49;
-
-    @FXML
-    private TextArea tabooContentTextArea;
 
     @FXML
     private TableColumn<?, ?> experienceNameColumn;
@@ -129,28 +100,13 @@ public class KnowledgeSupplySearch {
     private TableColumn<ExperienceData, String> expFilePathTC;
 
     @FXML
-    private ComboBox<String> tabooShipTypeCB;
-
-    @FXML
     private TableColumn<?, ?> problemColumn;
 
     @FXML
     private TableColumn<?, ?> experienceIdColumn;
 
     @FXML
-    private TableColumn<?, ?> tabooShipTypeColumn;
-
-    @FXML
-    private TextField jinjiNameTextField;
-
-    @FXML
     private TableColumn<?, ?> criterionOutfittingRegionColumn;
-
-    @FXML
-    private TableColumn<?, ?> tabooContentColumn;
-
-    @FXML
-    private TextField jinjioutfittingTypeTextField;
 
     @FXML
     private TextField experienceNameTextField1;
@@ -183,9 +139,6 @@ public class KnowledgeSupplySearch {
     private TableColumn<?, ?> criterionClassificationSocietyTC;
 
     @FXML
-    private TableView<TabooData> tabooTable;
-
-    @FXML
     private TableView<CriterionData> criterionTable;
 
     @FXML
@@ -202,9 +155,9 @@ public class KnowledgeSupplySearch {
 
     @FXML
     private TableColumn<?, ?> experienceOutfittingRegionColumn;
-    private ObservableList<String> jinjiLevelList = FXCollections.observableArrayList(null, "公司级", "部门级", "船级社级");
+
     private ObservableList<String> shipTypeList = FXCollections.observableArrayList(Constant.getShipTypeList());
-    private ObservableList<String> classificationSocietyList = FXCollections.observableArrayList(null, "CCS", "BV", "ABS", "DNV-GL", "LR");
+    private ObservableList<String> classificationSocietyList = FXCollections.observableArrayList(Constant.getChuanjisheList());
     private String criFile;
     private String sugFile;
     private String expFile;
@@ -254,25 +207,6 @@ public class KnowledgeSupplySearch {
         soutfittingTypeTextField.setText(null);
         suggestionSearchTextField.setText(null);
         suggestionTable.setItems(SuggestionDb.getSugDataList());
-    }
-
-    @FXML
-    void handleTabooSearch(ActionEvent event) {
-        String keyword = tabooShipTypeCB.getValue() +
-                tabooLevelCB.getValue() +
-                jinjiNameTextField.getText() +
-                jinjioutfittingTypeTextField.getText() +
-                tabooSearchTextField.getText();
-        try {
-            tabooTable.setItems(TabooDb.query(keyword));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void handleResetTaboo(ActionEvent event) {
-        tabooTable.setItems(TabooDb.getTabooDataList());
     }
 
     @FXML
@@ -431,16 +365,6 @@ public class KnowledgeSupplySearch {
             }
         });
 
-        //tabooTable绑定
-        tabooShipTypeCB.setItems(shipTypeList);
-        tabooLevelCB.setItems(jinjiLevelList);
-        tabooIdColumn.setCellValueFactory(new PropertyValueFactory<>("jinjiID"));
-        tabooShipTypeColumn.setCellValueFactory(new PropertyValueFactory<>("shipType"));
-        tabooOutfittingRegionColumn.setCellValueFactory(new PropertyValueFactory<>("outfittingType"));
-        tabooNameColumn.setCellValueFactory(new PropertyValueFactory<>("jinjiName"));
-        tabooContentColumn.setCellValueFactory(new PropertyValueFactory<>("jinjiContent"));
-        tabooTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showTabooDetail(newValue));
-
         //experienceTable绑定
         experienceShipTypeCB.setItems(shipTypeList);
         experienceIdColumn.setCellValueFactory(new PropertyValueFactory<>("expId"));
@@ -502,7 +426,6 @@ public class KnowledgeSupplySearch {
     void refreshAllTable() {
         criterionTable.setItems(CriterionDb.getCriterionDataList());
         suggestionTable.setItems(SuggestionDb.getSugDataList());
-        tabooTable.setItems(TabooDb.getTabooDataList());
         experienceTable.setItems(ExperienceDb.getExpDataList());
     }
 
@@ -523,14 +446,6 @@ public class KnowledgeSupplySearch {
             suggestionProblemTextArea.setText("");
             suggestionSolutionTextArea.setText("");
             sugContentTA.setText("");
-        }
-    }
-
-    private void showTabooDetail(TabooData tabooData) {
-        if (tabooData != null) {
-            tabooContentTextArea.setText(tabooData.getJinjiContent());
-        } else {
-            tabooContentTextArea.setText("");
         }
     }
 

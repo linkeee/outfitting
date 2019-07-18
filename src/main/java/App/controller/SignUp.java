@@ -45,8 +45,8 @@ public class SignUp {
     void okAction(ActionEvent event) {
         if (isForget) {
             if (userNameTF.getText().trim().length() < 1 ||
-            pwdPF.getText().trim().length() < 1 ||
-            pwdConfirmPF.getText().trim().length() < 1) {
+                    pwdPF.getText().trim().length() < 1 ||
+                    pwdConfirmPF.getText().trim().length() < 1) {
                 MyDialog.warning("警告", "有必填项未填写");
                 return;
             }
@@ -66,6 +66,9 @@ public class SignUp {
                 MyDialog.warning("警告", "两次密码输入不一致");
                 return;
             }
+
+            MyDialog.information("修改密码成功，权限置为‘用户’级别", "请联系超级管理员修改");
+            UserDb.setRoleToLow(UserDb.getUserByName(userNameTF.getText()).getId());
 
             UserDb.updatePwd(userNameTF.getText().trim(), pwdConfirmPF.getText().trim());
 
@@ -101,6 +104,7 @@ public class SignUp {
             }
 
             UserData userData = new UserData(
+                    null,
                     userNameTF.getText(),
                     telTF.getText().trim().length() < 1 ? null : telTF.getText().trim(),
                     jobNumTF.getText(),
@@ -119,7 +123,7 @@ public class SignUp {
 
     @FXML
     void initialize() {
-        positionCB.setItems(FXCollections.observableArrayList(Constant.positionList));
+        positionCB.setItems(FXCollections.observableArrayList(Constant.getPositionList()));
     }
 
     private void close(ActionEvent event) {

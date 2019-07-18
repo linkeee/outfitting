@@ -1,4 +1,4 @@
-package App;
+package App.utile;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,13 +19,28 @@ public class Test {
 //        }
         // 输入目录及输出目录
 
-        String inputpath = "F:\\fea培训";
-        String outpath = "F:\\fea培训";
-        HashMap<String, HashMap<String, Float>> all_tf = tfAllFiles(inputpath);
-        System.out.println();
-        HashMap<String, Float> idfs = idf(all_tf);
-        //        System.out.println();
-        tf_idf(all_tf, idfs, outpath);
+//        String inputpath = "F:\\fea培训";
+//        String outpath = "F:\\fea培训";
+//        HashMap<String, HashMap<String, Float>> all_tf = tfAllFiles(inputpath);
+//        System.out.println();
+//        HashMap<String, Float> idfs = idf(all_tf);
+//        //        System.out.println();
+//        tf_idf(all_tf, idfs, outpath);
+
+//        File file = new File(App.utile.Test.class.getResource(""));
+//        List<String> stopWords = new ArrayList<>();
+//        try {
+//            BufferedReader reader = new BufferedReader(new FileReader(file));
+//            String tempLine;
+//            while ((tempLine = reader.readLine()) != null) {
+//                if (!stopWords.contains(tempLine))
+//                    stopWords.add(tempLine);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        System.out.println(Test.class.getClassLoader().getResource("stopwords.txt"));
     }
 
     //获取文件名

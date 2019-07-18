@@ -10,6 +10,7 @@ import javafx.beans.property.StringProperty;
  */
 public class UserData {
 
+    private final SimpleStringProperty id;
     private final SimpleStringProperty name;
     private final SimpleStringProperty tel;
     private final SimpleStringProperty jobNum;
@@ -21,7 +22,7 @@ public class UserData {
      * Default constructor.
      */
     public UserData(){
-        this(null,null,null,null,null, null);
+        this(null,null,null,null,null, null, null);
     }
 
 
@@ -35,13 +36,26 @@ public class UserData {
      * @param role
      * @param password
      */
-    public UserData(String name, String tel, String jobNum, String position, String role, String password) {
+    public UserData(String id, String name, String tel, String jobNum, String position, String role, String password) {
+        this.id = new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
         this.tel = new SimpleStringProperty(tel);
         this.jobNum = new SimpleStringProperty(jobNum);
         this.position = new SimpleStringProperty(position);
         this.role = new SimpleStringProperty(role);
         this.password = new SimpleStringProperty(password);
+    }
+
+    public String getId() {
+        return id.get();
+    }
+
+    public SimpleStringProperty idProperty() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id.set(id);
     }
 
     public String getName() {

@@ -1,12 +1,15 @@
 package App.controller;
 
 import App.Main;
+import App.utile.Docker;
 import App.utile.FxmlUtile;
+import App.utile.MyDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -14,6 +17,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Home {
+
+    @FXML
+    private Button button1, button2, button3, button4;
 
     @FXML
     void goKnowledgeManagement(ActionEvent event) throws IOException {
@@ -59,6 +65,20 @@ public class Home {
 
     @FXML
     void initialize() {
+        switch (Docker.get("userRole").toString()) {
+            case "管理员":
+                button1.setDisable(false);
+                button2.setDisable(false);
+                button3.setDisable(false);
+                button4.setDisable(true);
+                break;
+            case "用户":
+                button1.setDisable(true);
+                button2.setDisable(false);
+                button3.setDisable(false);
+                button4.setDisable(true);
+                break;
+        }
     }
 
     static Stage stage = new Stage();

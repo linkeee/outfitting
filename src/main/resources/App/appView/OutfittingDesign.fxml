@@ -18,8 +18,8 @@
                             </VBox.margin>
                         </Button>
                         <Button fx:id="layoutDesignButton" mnemonicParsing="false" onAction="#goLayoutDesign" prefHeight="40.0" prefWidth="40.0" />
-                        <Button fx:id="designReviewButton" mnemonicParsing="false" onAction="#goDesignReview" prefHeight="40.0" prefWidth="40.0" />
                         <Button fx:id="exportButton" mnemonicParsing="false" onAction="#goExport" prefHeight="40.0" prefWidth="40.0" />
+                        <Button fx:id="designReviewButton" mnemonicParsing="false" onAction="#goDesignReview" prefHeight="40.0" prefWidth="40.0" visible="false" />
                     </children>
                     <VBox.margin>
                         <Insets />

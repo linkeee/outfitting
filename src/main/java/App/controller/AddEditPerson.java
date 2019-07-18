@@ -2,8 +2,9 @@ package App.controller;
 
 import App.dataModel.UserData;
 import App.database.UserDb;
-import App.utile.MyDialog;
+import App.utile.Constant;
 import App.utile.FxmlUtile;
+import App.utile.MyDialog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,11 +35,16 @@ public class AddEditPerson {
 
     @FXML
     private ComboBox<String> roleComboBox;
+    private ObservableList<String> positionList = FXCollections.observableArrayList("设计人员", "主管", "主任", "部长");
+    private ObservableList<String> roleList = FXCollections.observableArrayList("用户", "管理员", "超级管理员");
+    private UserData userData = new UserData();
+    private String editId;
+    FxmlUtile fxmlUtile = FxmlUtile.getInstance();
 
     @FXML
-    private void initialize () {
-        positionComboBox.setItems(positionList);
-        roleComboBox.setItems(roleList);
+    private void initialize() {
+        positionComboBox.setItems(FXCollections.observableArrayList(Constant.getPositionList()));
+        roleComboBox.setItems(FXCollections.observableArrayList(Constant.roleList));
     }
 
     @FXML
@@ -49,14 +55,24 @@ public class AddEditPerson {
         userData.setPosition(positionComboBox.getValue());
         userData.setRole(roleComboBox.getValue());
 
-        if (editJobNum != null) {
-            UserDb.update(userData, editJobNum);
+        if (nameText.getText().length() < 1 ||
+                jobText.getText().length() < 1 ||
+                positionComboBox.getValue() == null ||
+                positionComboBox.getValue().length() < 1 ||
+                roleComboBox.getValue() == null ||
+                roleComboBox.getValue().length() < 1) {
+            MyDialog.warning("警告", "有必填项未填写");
+            return;
+        }
+
+        if (editId != null) {
+            UserDb.update(userData, Integer.valueOf(editId));
             closeAddEditPerson(event);
-            MyDialog.information(null, userData.getName()+"的信息已修改!");
+            MyDialog.information(null, userData.getName() + "的信息已修改!");
         } else {
-            UserDb.insert(userData);
-            closeAddEditPerson(event);
-            MyDialog.information(null, "已添加用户"+userData.getName());
+//            UserDb.insert(userData);
+//            closeAddEditPerson(event);
+//            MyDialog.information(null, "已添加用户" + userData.getName());
         }
     }
 
@@ -65,16 +81,10 @@ public class AddEditPerson {
         closeAddEditPerson(event);
     }
 
-    private ObservableList<String> positionList = FXCollections.observableArrayList("设计人员","主管","主任","部长");
-    private ObservableList<String> roleList = FXCollections.observableArrayList("用户","管理员","超级管理员");
-
-    private UserData userData = new UserData();
-    private String editJobNum;
-
     //将选择的人员信息添加到修改界面中
     private void setUserData(UserData editUserData) {
-        this.editJobNum = editUserData.getJobNum();
-        if (editJobNum != null) {
+        this.editId = editUserData.getId();
+        if (editId != null) {
             this.userData = editUserData;
             nameText.setText(userData.getName());
             telText.setText(userData.getTel());
@@ -86,16 +96,12 @@ public class AddEditPerson {
 
     //显示添加、修改人员界面
     void showAddEditPerson(UserData userData) throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
+        fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/AddEditPerson.fxml");
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        if (editJobNum != null) {
-            stage.setTitle("Edit UserData!");
-        } else {
-            stage.setTitle("Add UserData!");
-        }
+        stage.setTitle("修改");
         stage.setScene(scene);
         AddEditPerson addEditPerson = loader.getController();
         addEditPerson.setUserData(userData);
@@ -104,7 +110,7 @@ public class AddEditPerson {
 
     //关闭添加、修改人员界面
     private void closeAddEditPerson(ActionEvent event) {
-        ((Node)(event.getSource())).getScene().getWindow().hide();
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
 }

@@ -42,7 +42,7 @@
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Label alignment="CENTER" text="企业知识资源管理" />
+                  <Label alignment="CENTER" text="企业信息资源管理" />
                </children>
                <HBox.margin>
                   <Insets top="30.0" />
@@ -55,7 +55,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label alignment="CENTER" text="舾装智能设计" />
+                  <Label alignment="CENTER" text="智能舾装设计" />
                </children>
                <HBox.margin>
                   <Insets top="30.0" />
@@ -68,7 +68,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label alignment="CENTER" text="知识供应" />
+                  <Label alignment="CENTER" text="知识主动供应" />
                </children>
                <HBox.margin>
                   <Insets top="30.0" />

@@ -18,8 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 public class LayoutDesign {
@@ -89,6 +88,11 @@ public class LayoutDesign {
         String searchWord = searchTF.getText().trim().replace(" ", "").replace("\r", "").replace("\n", "");
         JiebaSegmenter jieba = new JiebaSegmenter();
         List<String> list = jieba.sentenceProcess(searchWord);
+        List<String> stopWords = Constant.getStopWords();
+        for (String s : list) {
+            if (stopWords.contains(s))
+                list.remove(s);
+        }
         List<LayoutData> layoutDataList = LayoutDb.query(list);
         table.setItems(FXCollections.observableArrayList(layoutDataList));
     }
@@ -112,6 +116,7 @@ public class LayoutDesign {
 
     @FXML
     void initialize() {
+
         shipTypeCB.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         itemNameCB.setItems(FXCollections.observableArrayList(Constant.getOutfittingName()));
         itemNameTC.setCellValueFactory(new PropertyValueFactory<>("outfitting_name"));

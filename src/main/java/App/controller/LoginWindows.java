@@ -3,6 +3,7 @@ package App.controller;
 import App.Main;
 import App.dataModel.UserData;
 import App.database.UserDb;
+import App.utile.Docker;
 import App.utile.FxmlUtile;
 import App.utile.MyDialog;
 import javafx.collections.FXCollections;
@@ -61,9 +62,18 @@ public class LoginWindows {
             return;
         }
 
-        if (!UserDb.getPasswordOfUser(userNameText).equals(userPassword)) {
+        if (!UserDb.getUserByName(userNameText).getPassword().equals(userPassword)) {
             MyDialog.error("登录失败", "密码输入有误");
             return;
+        }
+
+        String role = UserDb.getUserByName(userNameText).getRole();
+        if (role == null || role.equals("")) {
+            MyDialog.information("未识别用户安全等级", "将按照普通用户等级处理");
+            Docker.put("userRole", "用户");
+//            return;
+        } else {
+            Docker.put("userRole", role);
         }
 
         Main main = new Main();

@@ -1,7 +1,12 @@
 package App.utile;
 
+import App.dataModel.UserData;
 import App.database.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class Constant {
@@ -30,11 +35,31 @@ public class Constant {
      */
     public static String selectedTypeTableName = "jproject.selectedtype";
 
-    public static List<String> positionList = new ArrayList<>(Arrays.asList(null, "部长", "主任", "主管", "设计人员"));
-    public static List<String> roleList = new ArrayList<>(Arrays.asList(null, "超级管理员", "管理员", "用户"));
-
+    public static List<String> roleList = new ArrayList<>(Arrays.asList("超级管理员", "管理员", "用户"));
     public static List<String> paramType = new ArrayList<>(Arrays.asList("已知", "待求"));
     public static String parameterTableName = "jproject.parameter";
+
+    public static List<String> getRoleList() {
+        List<UserData> list = UserDb.getAllUser();
+        Set<String> set = new LinkedHashSet<>();
+        for (UserData userData : list) {
+            set.add(userData.getRole());
+        }
+        set.remove("");
+        set.remove(null);
+        return new ArrayList<>(set);
+    }
+
+    public static List<String> getPositionList() {
+        List<UserData> list = UserDb.getAllUser();
+        Set<String> set = new LinkedHashSet<>();
+        for (UserData userData : list) {
+            set.add(userData.getPosition());
+        }
+        set.remove("");
+        set.remove(null);
+        return new ArrayList<>(set);
+    }
 
     /**
      * 船舶类型list
@@ -62,7 +87,11 @@ public class Constant {
      * @return
      */
     public static List<String> getChuanjisheList() {
-        return CriterionDb.getChuanJiSheList();
+        List<String> list = CriterionDb.getChuanJiSheList();
+        Set<String> set = new LinkedHashSet<>(list);
+        set.remove("");
+        set.remove(null);
+        return new ArrayList<>(set);
     }
 
     /**
@@ -71,7 +100,11 @@ public class Constant {
      * @return
      */
     public static List<String> getShipOwnerCompany() {
-        return SuggestionDb.getChuandongCompanyList();
+        List<String> list = SuggestionDb.getChuandongCompanyList();
+        Set<String> set = new LinkedHashSet<>(list);
+        set.remove("");
+        set.remove(null);
+        return new ArrayList<>(set);
     }
 
     /**
@@ -88,6 +121,22 @@ public class Constant {
         set.remove("");
         set.remove(null);
         return new ArrayList<>(set);
+    }
+
+    public static List<String> getStopWords() {
+        List<String> stopWords = new ArrayList<>();
+        File file = new File("..\\..\\..\\resources\\stopwords.txt");
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String tempLine;
+            while ((tempLine = reader.readLine()) != null) {
+                if (!stopWords.contains(tempLine))
+                    stopWords.add(tempLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return stopWords;
     }
 
 }
