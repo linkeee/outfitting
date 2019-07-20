@@ -4,16 +4,84 @@ import App.dataModel.CriterionData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 public class CriterionDb extends DatabaseItem {
+
+    static Connection connection = connectDB();
+
+    public static Map<String, String> getIndexAndContentMap() {
+        Map<String, String> map = new HashMap<>();
+        for (CriterionData criterionData : getCriterionDataList()) {
+            map.put(String.valueOf(criterionData.getCriId()), criterionData.getCriContent());
+        }
+        return map;
+    }
+
+    public static Map<String, String> getIndexAndTfIdfMapStr() {
+        Map<String, String> map = new HashMap<>();
+        for (CriterionData criterionData : getCriterionDataList()) {
+            map.put(String.valueOf(criterionData.getCriId()), criterionData.getTfIdfMapStr());
+        }
+        return map;
+    }
+
+    public static List<CriterionData> getOrderedDataList(List<String> linkedListOfIndex) {
+        List<CriterionData> list = new LinkedList<>();
+        for (String s : linkedListOfIndex) {
+            list.add(getDataById(Integer.valueOf(s)));
+        }
+        return list;
+    }
+
+    public static void updateTfIdf(Map<String, String> idAndTfIdfMap) {
+        PreparedStatement ps = null;
+
+        String sql = "update criterion set tfidf=? where criId=?";
+
+        for (Map.Entry<String, String> entry : idAndTfIdfMap.entrySet()) {
+            try {
+                ps = connection.prepareStatement(sql);
+                ps.setString(1, entry.getValue());
+                ps.setInt(2, Integer.valueOf(entry.getKey()));
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static CriterionData getDataById(Integer valueOf) {
+        PreparedStatement ps = null;
+        try {
+            ps = connection.prepareStatement("select * from criterion where criId = ?");
+            ps.setInt(1, valueOf);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                CriterionData data = new CriterionData();
+                data.setCriId(resultSet.getString("criId"));
+                data.setCriShipType(resultSet.getString("criShipType"));
+                data.setCriShipCompany(resultSet.getString("criShipCompany"));
+                data.setCriOutfittingRegion(resultSet.getString("criOutfittingRegion"));
+                data.setCriName(resultSet.getString("criName"));
+                data.setCriContent(resultSet.getString("criContent"));
+                data.setCriFilePath(resultSet.getString("criFilePath"));
+                data.setTfIdfMapStr(resultSet.getString("tfidf"));
+                return data;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static List<String> getShipTypeList() {
         List<String> list = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select distinct criShipType from criterion");
@@ -25,8 +93,6 @@ public class CriterionDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         return list;
     }
@@ -34,7 +100,6 @@ public class CriterionDb extends DatabaseItem {
     public static List<String> getChuanJiSheList() {
         List<String> list = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select distinct criShipCompany from criterion");
@@ -46,8 +111,6 @@ public class CriterionDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         return list;
     }
@@ -57,10 +120,9 @@ public class CriterionDb extends DatabaseItem {
      *
      * @return
      */
-    public static ObservableList<CriterionData> getCriterionDataList() {
-        ArrayList<CriterionData> criterionList = new ArrayList<>();
+    public static List<CriterionData> getCriterionDataList() {
+        List<CriterionData> criterionList = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select * from criterion order by criId+0");
@@ -74,15 +136,14 @@ public class CriterionDb extends DatabaseItem {
                 criterion.setCriName(resultSet.getString("criName"));
                 criterion.setCriContent(resultSet.getString("criContent"));
                 criterion.setCriFilePath(resultSet.getString("criFilePath"));
+                criterion.setTfIdfMapStr(resultSet.getString("tfidf"));
 
                 criterionList.add(criterion);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
-        return FXCollections.observableArrayList(criterionList);
+        return criterionList;
     }
 
     /**
@@ -105,7 +166,6 @@ public class CriterionDb extends DatabaseItem {
         if (name == null) name = "";
         if (region == null) region = "";
 
-        Connection connection = connectDB();
         PreparedStatement preparedStatement;
 
         String sql = "SELECT * FROM jproject.criterion where criContent like ? and criShipType like ? and criShipCompany like ? and criName like ? and criOutfittingRegion like ?";
@@ -141,7 +201,6 @@ public class CriterionDb extends DatabaseItem {
     public static boolean insert(CriterionData criterionData) {
         boolean flag = true;
 
-        Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
 
         String sql = "insert into criterion (criShipType, criShipCompany, criOutfittingRegion, criName, criContent, criFilePath) value (?, ?, ?, ?, ?, ?)";
@@ -159,8 +218,6 @@ public class CriterionDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -179,7 +236,6 @@ public class CriterionDb extends DatabaseItem {
         PreparedStatement preparedStatement = null;
 
         String sql = "update criterion set criShipType=?, criShipCompany=?, criOutfittingRegion=?, criName=?, criContent=?, criFilePath=? where criId=?";
-        Connection connection = connectDB();
 
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -196,8 +252,6 @@ public class CriterionDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -215,7 +269,6 @@ public class CriterionDb extends DatabaseItem {
         PreparedStatement preparedStatement = null;
 
         String sql = "delete from criterion where criId = ?";
-        Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, selectedCriterionId);
@@ -224,8 +277,6 @@ public class CriterionDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;

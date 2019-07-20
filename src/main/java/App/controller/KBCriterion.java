@@ -4,9 +4,12 @@ import App.dataModel.CriterionData;
 import App.database.CriterionDb;
 import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
+import App.utile.JieBaUtils;
+import App.utile.ProgressFrom;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +25,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class KBCriterion {
 
@@ -64,6 +68,20 @@ public class KBCriterion {
     @FXML
     private TextField guifanOutfittingTypeTextField;
     private String criterionFile;
+    private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
+
+    private void refreshTfIdf() {
+        Task task = new Task() {
+            @Override
+            protected Object call() {
+                Map<String, String> map = jieBaUtils.getDocumentsTfIdfMap(CriterionDb.getIndexAndContentMap());
+                CriterionDb.updateTfIdf(map);
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "正在更新文本TF-IDF值，请稍后...");
+        progressFrom.activateProgressBar();
+    }
 
     //规范搜索增加修改删除
     private AddCriterion acc = AddCriterion.getInstance();
@@ -81,9 +99,9 @@ public class KBCriterion {
 
     @FXML
     private void handleResetGuiFan() {
-        guifanTable.setItems(CriterionDb.getCriterionDataList());
+        guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
         showGuiFanDetails(null);
-        refreshCB();
+        refresh();
     }
 
     @FXML
@@ -91,35 +109,37 @@ public class KBCriterion {
         CriterionData deletedCrit = guifanTable.getSelectionModel().getSelectedItem();
         String deletedCritId = deletedCrit.getCriId();
         CriterionDb.delete(deletedCritId);
-        guifanTable.setItems(CriterionDb.getCriterionDataList());
-        refreshCB();
+        guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
+        refresh();
     }
 
     @FXML
     private void showAddGuiFan() throws IOException {
         CriterionData tempCriterionData = new CriterionData();
         acc.showAddGuiFan(tempCriterionData);
-        guifanTable.setItems(CriterionDb.getCriterionDataList());
-        refreshCB();
+        guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
+        refresh();
     }
 
     @FXML
     private void handleEditGuiFan() throws IOException {
         CriterionData selectedCrit = guifanTable.getSelectionModel().getSelectedItem();
         acc.showAddGuiFan(selectedCrit);
-        guifanTable.setItems(CriterionDb.getCriterionDataList());
-        refreshCB();
+        guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
+        refresh();
     }
 
-    private void refreshCB() {
+    private void refresh() {
         critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(Constant.getChuanjisheList()));
+        refreshTfIdf();
     }
 
     @FXML
     void initialize() {
+        critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(Constant.getChuanjisheList()));
         //添加规范
-        refreshCB();
         g32.setCellValueFactory(new PropertyValueFactory<>("criShipType"));
         criterionClassificationSocietyTC.setCellValueFactory(new PropertyValueFactory<>("criShipCompany"));
         g33.setCellValueFactory(new PropertyValueFactory<>("criOutfittingRegion"));
@@ -138,7 +158,7 @@ public class KBCriterion {
             }
         });
 
-        guifanTable.setItems(CriterionDb.getCriterionDataList());
+        guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
 
         MenuItem criterionItem1 = new MenuItem("打开文件");
         criterionItem1.setOnAction(new EventHandler<ActionEvent>() {

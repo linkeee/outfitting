@@ -4,9 +4,12 @@ import App.dataModel.ExperienceData;
 import App.database.ExperienceDb;
 import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
+import App.utile.JieBaUtils;
+import App.utile.ProgressFrom;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +25,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class KBExperience {
 
@@ -62,6 +66,27 @@ public class KBExperience {
 
     //经验修改，增加，删除
     private AddExperience aec = AddExperience.getInstance();
+    private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
+
+    private void refreshTfIdf() {
+        Task task = new Task() {
+            @Override
+            protected Object call() {
+                Map<String, String> map = jieBaUtils.getDocumentsTfIdfMap(ExperienceDb.getIndexAndContentMap());
+                ExperienceDb.updateTfIdf(map);
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "正在更新文本TF-IDF值，请稍后...");
+        progressFrom.activateProgressBar();
+    }
+
+    private void refresh() {
+        experienceTable1.setItems(FXCollections.observableArrayList(ExperienceDb.getExpDataList()));
+        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        showExperienceDetails(null);
+        refreshTfIdf();
+    }
 
     @FXML
     private void handleExperienceQuery() throws SQLException {
@@ -75,9 +100,7 @@ public class KBExperience {
 
     @FXML
     private void handleResetExperience() {
-        experienceTable1.setItems(ExperienceDb.getExpDataList());
-        showExperienceDetails(null);
-        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        refresh();
     }
 
     @FXML
@@ -85,24 +108,21 @@ public class KBExperience {
         ExperienceData deletedExp = experienceTable1.getSelectionModel().getSelectedItem();
         String deletedExpId = deletedExp.getExpId();
         ExperienceDb.delete(deletedExpId);
-        experienceTable1.setItems(ExperienceDb.getExpDataList());
-        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        refresh();
     }
 
     @FXML
     private void showAddExperience() throws IOException {
         ExperienceData tempExperienceData = new ExperienceData();
         aec.showAddExperience(tempExperienceData);
-        experienceTable1.setItems(ExperienceDb.getExpDataList());
-        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        refresh();
     }
 
     @FXML
     private void handleEditExperience() throws Exception {
         ExperienceData selectedExperience = experienceTable1.getSelectionModel().getSelectedItem();
         aec.showAddExperience(selectedExperience);
-        experienceTable1.setItems(ExperienceDb.getExpDataList());
-        experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        refresh();
     }
 
     @FXML
@@ -123,7 +143,7 @@ public class KBExperience {
             }
         });
 
-        experienceTable1.setItems(ExperienceDb.getExpDataList());
+        experienceTable1.setItems(FXCollections.observableArrayList(ExperienceDb.getExpDataList()));
 
         MenuItem expItem1 = new MenuItem("打开文件");
         expItem1.setOnAction(event -> {

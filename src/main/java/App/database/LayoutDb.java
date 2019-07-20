@@ -1,19 +1,31 @@
 package App.database;
 
 import App.dataModel.LayoutData;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LayoutDb extends DatabaseItem {
+    static Connection connection = connectDB();
+
+    public static Map<String, String> getIndexAndContentMap() {
+        Map<String, String> map = new HashMap<>();
+        for (LayoutData layoutData : getAllLayoutData()) {
+            map.put(String.valueOf(layoutData.getId()), layoutData.getLayoutContent());
+        }
+        return map;
+    }
+
+    public static Map<String, String> getIndexAndTfIdfMapStr() {
+        Map<String, String> map = new HashMap<>();
+        for (LayoutData layoutData : getAllLayoutData()) {
+            map.put(String.valueOf(layoutData.getId()), layoutData.getTfIdfMapStr());
+        }
+        return map;
+    }
 
     /**
      * Return all of the layoutData in a list way.
@@ -22,8 +34,6 @@ public class LayoutDb extends DatabaseItem {
      */
     public static List<LayoutData> getAllLayoutData() {
         List<LayoutData> layoutList = new ArrayList<>();
-
-        Connection connection = connectDB();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from layout order by Id+0");
@@ -42,6 +52,7 @@ public class LayoutDb extends DatabaseItem {
                 layoutData.setShipDraught(resultSet.getString("ship_draught"));
                 layoutData.setLayoutContent(resultSet.getString("layout_content"));
                 layoutData.setFilePath(resultSet.getString("file_path"));
+                layoutData.setTfIdfMapStr(resultSet.getString("tfidf"));
 
                 layoutList.add(layoutData);
             }
@@ -61,7 +72,6 @@ public class LayoutDb extends DatabaseItem {
     public static List<LayoutData> query(List<String> keywords) {
         Map<String, LayoutData> map = new HashMap<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
 
         String sql = "SELECT * FROM jproject.layout where layout_content like ?";
@@ -92,7 +102,6 @@ public class LayoutDb extends DatabaseItem {
                 e.printStackTrace();
             }
         }
-        closeDatabase(ps, null, connection);
 
         return new ArrayList<>(map.values());
     }
@@ -106,7 +115,6 @@ public class LayoutDb extends DatabaseItem {
     public static boolean insert(LayoutData layoutData) {
         boolean flag = true;
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
 
         String sql = "insert into layout (" +
@@ -131,8 +139,6 @@ public class LayoutDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -153,7 +159,6 @@ public class LayoutDb extends DatabaseItem {
         String sql = "update layout set outfitting_name=?, ship_type=?, ship_num=?, " +
                 "ship_type_coefficient=?, ship_load=?, ship_length=?, ship_width=?, ship_depth=?, " +
                 "ship_draught=?, layout_content=?, file_path=? where id=?";
-        Connection connection = connectDB();
 
         try {
             ps = connection.prepareStatement(sql);
@@ -173,8 +178,6 @@ public class LayoutDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -192,7 +195,6 @@ public class LayoutDb extends DatabaseItem {
         PreparedStatement preparedStatement = null;
 
         String sql = "delete from layout where id = ?";
-        Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, selectedLayoutId);
@@ -201,8 +203,6 @@ public class LayoutDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -211,7 +211,6 @@ public class LayoutDb extends DatabaseItem {
     public static List<String> getShipTypeList() {
         List<String> list = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select distinct ship_type from layout");
@@ -223,8 +222,6 @@ public class LayoutDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         return list;
     }
@@ -233,7 +230,6 @@ public class LayoutDb extends DatabaseItem {
         List<String> list = new ArrayList<>();
 
         PreparedStatement ps = null;
-        Connection connection = connectDB();
 
         String sql = "select distinct outfitting_name from layout";
         try {
@@ -244,9 +240,61 @@ public class LayoutDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         return list;
+    }
+
+    public static List<LayoutData> getOrderedDataList(List<String> linkedListOfIndex) {
+        List<LayoutData> list = new LinkedList<>();
+        for (String s : linkedListOfIndex) {
+            list.add(getDataById(Integer.valueOf(s)));
+        }
+        return list;
+    }
+
+    private static LayoutData getDataById(Integer id) {
+        PreparedStatement ps = null;
+        try {
+            ps= connection.prepareStatement("select * from layout where id = ?");
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                LayoutData layoutData = new LayoutData();
+                layoutData.setId(String.valueOf(resultSet.getInt("id")));
+                layoutData.setOutfitting_name(resultSet.getString("outfitting_name"));
+                layoutData.setShipType(resultSet.getString("ship_type"));
+                layoutData.setShipNum(resultSet.getString("ship_num"));
+                layoutData.setShipTypeCoefficient(resultSet.getString("ship_type_coefficient"));
+                layoutData.setShipLoad(resultSet.getString("ship_load"));
+                layoutData.setShipLength(resultSet.getString("ship_length"));
+                layoutData.setShipWidth(resultSet.getString("ship_width"));
+                layoutData.setShipDepth(resultSet.getString("ship_depth"));
+                layoutData.setShipDraught(resultSet.getString("ship_draught"));
+                layoutData.setLayoutContent(resultSet.getString("layout_content"));
+                layoutData.setFilePath(resultSet.getString("file_path"));
+                layoutData.setTfIdfMapStr(resultSet.getString("tfidf"));
+                return layoutData;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void updateTfIdf(Map<String, String> map) {
+        PreparedStatement ps = null;
+
+        String sql = "update layout set tfidf=? where id=?";
+
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            try {
+                ps = connection.prepareStatement(sql);
+                ps.setString(1, entry.getValue());
+                ps.setInt(2, Integer.valueOf(entry.getKey()));
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

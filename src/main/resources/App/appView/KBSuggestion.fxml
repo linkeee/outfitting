@@ -14,7 +14,7 @@
          <children>
             <GridPane>
                <children>
-                  <TextField fx:id="soutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                  <TextField fx:id="soutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                   <Label text="船舶类型" />
                   <Label prefHeight="20.0" text="船东公司" GridPane.columnIndex="2">
                      <font>
@@ -26,8 +26,8 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="schuanboTypeChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="1" />
-                  <ComboBox fx:id="schuanDongChoiceBox" editable="true" prefWidth="150.0" GridPane.columnIndex="3" />
+                  <ComboBox fx:id="schuanboTypeChoiceBox" editable="true" prefWidth="150.0" promptText="船舶类型" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="schuanDongChoiceBox" editable="true" prefWidth="150.0" promptText="船东公司" GridPane.columnIndex="3" />
                </children>
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" />
@@ -47,16 +47,19 @@
             <Separator VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" spacing="20.0">
                <children>
-                  <TextField fx:id="suggestionQueryTextField" prefWidth="300.0">
+                  <Button mnemonicParsing="false" onAction="#showAddSuggestion" text="添加">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#handleEditSuggestion" text="修改" />
+                  <Button mnemonicParsing="false" onAction="#handleDeleteSuggestion" text="删除" />
+                  <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetSuggestion" text="重置" />
+                  <Button defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleSuggestionQuery" text="搜索" visible="false" />
+                  <TextField fx:id="suggestionQueryTextField" disable="true" prefWidth="300.0" visible="false">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSuggestionQuery" text="搜索" />
-                  <Button mnemonicParsing="false" onAction="#showAddSuggestion" text="添加" />
-                  <Button mnemonicParsing="false" onAction="#handleEditSuggestion" text="修改" />
-                  <Button mnemonicParsing="false" onAction="#handleDeleteSuggestion" text="删除" />
-                  <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetSuggestion" text="重置" />
                </children>
             </HBox>
             <Separator VBox.vgrow="ALWAYS" />

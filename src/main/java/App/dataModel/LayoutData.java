@@ -16,12 +16,13 @@ public class LayoutData {
     private final SimpleStringProperty shipDraught;
     private final SimpleStringProperty layoutContent;
     private final SimpleStringProperty filePath;
+    private final SimpleStringProperty tfIdfMapStr;
 
     public LayoutData() {
-        this(null, null, null, null, null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
-    private LayoutData(String id, String outfitting_name, String shipType, String shipNum, String shipTypeCoefficient, String shipLoad, String shipLength, String shipWidth, String shipDepth, String shipDraught, String layoutContent, String filePath) {
+    private LayoutData(String id, String outfitting_name, String shipType, String shipNum, String shipTypeCoefficient, String shipLoad, String shipLength, String shipWidth, String shipDepth, String shipDraught, String layoutContent, String filePath, String tfIdfMapStr) {
         this.id = new SimpleStringProperty(id);
         this.outfitting_name = new SimpleStringProperty(outfitting_name);
         this.shipType = new SimpleStringProperty(shipType);
@@ -34,6 +35,7 @@ public class LayoutData {
         this.shipDraught = new SimpleStringProperty(shipDraught);
         this.layoutContent = new SimpleStringProperty(layoutContent);
         this.filePath = new SimpleStringProperty(filePath);
+        this.tfIdfMapStr = new SimpleStringProperty(tfIdfMapStr);
     }
 
     public String getId() {
@@ -178,5 +180,17 @@ public class LayoutData {
 
     public SimpleStringProperty filePathProperty() {
         return filePath;
+    }
+
+    public String getTfIdfMapStr() {
+        return tfIdfMapStr.get();
+    }
+
+    public SimpleStringProperty tfIdfMapStrProperty() {
+        return tfIdfMapStr;
+    }
+
+    public void setTfIdfMapStr(String tfIdfMapStr) {
+        this.tfIdfMapStr.set(tfIdfMapStr);
     }
 }

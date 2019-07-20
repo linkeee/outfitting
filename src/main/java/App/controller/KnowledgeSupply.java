@@ -8,8 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,20 +20,35 @@ import java.io.IOException;
 public class KnowledgeSupply {
 
     @FXML
+    private VBox leftVbox;
+
+    @FXML
+    private Button recommendBtn;
+
+    @FXML
+    private Button supplyBtn;
+
+    @FXML
+    private Button backBtn;
+
+    @FXML
     private BorderPane knowledgeSupplyBorderPane;
 
+    FxmlUtile fxmlUtile = FxmlUtile.getInstance();
+
     @FXML
-    void goKnowledgeSearch(ActionEvent event) throws IOException {
-        loadKnowledgeSupplySearch();
+    void recommendAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBRecommend.fxml");
+        knowledgeSupplyBorderPane.setCenter(loader.load());
     }
 
     @FXML
-    void goKnowledgeActiveSupply(ActionEvent event) {
+    void supplyAction(ActionEvent event) {
 
     }
 
     @FXML
-    void backHome(ActionEvent event) throws IOException {
+    void backAction(ActionEvent event) throws IOException {
         Home hc = new Home();
         hc.showHomeWindows();
         closeKnowledgeSupply(event);
@@ -38,7 +56,11 @@ public class KnowledgeSupply {
 
     @FXML
     void initialize() throws IOException {
-        loadKnowledgeSupplySearch();
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBRecommend.fxml");
+        knowledgeSupplyBorderPane.setCenter(loader.load());
+        recommendBtn.setTooltip(new Tooltip("知识检索"));
+        supplyBtn.setTooltip(new Tooltip("知识主动供应"));
+        backBtn.setTooltip(new Tooltip("返回上一级"));
     }
 
     //显示知识供应界面
@@ -58,23 +80,4 @@ public class KnowledgeSupply {
     private void closeKnowledgeSupply(ActionEvent event) throws IOException {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
-
-    //用borderpane加载知识检索界面
-    private void loadKnowledgeSupplySearch() throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KnowledgeSupplySearch.fxml");
-        knowledgeSupplyBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                KnowledgeSupplySearch controller = loader.getController();
-                controller.refreshAllTable();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "数据加载中，请稍后...");
-        progressFrom.activateProgressBar();
-    }
-
 }

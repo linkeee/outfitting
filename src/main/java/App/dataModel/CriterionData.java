@@ -17,19 +17,20 @@ public class CriterionData {
     private final SimpleStringProperty criName;
     private final SimpleStringProperty criContent;
     private final SimpleStringProperty criFilePath;
+    private final SimpleStringProperty tfIdfMapStr;
 
     /**
      * Default constructor.
      */
-    public CriterionData(){
-        this(null, null, null, null,  null, null, null);
+    public CriterionData() {
+        this(null, null, null, null, null, null, null, null);
     }
 
 
     /**
      * Constructor.
      */
-    public CriterionData(String criId, String criShipType, String criShipCompany, String criOutfittingRegion, String criName, String criContent, String criFilePath) {
+    public CriterionData(String criId, String criShipType, String criShipCompany, String criOutfittingRegion, String criName, String criContent, String criFilePath, String tfIdfMapStr) {
         this.criId = new SimpleStringProperty(criId);
         this.criShipType = new SimpleStringProperty(criShipType);
         this.criShipCompany = new SimpleStringProperty(criShipCompany);
@@ -37,89 +38,102 @@ public class CriterionData {
         this.criName = new SimpleStringProperty(criName);
         this.criContent = new SimpleStringProperty(criContent);
         this.criFilePath = new SimpleStringProperty(criFilePath);
+        this.tfIdfMapStr = new SimpleStringProperty(tfIdfMapStr);
     }
 
     public String getCriId() {
         return criId.get();
     }
 
-    public StringProperty criIdProperty() {
-        return criId;
-    }
-
     public void setCriId(String criId) {
         this.criId.set(criId);
+    }
+
+    public StringProperty criIdProperty() {
+        return criId;
     }
 
     public String getCriShipType() {
         return criShipType.get();
     }
 
-    public StringProperty criShipTypeProperty() {
-        return criShipType;
-    }
-
     public void setCriShipType(String criShipType) {
         this.criShipType.set(criShipType);
+    }
+
+    public StringProperty criShipTypeProperty() {
+        return criShipType;
     }
 
     public String getCriShipCompany() {
         return criShipCompany.get();
     }
 
-    public SimpleStringProperty criShipCompanyProperty() {
-        return criShipCompany;
-    }
-
     public void setCriShipCompany(String criShipCompany) {
         this.criShipCompany.set(criShipCompany);
+    }
+
+    public SimpleStringProperty criShipCompanyProperty() {
+        return criShipCompany;
     }
 
     public String getCriOutfittingRegion() {
         return criOutfittingRegion.get();
     }
 
-    public StringProperty criOutfittingRegionProperty() {
-        return criOutfittingRegion;
-    }
-
     public void setCriOutfittingRegion(String criOutfittingRegion) {
         this.criOutfittingRegion.set(criOutfittingRegion);
+    }
+
+    public StringProperty criOutfittingRegionProperty() {
+        return criOutfittingRegion;
     }
 
     public String getCriName() {
         return criName.get();
     }
 
-    public StringProperty criNameProperty() {
-        return criName;
-    }
-
     public void setCriName(String criName) {
         this.criName.set(criName);
+    }
+
+    public StringProperty criNameProperty() {
+        return criName;
     }
 
     public String getCriContent() {
         return criContent.get();
     }
 
-    public StringProperty criContentProperty() {
-        return criContent;
-    }
-
     public void setCriContent(String criContent) {
         this.criContent.set(criContent);
+    }
+
+    public StringProperty criContentProperty() {
+        return criContent;
     }
 
     public String getCriFilePath() {
         return criFilePath.get();
     }
 
+    public void setCriFilePath(String criFilePath) {
+        this.criFilePath.set(criFilePath);
+    }
+
     public SimpleStringProperty criFilePathProperty() {
         return criFilePath;
     }
 
-    public void setCriFilePath(String criFilePath) {
-        this.criFilePath.set(criFilePath);
+    public String getTfIdfMapStr() {
+        return tfIdfMapStr.get();
+    }
+
+    public void setTfIdfMapStr(String tfIdfMapStr) {
+        this.tfIdfMapStr.set(tfIdfMapStr);
+    }
+
+    public SimpleStringProperty tfIdfMapStrProperty() {
+        return tfIdfMapStr;
     }
 }

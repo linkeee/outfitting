@@ -4,9 +4,12 @@ import App.dataModel.LayoutData;
 import App.database.LayoutDb;
 import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
+import App.utile.JieBaUtils;
+import App.utile.ProgressFrom;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.SegToken;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,7 +22,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.awt.*;
 import java.io.*;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class LayoutDesign {
 
@@ -83,24 +88,21 @@ public class LayoutDesign {
     @FXML
     private ComboBox<String> itemNameCB;
 
+    private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
+
     @FXML
     void searchAction(ActionEvent event) {
-        String searchWord = searchTF.getText().trim().replace(" ", "").replace("\r", "").replace("\n", "");
-        JiebaSegmenter jieba = new JiebaSegmenter();
-        List<String> list = jieba.sentenceProcess(searchWord);
-        List<String> stopWords = Constant.getStopWords();
-        for (String s : list) {
-            if (stopWords.contains(s))
-                list.remove(s);
-        }
-        List<LayoutData> layoutDataList = LayoutDb.query(list);
-        table.setItems(FXCollections.observableArrayList(layoutDataList));
+
+        String inputStr = searchTF.getText().trim();
+        Map<String, Double> map = jieBaUtils.getSortedRelativityMap(inputStr, LayoutDb.getIndexAndTfIdfMapStr());
+        List<String> list = new LinkedList<>(map.keySet());
+        List<LayoutData> orderedDataList = LayoutDb.getOrderedDataList(list);
+        table.setItems(FXCollections.observableArrayList(orderedDataList));
     }
 
     @FXML
     void resetAction(ActionEvent event) {
         refresh();
-        showDetails(null);
         searchTF.setText(null);
         titledPane.setExpanded(false);
     }

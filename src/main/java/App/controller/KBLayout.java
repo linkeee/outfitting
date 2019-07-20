@@ -4,7 +4,10 @@ import App.dataModel.LayoutData;
 import App.database.LayoutDb;
 import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
+import App.utile.JieBaUtils;
+import App.utile.ProgressFrom;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 public class KBLayout {
 
@@ -88,6 +92,20 @@ public class KBLayout {
 
     private AddLayout addLayout = AddLayout.getInstance();
     private String file;
+    private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
+
+    private void refreshTfIdf() {
+        Task task = new Task() {
+            @Override
+            protected Object call() {
+                Map<String, String> map = jieBaUtils.getDocumentsTfIdfMap(LayoutDb.getIndexAndContentMap());
+                LayoutDb.updateTfIdf(map);
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "正在更新文本TF-IDF值，请稍后...");
+        progressFrom.activateProgressBar();
+    }
 
     @FXML
     void searchAction(ActionEvent event) {
@@ -118,10 +136,9 @@ public class KBLayout {
 
     @FXML
     void resetAction(ActionEvent event) {
-        refresh();
-        showDetails(null);
         searchTF.setText(null);
         titledPane.setExpanded(false);
+        refresh();
     }
 
     private void refresh() {
@@ -129,6 +146,7 @@ public class KBLayout {
         shipTypeCB.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         table.setItems(FXCollections.observableArrayList(LayoutDb.getAllLayoutData()));
         showDetails(null);
+        refreshTfIdf();
     }
 
     private void showDetails(LayoutData layoutData) {

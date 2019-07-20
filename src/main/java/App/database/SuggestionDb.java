@@ -8,15 +8,81 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SuggestionDb extends DatabaseItem {
+
+    static Connection connection = connectDB();
+
+    public static Map<String, String> getIndexAndContentMap() {
+        Map<String, String> map = new HashMap<>();
+        for (SuggestionData suggestionData : getSugDataList()) {
+            map.put(String.valueOf(suggestionData.getSugId()), suggestionData.getSugProblemDescribe()+suggestionData.getSugSolutionDescribe()+suggestionData.getSugContent());
+        }
+        return map;
+    }
+
+    public static Map<String, String> getIndexAndTfIdfMapStr() {
+        Map<String, String> map = new HashMap<>();
+        for (SuggestionData suggestionData : getSugDataList()) {
+            map.put(String.valueOf(suggestionData.getSugId()), suggestionData.getTfIdfMapStr());
+        }
+        return map;
+    }
+
+    public static List<SuggestionData> getOrderedDataList(List<String> linkedListOfIndex) {
+        List<SuggestionData> list = new LinkedList<>();
+        for (String s : linkedListOfIndex) {
+            list.add(getDataById(Integer.valueOf(s)));
+        }
+        return list;
+    }
+
+    public static void updateTfIdf(Map<String, String> idAndTfIdfMap) {
+        PreparedStatement ps = null;
+
+        String sql = "update suggestion set tfidf=? where sugId=?";
+
+        for (Map.Entry<String, String> entry : idAndTfIdfMap.entrySet()) {
+            try {
+                ps = connection.prepareStatement(sql);
+                ps.setString(1, entry.getValue());
+                ps.setInt(2, Integer.valueOf(entry.getKey()));
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static SuggestionData getDataById(Integer valueOf) {
+        PreparedStatement ps = null;
+        try {
+            ps= connection.prepareStatement("select * from suggestion where sugId = ?");
+            ps.setInt(1, valueOf);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                SuggestionData data = new SuggestionData();
+                data.setSugId(resultSet.getString("sugId"));
+                data.setSugShipCompany(resultSet.getString("sugShipCompany"));
+                data.setSugShipType(resultSet.getString("sugShipType"));
+                data.setSugOutfittingRegion(resultSet.getString("sugOutfittingRegion"));
+                data.setSugProblemDescribe(resultSet.getString("sugProblemDescribe"));
+                data.setSugSolutionDescribe(resultSet.getString("sugSolutionDescribe"));
+                data.setSugContent(resultSet.getString("sugContent"));
+                data.setSugFilePath(resultSet.getString("sugFilePath"));
+                data.setTfIdfMapStr(resultSet.getString("tfidf"));
+                return data;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static List<String> getShipTypeList() {
         List<String> list = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select distinct sugShipType from suggestion");
@@ -28,8 +94,6 @@ public class SuggestionDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         return list;
     }
@@ -37,7 +101,6 @@ public class SuggestionDb extends DatabaseItem {
     public static List<String> getChuandongCompanyList() {
         List<String> list = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select distinct sugShipCompany from suggestion");
@@ -49,8 +112,6 @@ public class SuggestionDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         return list;
     }
@@ -60,10 +121,9 @@ public class SuggestionDb extends DatabaseItem {
      *
      * @return
      */
-    public static ObservableList<SuggestionData> getSugDataList() {
-        ArrayList<SuggestionData> sugList = new ArrayList<>();
+    public static List<SuggestionData> getSugDataList() {
+        List<SuggestionData> sugList = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select * from suggestion order by sugId+0");
@@ -78,14 +138,13 @@ public class SuggestionDb extends DatabaseItem {
                 suggestionData.setSugSolutionDescribe(resultSet.getString("sugSolutionDescribe"));
                 suggestionData.setSugContent(resultSet.getString("sugContent"));
                 suggestionData.setSugFilePath(resultSet.getString("sugFilePath"));
+                suggestionData.setTfIdfMapStr(resultSet.getString("tfidf"));
                 sugList.add(suggestionData);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
-        return FXCollections.observableArrayList(sugList);
+        return sugList;
     }
 
     /**
@@ -103,7 +162,6 @@ public class SuggestionDb extends DatabaseItem {
         if (outfittingRegion == null) outfittingRegion = "";
         if (keyword == null) keyword = "";
 
-        Connection connection = connectDB();
         PreparedStatement preparedStatement;
 
         String sql = "select * from jproject.suggestion where sugShipCompany like ? and sugShipType like ? and sugOutfittingRegion like ? and (sugProblemDescribe like ? or sugSolutionDescribe like ? or sugContent like ?)";
@@ -141,7 +199,6 @@ public class SuggestionDb extends DatabaseItem {
     public static boolean insert(SuggestionData sug) {
         boolean flag = true;
 
-        Connection connection = connectDB();
         PreparedStatement preparedStatement = null;
 
         String sql = "insert into suggestion (sugShipCompany, sugShipType, sugOutfittingRegion, sugProblemDescribe, sugSolutionDescribe, sugContent, sugFilePath) value(?, ?, ?, ?, ?, ?, ?)";
@@ -160,8 +217,6 @@ public class SuggestionDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -179,7 +234,6 @@ public class SuggestionDb extends DatabaseItem {
         PreparedStatement preparedStatement = null;
 
         String sql = "update suggestion set sugShipCompany=?, sugShipType=?, sugOutfittingRegion=?, sugProblemDescribe=?, sugSolutionDescribe=?, sugContent=?, sugFilePath=? where sugId=?";
-        Connection connection = connectDB();
 
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -197,8 +251,6 @@ public class SuggestionDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -216,7 +268,6 @@ public class SuggestionDb extends DatabaseItem {
         PreparedStatement preparedStatement = null;
 
         String sql = "delete from suggestion where sugId = ?";
-        Connection connection = connectDB();
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, selectedSugId);
@@ -225,8 +276,6 @@ public class SuggestionDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;

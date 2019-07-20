@@ -4,9 +4,12 @@ import App.dataModel.SuggestionData;
 import App.database.SuggestionDb;
 import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
+import App.utile.JieBaUtils;
+import App.utile.ProgressFrom;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +25,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class KBSuggestion {
 
@@ -57,6 +61,20 @@ public class KBSuggestion {
     private ComboBox<String> schuanboTypeChoiceBox;
 
     private String sugFile;
+    private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
+
+    private void refreshTfIdf() {
+        Task task = new Task() {
+            @Override
+            protected Object call() {
+                Map<String, String> map = jieBaUtils.getDocumentsTfIdfMap(SuggestionDb.getIndexAndContentMap());
+                SuggestionDb.updateTfIdf(map);
+                return null;
+            }
+        };
+        ProgressFrom progressFrom = new ProgressFrom(task, "正在更新文本TF-IDF值，请稍后...");
+        progressFrom.activateProgressBar();
+    }
 
     //船东船检增加修改删除
     private final AddSuggestion asc = AddSuggestion.getInstance();
@@ -75,16 +93,16 @@ public class KBSuggestion {
     private void showAddSuggestion() throws IOException {
         SuggestionData tempSuggestion = new SuggestionData();
         asc.showAddSuggestion(tempSuggestion);
-        suggestionTable.setItems(SuggestionDb.getSugDataList());
-        refreshCB();
+        suggestionTable.setItems(FXCollections.observableArrayList(SuggestionDb.getSugDataList()));
+        refresh();
     }
 
     @FXML
     private void handleEditSuggestion() throws IOException {
         SuggestionData selectedSuggestion = suggestionTable.getSelectionModel().getSelectedItem();
         asc.showAddSuggestion(selectedSuggestion);
-        suggestionTable.setItems(SuggestionDb.getSugDataList());
-        refreshCB();
+        suggestionTable.setItems(FXCollections.observableArrayList(SuggestionDb.getSugDataList()));
+        refresh();
     }
 
     @FXML
@@ -92,26 +110,28 @@ public class KBSuggestion {
         SuggestionData deletedSugData = suggestionTable.getSelectionModel().getSelectedItem();
         String deletedSugDataId = deletedSugData.getSugId();
         SuggestionDb.delete(deletedSugDataId);
-        suggestionTable.setItems(SuggestionDb.getSugDataList());
-        refreshCB();
+        suggestionTable.setItems(FXCollections.observableArrayList(SuggestionDb.getSugDataList()));
+        refresh();
     }
 
     @FXML
     private void handleResetSuggestion() {
-        suggestionTable.setItems(SuggestionDb.getSugDataList());
+        suggestionTable.setItems(FXCollections.observableArrayList(SuggestionDb.getSugDataList()));
         showSugDetails(null);
-        refreshCB();
+        refresh();
     }
 
-    private void refreshCB() {
+    private void refresh() {
         schuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         schuanDongChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipOwnerCompany()));
+        refreshTfIdf();
     }
 
     @FXML
     void initialize() {
+        schuanboTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        schuanDongChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipOwnerCompany()));
         //船东船检意见表显示内容
-        refreshCB();
         c37.setCellValueFactory(new PropertyValueFactory<>("sugShipType"));
         c38.setCellValueFactory(new PropertyValueFactory<>("sugOutfittingRegion"));
         c39.setCellValueFactory(new PropertyValueFactory<>("sugProblemDescribe"));
@@ -131,44 +151,28 @@ public class KBSuggestion {
             }
         });
 
-        suggestionTable.setItems(SuggestionDb.getSugDataList());
+        suggestionTable.setItems(FXCollections.observableArrayList(SuggestionDb.getSugDataList()));
 
         MenuItem sugItem1 = new MenuItem("打开文件");
-        sugItem1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Desktop.getDesktop().open(new File(sugFile));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        sugItem1.setOnAction(event -> {
+            try {
+                Desktop.getDesktop().open(new File(sugFile));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         MenuItem sugItem2 = new MenuItem("打开文件夹");
-        sugItem2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Desktop.getDesktop().open(new File(new File(sugFile).getParent()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        sugItem2.setOnAction(event -> {
+            try {
+                Desktop.getDesktop().open(new File(new File(sugFile).getParent()));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         ContextMenu sugMenu = new ContextMenu();
         sugMenu.getItems().addAll(sugItem1, sugItem2);
-        suggestionTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-            @Override
-            public void handle(ContextMenuEvent event) {
-                sugMenu.show(suggestionTable, event.getScreenX(), event.getScreenY());
-            }
-        });
-        suggestionTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                sugMenu.hide();
-            }
-        });
+        suggestionTable.setOnContextMenuRequested(event -> sugMenu.show(suggestionTable, event.getScreenX(), event.getScreenY()));
+        suggestionTable.setOnMouseClicked(event -> sugMenu.hide());
 
         suggestionTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showSugDetails(newValue));

@@ -1,4 +1,6 @@
-package App.utile;
+package App;
+
+import com.google.gson.Gson;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -27,7 +29,7 @@ public class Test {
 //        //        System.out.println();
 //        tf_idf(all_tf, idfs, outpath);
 
-//        File file = new File(App.utile.Test.class.getResource(""));
+//        File file = new File(App.Test.class.getResource(""));
 //        List<String> stopWords = new ArrayList<>();
 //        try {
 //            BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -40,7 +42,19 @@ public class Test {
 //            e.printStackTrace();
 //        }
 
-        System.out.println(Test.class.getClassLoader().getResource("stopwords.txt"));
+        Gson gson = new Gson();
+        Map<String, Double> map = new LinkedHashMap<>();
+        map.put("01", 0.898798767845678);
+        map.put("02", 0.56765678);
+        map.put("03", 9.456787678);
+        String s = gson.toJson(map);
+        System.out.println(s);
+
+        Map<String, Double> map1 = new LinkedHashMap<>();
+        map1 = gson.fromJson(s, map1.getClass());
+        for (String s1 : map1.keySet()) {
+            System.out.println(map1.get(s1) instanceof Double);
+        }
     }
 
     //获取文件名

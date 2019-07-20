@@ -3,9 +3,12 @@ package App.utile;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -38,31 +41,32 @@ public class ProgressFrom {
         progressIndicator.progressProperty().bind(task.progressProperty());
         progressIndicator.setMinSize(80, 80);
 
+        Button button = new Button("后台运行");
+
         VBox vBox = new VBox();
         vBox.setSpacing(10);
+        vBox.setAlignment(Pos.CENTER);
         vBox.setBackground(Background.EMPTY);
-        vBox.getChildren().addAll(progressIndicator, label);
+        vBox.getChildren().addAll(progressIndicator, label, button);
 
         Scene scene = new Scene(vBox);
         scene.setFill(null);
         dialogStage.setScene(scene);
 
         Thread thread = new Thread(task);
+        thread.setName("jobThread");
         thread.setDaemon(true);  //true为守护线程；false为用户线程，默认为false。
         thread.start();
-//        System.out.println(thread.getName());
 
-        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent event) {
-                cancelProgressBar();
-            }
+        task.setOnSucceeded(event -> cancelProgressBar());
+
+        button.setOnMouseClicked(event -> {
+//            thread.stop();
+            cancelProgressBar();
         });
-
     }
 
     public void activateProgressBar() {
-//        System.out.println(Thread.currentThread().getName());
         dialogStage.showAndWait();
     }
 

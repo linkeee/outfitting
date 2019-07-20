@@ -102,12 +102,12 @@
                 <Separator prefWidth="200.0" />
                 <HBox alignment="CENTER_LEFT" spacing="20.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <TextField fx:id="searchTF" promptText="输入关键词检索" />
-                        <Button fx:id="searchBtn" defaultButton="true" mnemonicParsing="false" onAction="#searchAction" text="搜索" />
                         <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addAction" text="添加" />
                         <Button fx:id="modifyBtn" mnemonicParsing="false" onAction="#modifyAction" text="修改" />
                         <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteAction" text="删除" />
                         <Button fx:id="resetBtn" cancelButton="true" mnemonicParsing="false" onAction="#resetAction" text="重置" />
+                        <Button fx:id="searchBtn" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#searchAction" text="搜索" visible="false" />
+                        <TextField fx:id="searchTF" disable="true" promptText="输入关键词检索" visible="false" />
                     </children>
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

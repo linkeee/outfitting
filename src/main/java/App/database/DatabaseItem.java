@@ -10,7 +10,7 @@ public class DatabaseItem {
      * @return
      */
     public static Connection connectDB() {
-        Connection conn = null;
+        final Connection conn;
         try {
             String driver = "com.mysql.cj.jdbc.Driver";
             Class.forName(driver);
@@ -18,10 +18,11 @@ public class DatabaseItem {
             String user = "root";
             String password = "sa";
             conn = DriverManager.getConnection(url, user, password);
+            return conn;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return conn;
+        return null;
     }
 
     /**

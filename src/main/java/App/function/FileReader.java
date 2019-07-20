@@ -58,7 +58,7 @@ public class FileReader {
             case "pdf":
                 text = getTextFromPDF(buffer);
                 break;
-            case "txt":
+            case "App/txt":
                 text = getTextFromTxt(buffer);
                 break;
             default:

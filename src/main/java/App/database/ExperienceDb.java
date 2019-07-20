@@ -8,15 +8,78 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ExperienceDb extends DatabaseItem {
+    static Connection connection = connectDB();
+
+    public static Map<String, String> getIndexAndContentMap() {
+        Map<String, String> map = new HashMap<>();
+        for (ExperienceData experienceData : getExpDataList()) {
+            map.put(String.valueOf(experienceData.getExpId()), experienceData.getExpContent());
+        }
+        return map;
+    }
+
+    public static Map<String, String> getIndexAndTfIdfMapStr() {
+        Map<String, String> map = new HashMap<>();
+        for (ExperienceData experienceData : getExpDataList()) {
+            map.put(String.valueOf(experienceData.getExpId()), experienceData.getTfIdfMapStr());
+        }
+        return map;
+    }
+
+    public static List<ExperienceData> getOrderedDataList(List<String> linkedListOfIndex) {
+        List<ExperienceData> list = new LinkedList<>();
+        for (String s : linkedListOfIndex) {
+            list.add(getDataById(Integer.valueOf(s)));
+        }
+        return list;
+    }
+
+    public static void updateTfIdf(Map<String, String> idAndTfIdfMap) {
+        PreparedStatement ps = null;
+
+        String sql = "update experience set tfidf=? where expId=?";
+
+        for (Map.Entry<String, String> entry : idAndTfIdfMap.entrySet()) {
+            try {
+                ps = connection.prepareStatement(sql);
+                ps.setString(1, entry.getValue());
+                ps.setInt(2, Integer.valueOf(entry.getKey()));
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static ExperienceData getDataById(Integer valueOf) {
+        PreparedStatement ps = null;
+        try {
+            ps= connection.prepareStatement("select * from experience where expId = ?");
+            ps.setInt(1, valueOf);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                ExperienceData data = new ExperienceData();
+                data.setExpId(resultSet.getString("expId"));
+                data.setExpShipType(resultSet.getString("expShipType"));
+                data.setExpOutfittingRegion(resultSet.getString("expOutfittingRegion"));
+                data.setExpName(resultSet.getString("expName"));
+                data.setExpContent(resultSet.getString("expContent"));
+                data.setExpFilePath(resultSet.getString("expFilePath"));
+                data.setTfIdfMapStr(resultSet.getString("tfidf"));
+                return data;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static List<String> getShipTypeList() {
         List<String> list = new ArrayList<>();
 
-        Connection connection = connectDB();
         PreparedStatement ps = null;
         try {
             ps = connection.prepareStatement("select distinct expShipType from experience");
@@ -28,8 +91,6 @@ public class ExperienceDb extends DatabaseItem {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(ps, null, connection);
         }
         return list;
     }
@@ -39,10 +100,9 @@ public class ExperienceDb extends DatabaseItem {
      *
      * @return
      */
-    public static ObservableList<ExperienceData> getExpDataList() {
-        ArrayList<ExperienceData> expList = new ArrayList<>();
+    public static List<ExperienceData> getExpDataList() {
+        List<ExperienceData> expList = new ArrayList<>();
 
-        Connection connection = connectDB();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from experience order by expId+0");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -54,6 +114,7 @@ public class ExperienceDb extends DatabaseItem {
                 experienceData.setExpName(resultSet.getString("expName"));
                 experienceData.setExpContent(resultSet.getString("expContent"));
                 experienceData.setExpFilePath(resultSet.getString("expFilePath"));
+                experienceData.setTfIdfMapStr(resultSet.getString("tfidf"));
                 expList.add(experienceData);
             }
         } catch (SQLException e) {
@@ -131,8 +192,6 @@ public class ExperienceDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -167,8 +226,6 @@ public class ExperienceDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;
@@ -195,8 +252,6 @@ public class ExperienceDb extends DatabaseItem {
             if (i == 0) flag = false;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeDatabase(preparedStatement, null, connection);
         }
         if (flag) System.out.println("操作成功！");
         return flag;

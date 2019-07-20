@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KBRCriterion">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <TextField fx:id="inputTF" prefWidth="300.0" promptText="输入自然语言进行检索" />
+                  <Button fx:id="searchBtn" defaultButton="true" mnemonicParsing="false" onAction="#searchAction" text="搜索" />
+                  <Button fx:id="resetBtn" cancelButton="true" mnemonicParsing="false" onAction="#resetAction" text="重置" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <HBox alignment="CENTER_LEFT" spacing="5.0">
+               <children>
+                  <Label prefWidth="48.0" text="船舶类型" />
+                  <ComboBox fx:id="shipTypeCB" prefWidth="150.0" promptText="船舶类型" />
+                  <Label prefWidth="36.0" text="船级社">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="chuanjisheCB" prefWidth="150.0" promptText="船级社" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <HBox VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="table" fixedCellSize="25.0" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <columns>
+                        <TableColumn fx:id="shipTypeTC" prefWidth="75.0" text="船舶类型" />
+                        <TableColumn fx:id="chuanjisheTC" prefWidth="75.0" text="船级社" />
+                        <TableColumn fx:id="outfittingRegionTC" prefWidth="75.0" text="舾装区域" />
+                        <TableColumn fx:id="criterionNameTC" prefWidth="75.0" text="规范名称" />
+                        <TableColumn fx:id="criterionUrlTC" prefWidth="75.0" text="文件地址" />
+                     </columns>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </TableView>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label minHeight="-Infinity" minWidth="-Infinity" text="规范内容" textAlignment="RIGHT" wrapText="true" />
+                        <TextArea fx:id="contentTA" promptText="规范内容" wrapText="true" VBox.vgrow="ALWAYS" />
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

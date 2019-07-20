@@ -75,36 +75,16 @@ public class KnowledgeResourceManagement {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
+    FxmlUtile fxmlUtile = FxmlUtile.getInstance();
+
     //用borderpane加载知识库管理界面
     private void loadKbManagement() throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KnowledgeBaseMana.fxml");
         knowledgeResourceBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "数据加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     private void loadDBMana() throws IOException {
-        FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/DatabaseMana.fxml");
         knowledgeResourceBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "数据加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 }

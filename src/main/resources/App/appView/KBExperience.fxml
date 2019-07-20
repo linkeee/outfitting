@@ -13,8 +13,8 @@
             <children>
                 <GridPane>
                     <children>
-                        <TextField fx:id="experienceOutfittingTypeTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                        <TextField fx:id="experienceNameTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <TextField fx:id="experienceOutfittingTypeTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <TextField fx:id="experienceNameTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="经验知识名称" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                         <Label text="船舶类型" />
                         <Label text="舾装区域" GridPane.columnIndex="2" />
                         <Label text="经验知识名称" GridPane.columnIndex="4">
@@ -22,7 +22,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="experienceshipType1" editable="true" prefWidth="150.0" GridPane.columnIndex="1" />
+                        <ComboBox fx:id="experienceshipType1" editable="true" prefWidth="150.0" promptText="船舶类型" GridPane.columnIndex="1" />
                     </children>
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" />
@@ -42,19 +42,19 @@
                 <Separator />
                 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" prefHeight="40.0" spacing="20.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <TextField fx:id="experienceQueryTextField" prefWidth="300.0">
-                            <HBox.margin>
-                                <Insets left="30.0" />
-                            </HBox.margin>
-                        </TextField>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleExperienceQuery" text="搜索" />
                         <Button mnemonicParsing="false" onAction="#showAddExperience" text="添加" />
                         <Button mnemonicParsing="false" onAction="#handleEditExperience" text="修改" />
                         <Button mnemonicParsing="false" onAction="#handleDeleteExperience" text="删除" />
                         <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetExperience" text="重置" />
+                        <Button defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleExperienceQuery" text="搜索" visible="false" />
+                        <TextField fx:id="experienceQueryTextField" disable="true" prefWidth="300.0" visible="false">
+                            <HBox.margin>
+                                <Insets left="30.0" />
+                            </HBox.margin>
+                        </TextField>
                     </children>
                     <VBox.margin>
-                        <Insets />
+                        <Insets left="10.0" />
                     </VBox.margin>
                 </HBox>
                 <Separator />
@@ -78,7 +78,7 @@
                         <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                             <children>
                                 <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="80.0" text="经验知识内容" />
-                                <TextArea fx:id="experienceTextArea1" wrapText="true" VBox.vgrow="ALWAYS" />
+                                <TextArea fx:id="experienceTextArea1" promptText="经验知识内容" wrapText="true" VBox.vgrow="ALWAYS" />
                             </children>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
