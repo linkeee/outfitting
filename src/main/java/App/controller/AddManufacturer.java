@@ -2,8 +2,6 @@ package App.controller;
 
 import App.dataModel.ManufacturerData;
 import App.database.ManufacturerDb;
-import App.database.ParamValueDb;
-import App.database.ParameterDb;
 import App.utile.Constant;
 import App.utile.MyDialog;
 import javafx.collections.FXCollections;
@@ -14,42 +12,31 @@ import javafx.scene.control.*;
 
 public class AddManufacturer {
 
-    @FXML
-    private ComboBox<String> outfittingNameCB;
-
-    @FXML
-    private TextField lowerTF;
-
-    @FXML
-    private TextField upperTF;
-
-    @FXML
-    private Button cancelBtn;
-
-    @FXML
-    private TextField manuTF;
-
-    @FXML
-    private TextArea remarkTA;
-
-    @FXML
-    private TextField itemTypeTF;
-
-    @FXML
-    private Button okBtn;
-
+    private static final AddManufacturer Instance = new AddManufacturer();
     @FXML
     Label addManuLabel;
-
+    @FXML
+    private ComboBox<String> outfittingNameCB;
+    @FXML
+    private TextField lowerTF;
+    @FXML
+    private TextField upperTF;
+    @FXML
+    private Button cancelBtn;
+    @FXML
+    private TextField manuTF;
+    @FXML
+    private TextArea remarkTA;
+    @FXML
+    private TextField itemTypeTF;
+    @FXML
+    private Button okBtn;
     private Boolean isModify = false;
-
-    private static final AddManufacturer Instance = new AddManufacturer();
+    private String selectedId = null;
 
     public static AddManufacturer getInstance() {
         return Instance;
     }
-
-    private String selectedId = null;
 
     @FXML
     void okAction(ActionEvent event) {

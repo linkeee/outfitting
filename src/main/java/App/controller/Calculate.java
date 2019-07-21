@@ -3,6 +3,7 @@ package App.controller;
 import App.dataModel.ParamAndValueData;
 import App.database.ParamValueDb;
 import App.database.ProjectDb;
+import App.formulalib.LogicalException;
 import App.utile.Docker;
 import App.utile.FxmlUtile;
 import App.utile.MyDialog;
@@ -66,10 +67,17 @@ public class Calculate {
     @FXML
     void calculateAction(ActionEvent event) {
         //todo 循环调用计算模块计算待求参数结果
+        App.formulalib.Calculate cal = new App.formulalib.Calculate(ParamValueDb.getParamOfType(Integer.valueOf(projLabel.getText()), versionLabel.getText(), 0));
         List<ParamAndValueData> list = projParamValueTV.getItems();
         for (ParamAndValueData p : list) {
-            
+            try {
+                p.setParam_value(String.valueOf(cal.varToValue(p.getParam_name())));
+            } catch (LogicalException e) {
+                MyDialog.error("错误", e.toString());
+                e.printStackTrace();
+            }
         }
+        projParamValueTV.setItems(FXCollections.observableArrayList(list));
         calculateLabel.setText("请点击保存按钮以保存计算结果" + "\r\n" + "项目: " + projLabel.getText() + "   版本: " + versionLabel.getText());
         calculateLabel.setStyle("-fx-text-fill: #ff0000");
     }

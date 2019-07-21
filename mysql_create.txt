@@ -1,0 +1,27 @@
+CREATE TABLE `jproject`.`variable` (
+  `variableID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `variable_string` VARCHAR(60) NOT NULL,
+  `variable_type` TINYINT(1) NOT NULL,
+  `variable_description` VARCHAR(100) NULL DEFAULT NULL,
+  `variable_device` VARCHAR(100) NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`variableID`),
+  UNIQUE INDEX `variableID_UNIQUE` (`variableID` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+CREATE TABLE `jproject`.`formula` (
+  `equationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `equation_right` VARCHAR(60) NOT NULL,
+  `equation_VarID` INT(10) UNSIGNED NOT NULL,
+  `description` VARCHAR(100) NULL DEFAULT NULL,
+  `restrictedVarID` INT(10) UNSIGNED NULL DEFAULT NULL,
+  `lowerBound` DOUBLE NULL DEFAULT NULL,
+  `upperBound` DOUBLE NULL DEFAULT NULL,
+  `rule_more` VARCHAR(100) NULL DEFAULT NULL,
+  `rule_description` VARCHAR(100) NULL DEFAULT NULL,
+  `isDeleted` TINYINT(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`equationID`),
+  UNIQUE INDEX `equationID_UNIQUE` (`equationID` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;

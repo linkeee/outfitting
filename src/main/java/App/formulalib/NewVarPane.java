@@ -27,6 +27,8 @@ public class NewVarPane {
     @FXML
     private TextField tfStringNewDevice;
     @FXML
+    private TextField lowerTF, upperTF;
+    @FXML
     private RadioButton rbBooleanVariableType1, rbBooleanVariableType2;
     @FXML
     private Button btCheckNewVariable;
@@ -42,19 +44,19 @@ public class NewVarPane {
         //初始化使Type1被选中，保证两项必有一项被选中
         rbBooleanVariableType1.setSelected(true);
         rbBooleanVariableType1.requestFocus();
+        btAddNewVariable.setDisable(true);
 
         btCheckNewVariable.setOnAction(event -> buttonActionCheckNewVariable());
         btAddNewVariable.setOnAction(event -> buttonActionAddNewVariable());
         btCancel.setOnAction(event -> buttonActionExitStage());
     }
-
+//todo
     public void show() {
         try {
-            FxmlUtile fxmlUtile = FxmlUtile.getInstance();
+            FxmlUtile fxmlUtile = new FxmlUtile();
             FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/varpane.fxml");
             AnchorPane root = loader.load();
 
-//            AnchorPane root = FXMLLoader.load(getClass().getResource("App/appView/varpane.fxml"));
             Scene newScene = new Scene(root);
 
             Stage secondStage = new Stage();
@@ -78,6 +80,7 @@ public class NewVarPane {
         try {
             if (checkInput(varSting)) {
                 AlertWindows alert = new AlertWindows("变量命名检查", "变量命名检查通过");
+                btAddNewVariable.setDisable(false);
             }
         } catch (LogicalException e) {
             AlertWindows alert = new AlertWindows(e);
@@ -96,18 +99,19 @@ public class NewVarPane {
             boolean varType = (variableType.getSelectedToggle() == rbBooleanVariableType2);
             StringBuilder confirmInfo = new StringBuilder("变量名：" + varString + "\n变量类型：");
             if (varType)
-                confirmInfo.append("中间变量");
+                confirmInfo.append("待求变量");
             else
-                confirmInfo.append("人工赋值变量");
+                confirmInfo.append("已知变量");
             confirmInfo.append("\n变量描述：" + varDescription + "\n设备说明：" + varDevice);
             if (AlertWindows.newConfirmWindows("确认添加变量", "确认添加新变量？", confirmInfo.toString())) {
                 DataBase db = new DataBase();
-                Vari result = db.addVariable(varString, varType, varDescription, varDevice);
+                Vari result = db.addVariable(varString, varType, varDescription, varDevice, lowerTF.getText().trim() + ", " + upperTF.getText().trim());
                 if (result == null) {
                     AlertWindows alert = new AlertWindows("添加变量", "数据库通讯错误，添加变量失败！");
                 } else {
                     AlertWindows alert = new AlertWindows("添加变量", "添加变量成功！在数据库中的记录如下", result.toString());
                     clear();
+                    btAddNewVariable.setDisable(true);
                 }
                 db.close();
             } else return;
@@ -148,6 +152,8 @@ public class NewVarPane {
         tfStringNewVariable.clear();
         tfStringNewDescription.clear();
         tfStringNewDevice.clear();
+        lowerTF.clear();
+        upperTF.clear();
         //初始化使Type1被选中，保证两项必有一项被选中
 
         rbBooleanVariableType1.setSelected(true);

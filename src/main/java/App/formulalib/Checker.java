@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Checker {
+class Checker {
     /**
      * Checker内置数据库连接对象
      */
@@ -377,10 +377,10 @@ public class Checker {
     }
 
     /**
-     * 树状图分析者，以传入的变量对象为起点，寻找是否有不可通过公式库中已存公式推导出来的中间变量
+     * 树状图分析者，以传入的变量对象为起点，寻找是否有不可通过公式库中已存公式推导出来的待求变量
      *
-     * @param variable Vari 应为中间变量
-     * @param route    记录已经历的中间变量的路径，防止出现公式链的死循环
+     * @param variable Vari 应为待求变量
+     * @param route    记录已经历的待求变量的路径，防止出现公式链的死循环
      * @return
      * @throws LogicalException 两种：出现了死循环、变量缺乏对应的推导公式
      */
@@ -404,11 +404,14 @@ public class Checker {
     /**
      * 获得下层推导所需的变量集合，无重复元素
      *
-     * @param var Vari 应为中间变量
+     * @param var Vari 应为待求变量
      * @return List<Vari> 包含了所有推导这个变量所需的下层变量的集合
      */
     private List<Vari> getVariList(Vari var) throws LogicalException {
         List<String> formulaList = db.getAllAlgebraic(var);
+        if (formulaList.isEmpty()) {
+            throw new LogicalException(var, "该变量为待求变量，但缺少对应的推导公式");
+        }
         int formulaAmount = formulaList.size();
         List<String> varStrList = new ArrayList<>();
         List<Vari> varList = new ArrayList<>();
@@ -419,7 +422,12 @@ public class Checker {
         varStrList.clear();
         varStrList.addAll(varSet);
         for (int i = 0, varAmount = varStrList.size(); i < varAmount; i++) {
-            varList.add(db.getVar(varStrList.get(i)));
+            Vari varToAdd = db.getVar(varStrList.get(i));
+            if (varToAdd == null) {
+                throw new LogicalException("没有定义这样的变量:" + varStrList.get(i));
+            } else {
+                varList.add(varToAdd);
+            }
         }
         return varList;
     }

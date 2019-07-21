@@ -1,6 +1,5 @@
 package App.formulalib;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -65,9 +64,11 @@ public class Consoler {
     @FXML
     private TableView<Vari> tvTableVariable;
     @FXML
-    private TableColumn tcTableVariableCol1, tcTableVariableCol2, tcTableVariableCol3, tcTableVariableCol4;
+    private TableColumn tcTableVariableCol1, tcTableVariableCol2, tcTableVariableCol3, tcTableVariableCol4, tcTableVariableCol5, tcTableVariableCol6;
     @FXML
     private Button btNewVariable;
+    @FXML
+    private Button btEditVariable;
     @FXML
     private Button btDeleteVariable;
     @FXML
@@ -75,10 +76,10 @@ public class Consoler {
 
     @FXML
     private void initialize() {
-        exitWindow.setOnAction(event -> buttonActionExitSystem());
+//        exitWindow.setOnAction(event -> buttonActionExitSystem());
         choiceQueryType.setValue(queryType.get(0));
         choiceQueryType.setItems(queryType);
-        tcFormulaLastColumn.prefWidthProperty().bind(tvTableFormula.widthProperty().subtract(842));//列宽绑定//todo
+        tcFormulaLastColumn.prefWidthProperty().bind(tvTableFormula.widthProperty().subtract(842));//列宽绑定
         checkboxActivateRuleArea();
         bindTableColumns();
 
@@ -89,18 +90,21 @@ public class Consoler {
         btDeleteFormula.setOnAction(event -> buttonActionDeleteFormula());
         btQueryVariable.setOnAction(event -> buttonActionQueryVariable());
         btNewVariable.setOnAction(event -> buttonActionNewVariable());
+        btEditVariable.setOnAction(event -> buttonActionEditVariable());
         btDeleteVariable.setOnAction(event -> buttonActionDeleteVariable());
         btCheckAlteration.setOnAction(event -> buttonActionCheckAlteration());
+
+        resetVariableForm();
     }
 
-    private void buttonActionExitSystem() {
-        if (AlertWindows.newConfirmWindows("确认退出", "确认退出公式库管理系统？", "退出前请确保已对改动应用检查")) {
-            Stage stage = (Stage) exitWindow.getScene().getWindow();
-            stage.close();
-            Platform.exit();
-        } else
-            return;
-    }
+//    private void buttonActionExitSystem() {
+//        if (AlertWindows.newConfirmWindows("确认退出", "确认退出公式库管理系统？", "退出前请确保已对改动应用检查")) {
+//            Stage stage = (Stage) exitWindow.getScene().getWindow();
+//            stage.close();
+//            //Platform.exit();
+//        } else
+//            return;
+//    }
 
     /**
      * 提交公式的按钮动作
@@ -112,7 +116,10 @@ public class Consoler {
             if (!Checker.isVarSpellCorrected(NewVariable)) {
                 throw new LogicalException("变量名错误", "输入的待求变量名有误");
             }
-            //将变量String转换为变量ID，throw变量不存在的异常（IllegalArguementException）
+            //将变量String转换为变量ID，throw变量不存在的异常（LogicalException）
+            if (db.getVar(NewVariable) == null) {
+                throw new LogicalException("没有定义这样的变量:" + NewVariable);
+            }
             int NewVariableID = db.getVar(NewVariable).getVariableID();
             String NewAlgebraic = tfStringNewAlgebraic.getText();
             String NewFormulaRemark = tfStringNewFormulaRemark.getText();
@@ -161,7 +168,10 @@ public class Consoler {
                     }
                 }
                 String NewRuleDescription = tfStringNewRuleDescription.getText();
-                //将变量String转换为变量ID，throw变量不存在的异常（IllegalArguementException）
+                //将变量String转换为变量ID，throw变量不存在的异常（LogicalException）
+                if (db.getVar(NewRestrictedVariable) == null) {
+                    throw new LogicalException("没有定义这样的变量:" + NewRestrictedVariable);
+                }
                 int NewRestrictedVariableID = db.getVar(NewRestrictedVariable).getVariableID();
 
                 //带Rule的公式储存
@@ -379,7 +389,7 @@ public class Consoler {
     }
 
     /**
-     * 查询变量按钮交互
+     * 查询变量按钮交互，查询条件皆可为空
      */
     private void buttonActionQueryVariable() {
         try {
@@ -387,9 +397,11 @@ public class Consoler {
             String queryVariable = Checker.removeSpace(tfStringQueryVariable.getText());//异常处理？
             String queryDescription = Checker.removeSpace(tfStringQueryDescription.getText());
             boolean isCalculated = cbIsCalculated.isSelected();
-            if (!Checker.isVarSpellCorrected(queryVariable)) {
-                db.close();
-                throw new LogicalException("变量名错误", "输入的查询变量名拼写有误");
+            if (!queryVariable.isEmpty()) {
+                if (!Checker.isVarSpellCorrected(queryVariable)) {
+                    db.close();
+                    throw new LogicalException("变量名错误", "输入的查询变量名拼写有误");
+                }
             }
             List<Vari> variList = db.getVariableList(queryVariable, queryDescription, isCalculated);
             if (variList.isEmpty()) {
@@ -404,6 +416,8 @@ public class Consoler {
             }
         } catch (LogicalException e) {
             AlertWindows NewAlert = new AlertWindows(e.getTitle(), e.getContent());
+        } finally {
+            cbIsCalculated.setSelected(false);
         }
     }
 
@@ -413,16 +427,38 @@ public class Consoler {
     private void buttonActionNewVariable() {
         NewVarPane newVarPane = new NewVarPane();
         newVarPane.show();
+        resetVariableForm();
+    }
+
+    private void buttonActionEditVariable(){
+        Vari vari=tvTableVariable.getSelectionModel().getSelectedItem();
+        if (vari!=null) {
+            VarEditor varEditor=new VarEditor();
+            Vari editedVar = varEditor.show(vari);
+            if (editedVar!=null)
+            {
+                DataBase db =new DataBase();
+                db.updateVariable(editedVar);
+                db.close();
+                resetVariableForm();
+            }
+            else return;
+        }else return;
     }
 
     /**
-     * 按钮动作，删除变量定义
+     * 按钮动作，删除变量定义，不能删除已有公式关联的待求变量
      */
     private void buttonActionDeleteVariable() {
         Vari var = tvTableVariable.getSelectionModel().getSelectedItem();
         if (var != null) {
             if (AlertWindows.newConfirmWindows("删除变量", "确认删除下列变量的定义？", var.toString())) {
                 DataBase db = new DataBase();
+                if (!db.getAllAlgebraic(var).isEmpty()) {
+                    db.close();
+                    AlertWindows alert = new AlertWindows("删除变量", "变量删除失败，不能删除已有公式关联的待求变量！");
+                    return;
+                }
                 if (db.deleteVariable(var)) {
                     db.close();
                     AlertWindows alert = new AlertWindows("删除变量", "变量删除成功");
@@ -435,6 +471,9 @@ public class Consoler {
         }
     }
 
+    /**
+     * 验证公式库有效性
+     */
     private void buttonActionCheckAlteration() {
         try {
             DataBase db = new DataBase();
@@ -443,9 +482,39 @@ public class Consoler {
             Checker checker = new Checker();
             checker.isDerivationCorrected();
             checker.checkRules();
-            AlertWindows alert = new AlertWindows("公式库改动检查","检查完毕，没有发现问题");
+            AlertWindows alert = new AlertWindows("公式库有效性", "检查完毕，没有发现问题");
         } catch (LogicalException e) {
-            AlertWindows alert = new AlertWindows("公式库改动检查", e.getTitle(), e.getVari().getVarString() + "：" + e.getContent());
+            if (e.getVari() == null) {
+                AlertWindows alert = new AlertWindows("公式库有效性", e.getTitle(), e.getContent());
+            } else {
+                AlertWindows alert = new AlertWindows("公式库有效性", e.getTitle(), e.getVari().getVarString() + "：" + e.getContent());
+            }
+        }
+    }
+
+    /**
+     * 初始化填充变量列表
+     */
+    private void resetVariableForm() {
+        DataBase db = new DataBase();
+        String queryVariable = Checker.removeSpace(tfStringQueryVariable.getText());//异常处理？
+        String queryDescription = Checker.removeSpace(tfStringQueryDescription.getText());
+        boolean isCalculated = cbIsCalculated.isSelected();
+        if (!queryVariable.isEmpty()) {
+            if (!Checker.isVarSpellCorrected(queryVariable)) {
+                db.close();
+                return;
+            }
+        }
+        List<Vari> variList = db.getVariableList(queryVariable, queryDescription, isCalculated);
+        if (variList.isEmpty()) {
+            db.close();
+        } else {
+            variableList.clear();
+            for (int i = 0, j = variList.size(); i < j; i++) {
+                variableList.add(variList.get(i));
+            }
+            db.close();
         }
     }
 
@@ -502,8 +571,10 @@ public class Consoler {
         tvTableFormula.setItems(equationList);
         tcTableVariableCol1.setCellValueFactory(new PropertyValueFactory<>("variableID"));
         tcTableVariableCol2.setCellValueFactory(new PropertyValueFactory<>("varString"));
-        tcTableVariableCol3.setCellValueFactory(new PropertyValueFactory<>("isCalculated"));
+        tcTableVariableCol3.setCellValueFactory(new PropertyValueFactory<>("varType"));
         tcTableVariableCol4.setCellValueFactory(new PropertyValueFactory<>("variableDescription"));
+        tcTableVariableCol5.setCellValueFactory(new PropertyValueFactory<>("varDevice"));
+        tcTableVariableCol6.setCellValueFactory(new PropertyValueFactory<>("varScope"));
         tvTableVariable.setItems(variableList);
     }
 }

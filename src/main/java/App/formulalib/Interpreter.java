@@ -1,10 +1,21 @@
 package App.formulalib;
 
+import App.dataModel.ParamAndValueData;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Interpreter {
     private DataBase db = new DataBase();
+    private List<ParamAndValueData> valueDataList;
+
+    Interpreter(List<ParamAndValueData> valueDataList) {
+        {
+            this.valueDataList = valueDataList;
+        }
+    }
 
     //搜索变量字符串(至少有一位)
     private static String findvar(String str) {
@@ -118,7 +129,7 @@ class Interpreter {
             varExpress.append(formulaAnalyzer(strFormula)).append(")");
             return varExpress.toString();
         } else {
-            return Double.toString(LibraryManager.getValue(Var));
+            return getValue(Var);
         }
     }
 
@@ -187,5 +198,35 @@ class Interpreter {
             processedFormula.append(strFormula, lengthOfFormula - lengthOfFrag, lengthOfFormula);
         }
         return processedFormula.toString();
+    }
+
+    /**
+     * 获取变量的实际值
+     *
+     * @param var Vari
+     * @return String ActualValue
+     */
+    private String getValue(@NotNull Vari var) {
+        if (var.getIsCalculated()) {
+            throw new IllegalArgumentException("非已知变量，无法查询");
+        } else {
+            return findStringValue(var.getVariableID());
+        }
+    }
+
+    /**
+     * 从valueDataList中找到varID对应的实际值
+     *
+     * @param varID int
+     * @return String ActualValue
+     */
+    private String findStringValue(int varID) {
+        int lengthOfList = valueDataList.size();
+        for (int i = 0; i < lengthOfList; ++i) {
+            if (Integer.parseInt(valueDataList.get(i).getParam_id()) == varID) {
+                return valueDataList.get(i).getParam_value();//可能为null？
+            }
+        }
+        throw new IllegalArgumentException("变量ID对应的变量没有赋值,变量ID=" + varID);
     }
 }

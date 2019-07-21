@@ -1,7 +1,10 @@
 package App.utile;
 
+import App.dataModel.ParameterData;
 import App.dataModel.UserData;
 import App.database.*;
+import App.formulalib.LibraryManager;
+import App.formulalib.Vari;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -113,8 +116,8 @@ public class Constant {
      * @return
      */
     public static List<String> getOutfittingName() {
-        List<String> list1 = ParameterDb.getOutfittingItems();
-        List<String> list2 = LayoutDb.getOutfittingItems();
+        List<String> list1 = ParameterDb.getOutfittingName();
+        List<String> list2 = LayoutDb.getOutfittingName();
         Set<String> set = new LinkedHashSet<>();
         set.addAll(list1);
         set.addAll(list2);
@@ -123,20 +126,33 @@ public class Constant {
         return new ArrayList<>(set);
     }
 
-    public static List<String> getStopWords() {
-        List<String> stopWords = new ArrayList<>();
-        File file = new File("..\\..\\..\\resources\\stopwords.txt");
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String tempLine;
-            while ((tempLine = reader.readLine()) != null) {
-                if (!stopWords.contains(tempLine))
-                    stopWords.add(tempLine);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    /**
+     * 从参数管理模块取过来List<Vari>，转换成List<Parameter>
+     *
+     * @return
+     */
+    public static List<ParameterData> getAllParameterList() {
+        List<ParameterData> list = new ArrayList<>();
+        List<Vari> list1 = new LibraryManager().getAllKnownVariable();
+        for (Vari vari : list1) {
+            ParameterData parameterData = new ParameterData();
+            parameterData.setParam_id(String.valueOf(vari.getVariableID()));
+            parameterData.setParam_type(vari.getVarType().equals("已知变量") ? "已知" : "待求");
+            parameterData.setParam_name(vari.getVarString());
+            parameterData.setParam_description(vari.getVariableDescription());
+            parameterData.setOutfitting_name(vari.getVarDevice());
+
+            list.add(parameterData);
         }
-        return stopWords;
+        return list;
+    }
+
+    public static List<String> getAllParamNameList() {
+        List<String> list = new ArrayList<>();
+        for (ParameterData p : getAllParameterList()) {
+            list.add(p.getParam_name());
+        }
+        return list;
     }
 
 }

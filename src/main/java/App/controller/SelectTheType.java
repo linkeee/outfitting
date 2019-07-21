@@ -14,6 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SelectTheType {
 
     @FXML
@@ -91,13 +94,36 @@ public class SelectTheType {
     @FXML
     private ComboBox<String> versionCB;
 
+    @FXML
+    private Label projVersionLabel;
+
     private ParamAndValueData selectedPv;
     private ManufacturerData selectedMf;
+
+    private void refreshTwoTV() {
+        List<SelectedTypeData> selectedList = SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue());
+        List<String> selectedOutfittingNameList = new ArrayList<>();
+        for (SelectedTypeData s : selectedList) {
+            selectedOutfittingNameList.add(s.getOutfitting_name());
+        }
+        List<ParamAndValueData> nowNeedToSelect = new ArrayList<>();
+        for (ParamAndValueData p : ParamValueDb.getParamByProjAndVersion(Integer.valueOf(projCB.getValue()), versionCB.getValue())) {
+            if (p.getOutfitting_name() == null || p.getOutfitting_name().equals("") || selectedOutfittingNameList.contains(p.getOutfitting_name())) continue;
+            nowNeedToSelect.add(p);
+        }
+        TVParam.setItems(FXCollections.observableArrayList(nowNeedToSelect));
+        TVList.setItems(FXCollections.observableArrayList(selectedList));
+    }
+
+    private void refreshOneTV() {
+
+    }
 
     @FXML
     void addAction(ActionEvent event) {
         SelectedTypeDb.insert(selectedPv, selectedMf);
-        TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
+//        TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
+        refreshTwoTV();
     }
 
     @FXML
@@ -105,8 +131,12 @@ public class SelectTheType {
         projCB.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
         projCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> versionCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(newValue)))));
         versionCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+
+
             TVParam.setItems(FXCollections.observableArrayList(ParamValueDb.getParamByProjAndVersion(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
             TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
+            projVersionLabel.setText("项目：" + projCB.getValue() + "\r\n" + "版本：" + versionCB.getValue() + "\r\n" + "计算结果");
         });
 
         TV1TCOutfittingName.setCellValueFactory(new PropertyValueFactory<>("outfitting_name"));
@@ -142,7 +172,8 @@ public class SelectTheType {
                     delBtn.setOnMouseClicked(click -> {
                         SelectedTypeData std = this.getTableView().getItems().get(this.getIndex());
                         SelectedTypeDb.delete(std);
-                        TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
+//                        TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
+                        refreshTwoTV();
                     });
                 }
             }

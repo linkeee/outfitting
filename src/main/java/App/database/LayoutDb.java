@@ -226,7 +226,7 @@ public class LayoutDb extends DatabaseItem {
         return list;
     }
 
-    public static List<String> getOutfittingItems() {
+    public static List<String> getOutfittingName() {
         List<String> list = new ArrayList<>();
 
         PreparedStatement ps = null;

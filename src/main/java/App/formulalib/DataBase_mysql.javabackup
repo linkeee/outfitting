@@ -1,8 +1,7 @@
-package App.formulalib;
+﻿package com.sws.formulalib;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,41 +10,32 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DataBase {
-    private static final String JDBC_DRIVER = "org.sqlite.JDBC";
-    private static final String DB_URL = "jdbc:sqlite:/";
-    private final String rootPath;
+    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/jproject?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT";
+    private static final String USER = "root";
+    private static final String PASSWORD = "sa";
     private Connection conn;
 
-    public DataBase() {
-        rootPath = this.getClass().getResource("/").getPath();
+    DataBase() {
         try {
             conn = getConnection();
         } catch (Exception e) {
-            Logger.getGlobal().log(Level.SEVERE, "数据库对象初始化失败", e);
+            Logger.getGlobal().log(Level.SEVERE,"数据库对象初始化失败",e);
         }
-
     }
 
-    /**
-     * SQLite的JDBC会在数据库文件不存在时自动新建空的db文件，我们使用getResource("/").getPath()获取项目根目录拼接formulalib.db的地址，因此只要做好前置过滤，手动写建立表结构的函数即可
-     *
-     * @return Connection
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     * @throws IOException
-     */
-    private Connection getConnection() throws IllegalAccessException, InstantiationException, IOException {
+    private Connection getConnection() throws Exception {
         try {
             Class.forName(JDBC_DRIVER).newInstance();
-            Logger.getGlobal().log(Level.INFO, "数据库驱动加载成功");
-            Connection newConn = DriverManager.getConnection(DB_URL.concat(rootPath).concat("formulalib.db"));
-            Logger.getGlobal().log(Level.INFO, "数据库连接成功");
+            Logger.getGlobal().log(Level.INFO,"数据库驱动加载成功");
+            Connection newConn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            Logger.getGlobal().log(Level.INFO,"数据库连接成功");
             return newConn;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库连接失败", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库连接失败",e);
             return null;
         } catch (ClassNotFoundException e) {
-            Logger.getGlobal().log(Level.SEVERE, "数据库驱动不存在", e);
+            Logger.getGlobal().log(Level.SEVERE,"数据库驱动不存在",e);
             return null;
         }
     }
@@ -55,30 +45,11 @@ public class DataBase {
      *
      * @throws SQLException
      */
-    public void close() {
+    void close() {
         try {
             conn.close();
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "未成功断开与数据库的连接", e);
-        }
-    }
-
-    /**
-     * 建立一个新的空数据库（包含表结构）
-     */
-    void createTables() {
-        try {
-            String sql1 = "CREATE TABLE variable ([variableID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[variable_string] TEXT NOT NULL,[variable_type] BOOLEAN NOT NULL DEFAULT (-1),[variable_description] TEXT NULL DEFAULT NULL,[variable_device] TEXT NULL DEFAULT NULL,[isDeleted] BOOLEAN NOT NULL DEFAULT '0', [variable_scope] TEXT NULL DEFAULT NULL);";
-            String sql2 = "CREATE TABLE formula ([equationID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[equation_right]TEXT NOT NULL,[equation_VarID]INTEGER NOT NULL,[description]TEXT NULL DEFAULT NULL,[restrictedVarID]INTEGER NULL DEFAULT NULL,[lowerBound]REAL NULL DEFAULT NULL,[upperBound]REAL NULL DEFAULT NULL,[rule_more]TEXT NULL DEFAULT NULL,[rule_description]TEXT NULL DEFAULT NULL,[isDeleted]BOOLEAN NOT NULL DEFAULT '0');";
-            Statement stat = conn.createStatement();
-            stat.addBatch("PRAGMA encoding = \"UTF-8\";");
-            stat.addBatch(sql1);
-            stat.addBatch(sql2);
-            int[] report = stat.executeBatch();
-            stat.close();
-            Logger.getGlobal().info("数据库创建成功");
-        } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库创建失败", e);
+            Logger.getGlobal().log(Level.WARNING,"未成功断开与数据库的连接",e);
         }
     }
 
@@ -92,14 +63,14 @@ public class DataBase {
     int getFirstFormulaID(int varID) {
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rSet = stmt.executeQuery("select equationID FROM formula WHERE isDeleted=0 and equation_VarID=".concat(String.valueOf(varID).concat(" limit 1")));
+            ResultSet rSet = stmt.executeQuery("select equationID FROM formula WHERE equation_VarID=".concat(String.valueOf(varID).concat(" limit 1")));
             while (rSet.next()) {
                 return rSet.getInt(1);
             }
             rSet.close();
             stmt.close();
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
         throw new IllegalArgumentException("该变量ID没有对应的公式");
     }
@@ -112,7 +83,7 @@ public class DataBase {
      * @return List<String> 包含所有公式
      * @throws IllegalArgumentException the illegal argument exception
      */
-    List<String> getAllAlgebraic(@NotNull Vari var) {
+    List<String> getAllAlgebraic(Vari var) throws LogicalException {
         List<String> a = new ArrayList<>();
         try {
             Statement stmt = conn.createStatement();
@@ -123,72 +94,68 @@ public class DataBase {
             rSet.close();
             stmt.close();
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
-        return a;
+        if (a.isEmpty()) {
+            throw new LogicalException(var, "该变量为待求变量，但缺少对应的推导公式");
+        } else return a;
     }
 
     /**
-     * 从字符串查询变量，返回一个Vari对象，如果没有这样的公式库中没有这样的变量，则返回null
+     * 从字符串查询变量，返回一个Vari对象
      *
      * @param varStr 变量字符串
      * @return Vari
-     * @throws LogicalException
+     * @throws IllegalArgumentException
      */
     Vari getVar(@NotNull String varStr) throws LogicalException {
         try {
-            String sql = "SELECT variableID,variable_type,variable_description,variable_device, variable_scope FROM variable WHERE isDeleted=0 and variable_string= ?";
+            String sql = "SELECT `variableID`,`variable_type`,`variable_description`,`variable_device` FROM `variable` WHERE `isDeleted`=0 and `variable_string`= ?";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, varStr);
             ResultSet rSet = stat.executeQuery();
             if (rSet.next()) {
-                Vari a = new Vari(rSet.getInt(1), varStr, rSet.getBoolean(2), rSet.getString(3), rSet.getString(4), rSet.getString(5));
+                Vari a = new Vari(rSet.getInt(1), varStr, rSet.getBoolean(2), rSet.getString(3), rSet.getString(4));
                 rSet.close();
                 stat.close();
                 return a;
             } else {
                 rSet.close();
                 stat.close();
-                return null;
+                throw new LogicalException("没有这样的变量");
             }
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
-        throw new LogicalException("没有定义这样的变量:" + varStr);
+        throw new LogicalException("没有这样的变量");
     }
 
     /**
-     * 从变量ID查询变量，返回一个Vari对象，如果没有这样的公式库中没有这样的变量，则抛出异常
+     * 从变量ID查询变量，返回一个Vari对象
      *
      * @param varID 变量字符串
      * @return Vari
-     * @throws LogicalException
+     * @throws IllegalArgumentException
      */
-    Vari getVar(int varID) throws LogicalException {
+    Vari getVar(int varID) throws IllegalArgumentException {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0 and variableID=".concat(String.valueOf(varID));
+            String sql = "SELECT variableID,variable_string,variable_type FROM variable WHERE isDeleted=0 and variableID=".concat(String.valueOf(varID));
             ResultSet rSet = stmt.executeQuery(sql);
             if (rSet.next()) {
-                String vardescription = null;
-                String vardevice = null;
-                if (rSet.getObject(4) != null)
-                    vardescription = rSet.getString(4);
-                if (rSet.getObject(5) != null)
-                    vardevice = rSet.getString(5);
-                Vari a = new Vari(varID, rSet.getString(2), rSet.getBoolean(3), vardescription, vardevice, rSet.getString(6));
+                Vari a = new Vari(varID, rSet.getString(2), rSet.getBoolean(3));
                 rSet.close();
                 stmt.close();
                 return a;
             } else {
                 rSet.close();
                 stmt.close();
-                throw new LogicalException("没有定义这样的变量:VarID=" + varID);
+                throw new IllegalArgumentException("没有这样的变量");
             }
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
-        throw new LogicalException("没有定义这样的变量:VarID=" + varID);
+        throw new IllegalArgumentException("没有这样的变量");
     }
 
     /**
@@ -207,7 +174,7 @@ public class DataBase {
             stmt.close();
             return is_Exist;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             throw new IllegalArgumentException("传入变量的字符串非法，请检查");
         }
     }
@@ -235,7 +202,7 @@ public class DataBase {
                 throw new IllegalArgumentException("没有这样的公式");
             }
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
         throw new IllegalArgumentException("没有这样的公式");
     }
@@ -246,10 +213,10 @@ public class DataBase {
      * @param FormulaID
      * @return Equation 返回一条公式或null，请注意检查返回对象为null的情况
      */
-    Equation getFormula(int FormulaID) throws LogicalException {
+    Equation getFormula(int FormulaID) {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT equationID,equation_right,equation_VarID,description,restrictedVarID,lowerBound,upperBound,rule_more,rule_description FROM formula WHERE isDeleted=0 and equationID=" + FormulaID;
+            String sql = "SELECT `equationID`,`equation_right`,`equation_VarID`,`description`,`restrictedVarID`,`lowerBound`,`upperBound`,`rule_more`,`rule_description` FROM formula WHERE isDeleted=0 and equationID=" + FormulaID;
             ResultSet rSet = stmt.executeQuery(sql);
             while (rSet.next()) {
                 Vari restrictedVar = null;
@@ -281,7 +248,7 @@ public class DataBase {
             stmt.close();
             return null;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             return null;
         }
     }
@@ -298,7 +265,8 @@ public class DataBase {
             Statement stmt = conn.createStatement();
             String sql = "SELECT equationID,restrictedVarID,lowerBound,upperBound FROM formula WHERE isDeleted=0 and equation_VarID=".concat(String.valueOf(varID));
             ResultSet rSet = stmt.executeQuery(sql);
-            while (rSet.next()) {
+            while (rSet.next())
+            {
                 String equationID = rSet.getString(1);
                 String restrictedVarID = rSet.getString(2);
                 String lowerBound = rSet.getString(3);
@@ -310,7 +278,7 @@ public class DataBase {
             stmt.close();
             return rulesForm;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
         throw new IllegalArgumentException("该变量ID没有对应的公式");
     }
@@ -322,11 +290,11 @@ public class DataBase {
      * @param varID int
      * @return List<Equation> 可能返回空的List，需做处理
      */
-    List<Equation> getFormulaList(int varID) throws LogicalException {
+    List<Equation> getFormulaList(int varID) {
         List<Equation> a = new LinkedList<>();
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT equationID,equation_right,equation_VarID,description,restrictedVarID,lowerBound,upperBound,rule_more,rule_description FROM formula WHERE isDeleted=0 and equation_VarID=" + varID;
+            String sql = "SELECT `equationID`,`equation_right`,`equation_VarID`,`description`,`restrictedVarID`,`lowerBound`,`upperBound`,`rule_more`,`rule_description` FROM formula WHERE isDeleted=0 and equation_VarID=" + varID;
             ResultSet rSet = stmt.executeQuery(sql);
             while (rSet.next()) {
                 Vari restrictedVar = null;
@@ -353,7 +321,7 @@ public class DataBase {
             rSet.close();
             stmt.close();
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
         return a;
     }
@@ -365,7 +333,7 @@ public class DataBase {
      * @param var Vari
      * @return List<Equation> 可能返回空的List，需做处理
      */
-    List<Equation> getFormulaList(Vari var) throws LogicalException {
+    List<Equation> getFormulaList(Vari var) {
         return getFormulaList(var.getVariableID());
     }
 
@@ -377,33 +345,39 @@ public class DataBase {
      * @return List<Equation> 可能返回空的List，需做处理
      */
     List<Equation> getFormulaList(String strVar) throws LogicalException {
-        if (getVar(strVar) == null) {
-            throw new LogicalException("没有定义这样的变量:" + strVar);
-        }
         return getFormulaList(getVar(strVar));
     }
 
     /**
      * 根据输入信息查询符合输入条件的变量，函数未使用未使用PreparedStatement
      *
-     * @param strVar         忽略大小写，不能有空格，不能为null，如果没有这一项请传入""
-     * @param varDescription 不能有空格,不能为null，如果没有这一项请传入""，模糊匹配，写得越少越好
-     * @param isAknown       是否为已知变量，默认是false，则查询时不会添加该条件
+     * @param strVar         忽略大小写，不能有空格，不能为空，如果没有这一项请传入""
+     * @param varDescription 不能有空格,不能为空，如果没有这一项请传入""，模糊匹配，写得越少越好
+     * @param isCalculated
      * @return List<Vari>符合条件的所有变量
      */
-    List<Vari> getVariableList(@NotNull String strVar, @NotNull String varDescription, boolean isAknown) {
+    List<Vari> getVariableList(@NotNull String strVar, @NotNull String varDescription, boolean isCalculated) {
         List<Vari> varList = new LinkedList<>();
+        int isCal;
+        if (isCalculated)
+            isCal = 1;
+        else isCal = 0;
         String varString = strVar.toLowerCase();
         try {
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0";
-            if (!varString.isEmpty()) {
-                sql = sql + " and lower(variable_string)='" + varString + "'";
-            }
-            if (!varDescription.isEmpty()) {
-                sql = sql + " and variable_description LIKE '%" + varDescription + "%'";
-            }
-            if (isAknown) {
-                sql = sql + " and variable_type=0";
+            String sql;
+            if (varDescription.isEmpty()) {
+                if (strVar.isEmpty()) {
+                    sql = "SELECT `variableID`,`variable_string`,`variable_type`,`variable_description`,`variable_device` FROM `variable` WHERE isDeleted=0 and variable_type=" + isCal;
+                } else {
+                    sql = "SELECT `variableID`,`variable_string`,`variable_type`,`variable_description`,`variable_device` FROM `variable` WHERE isDeleted=0 and lower(variable_string)='" + varString + "' and variable_type=" + isCal;
+                }
+            } else {
+                if (strVar.isEmpty()) {
+                    sql = "SELECT `variableID`,`variable_string`,`variable_type`,`variable_description`,`variable_device` FROM `variable` WHERE isDeleted=0 and variable_description LIKE '%" + varDescription + "%' and variable_type=" + isCal;
+                } else {
+                    sql = "SELECT `variableID`,`variable_string`,`variable_type`,`variable_description`,`variable_device` FROM `variable` WHERE isDeleted=0 and lower(variable_string)='" + varString + "' and variable_description LIKE '%" + varDescription + "%' and variable_type" + isCal;
+                }
+
             }
             Statement stmt = conn.createStatement();
             ResultSet rSet = stmt.executeQuery(sql);
@@ -419,13 +393,13 @@ public class DataBase {
                 if (rSet.getObject(5) != null) {
                     variableDevice = rSet.getString(5);
                 }
-                Vari var = new Vari(variableID, variableString, variableType, variableDescription, variableDevice, rSet.getString(6));
+                Vari var = new Vari(variableID, variableString, variableType, variableDescription, variableDevice);
                 varList.add(var);
             }
             rSet.close();
             stmt.close();
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
         return varList;
     }
@@ -435,10 +409,10 @@ public class DataBase {
      *
      * @return List<Vari>可能为空，请注意检查
      */
-    public List<Vari> getAllVariable() {
+    List<Vari> getAllVariable() {
         List<Vari> varList = new ArrayList<>();
         try {
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0";
+            String sql = "SELECT `variableID`,`variable_string`,`variable_type`,`variable_description`,`variable_device` FROM `variable` WHERE isDeleted=0";
             Statement stat = conn.createStatement();
             ResultSet rSet = stat.executeQuery(sql);
             while (rSet.next()) {
@@ -453,47 +427,13 @@ public class DataBase {
                 if (rSet.getObject(5) != null) {
                     variableDevice = rSet.getString(5);
                 }
-                Vari var = new Vari(variableID, variableString, variableType, varDescription, variableDevice, rSet.getString(6));
+                Vari var = new Vari(variableID, variableString, variableType, varDescription, variableDevice);
                 varList.add(var);
             }
             rSet.close();
             stat.close();
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
-        }
-        return varList;
-    }
-
-    /**
-     * 获取所有变量类型为“已知变量”的变量对象
-     *
-     * @return List<Vari>
-     */
-    public List<Vari> getAllKnownVariable() {
-        List<Vari> varList = new ArrayList<>();
-        try {
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0 and variable_type=0";
-            Statement stat = conn.createStatement();
-            ResultSet rSet = stat.executeQuery(sql);
-            while (rSet.next()) {
-                int variableID = rSet.getInt(1);
-                String variableString = rSet.getString(2);
-                boolean variableType = rSet.getBoolean(3);
-                String varDescription = null;
-                String variableDevice = null;
-                if (rSet.getObject(4) != null) {
-                    varDescription = rSet.getString(4);
-                }
-                if (rSet.getObject(5) != null) {
-                    variableDevice = rSet.getString(5);
-                }
-                Vari var = new Vari(variableID, variableString, variableType, varDescription, variableDevice, rSet.getString(6));
-                varList.add(var);
-            }
-            rSet.close();
-            stat.close();
-        } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
         return varList;
     }
@@ -503,10 +443,9 @@ public class DataBase {
     }
 
     boolean addFormula(int equationVarID, String equationRight, String description) {
-
         try {
             //测试预编译版本
-            String sql = "INSERT INTO formula (equation_right,equation_VarID,description) VALUES (?,?,?)";
+            String sql = "INSERT INTO `jproject`.`formula` (equation_right,equation_VarID,description) VALUES (?,?,?)";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, equationRight);
             stat.setInt(2, equationVarID);
@@ -515,11 +454,11 @@ public class DataBase {
             else
                 stat.setString(3, description);
             int line = stat.executeUpdate();
-            Logger.getGlobal().log(Level.INFO, "更新记录数" + line);
+            Logger.getGlobal().log(Level.INFO,"更新记录数" + line);
             stat.close();
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             return false;
         }
     }
@@ -540,7 +479,7 @@ public class DataBase {
      */
     boolean addFormula(int equationVarID, String equationRight, String description, int ruleType, int restrictedVarID, double lowerBound, double upperBound, String ruleDescription, String ruleMore) {
         try {
-            String sql = "INSERT INTO formula (equation_VarID,equation_right, description, restrictedVarID, lowerBound, upperBound, rule_description, rule_more) VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO `jproject`.`formula` (`equation_VarID`,`equation_right`, `description`, `restrictedVarID`, `lowerBound`, `upperBound`, `rule_description`, `rule_more`) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement stat = conn.prepareStatement(sql);
 
             stat.setInt(1, equationVarID);
@@ -609,30 +548,7 @@ public class DataBase {
             stat.close();
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
-            return false;
-        }
-    }
-
-    boolean updateVariable(@NotNull Vari inVar) {
-        try {
-            String sql = "UPDATE variable SET [variable_description]=?,[variable_device]=?,[variable_scope]=? WHERE variableID = ? and isDeleted=0";
-            PreparedStatement stat = conn.prepareStatement(sql);
-            if (inVar.getVariableDescription().isEmpty())
-                stat.setNull(1, Types.NULL);
-            else
-                stat.setString(1, inVar.getVariableDescription());
-            if (inVar.getVarDevice().isEmpty())
-                stat.setNull(2, Types.NULL);
-            else
-                stat.setString(2, inVar.getVarDevice());
-            stat.setString(3,inVar.getVarScope());
-            stat.setInt(4, inVar.getVariableID());
-            int line = stat.executeUpdate();
-            Logger.getGlobal().info("更新记录数" + line);
-            return true;
-        } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             return false;
         }
     }
@@ -668,7 +584,7 @@ public class DataBase {
      */
     boolean updateFormula(int equationID, int equationVarID, String equationRight, String description, int ruleType, int restrictedVarID, double lowerBound, double upperBound, String ruleDescription, String ruleMore) {
         try {
-            String sql = "UPDATE formula SET equation_VarID=?,equation_right=?, description=?, restrictedVarID=?, lowerBound=?, upperBound=?, rule_description=?, rule_more=? WHERE equationID = ? and isDeleted=0";
+            String sql = "UPDATE `jproject`.`formula` SET `equation_VarID`=?,`equation_right`=?, `description`=?, `restrictedVarID`=?, `lowerBound`=?, `upperBound`=?, `rule_description`=?, `rule_more`=? WHERE `equationID` = ? and isDeleted=0";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setInt(1, equationVarID);
             stat.setString(2, equationRight);
@@ -736,7 +652,7 @@ public class DataBase {
             Logger.getGlobal().info("更新记录数" + line);
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             return false;
         }
     }
@@ -749,7 +665,7 @@ public class DataBase {
      */
     boolean deleteFormula(int equationID) {
         try {
-            String sql = "UPDATE formula SET isDeleted=? WHERE isDeleted=0 and equationID = ?";
+            String sql = "UPDATE `jproject`.`formula` SET `isDeleted`=? WHERE `isDeleted`=0 and `equationID` = ?";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setBoolean(1, true);
             stat.setInt(2, equationID);
@@ -758,7 +674,7 @@ public class DataBase {
             stat.close();
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             return false;
         }
     }
@@ -781,16 +697,16 @@ public class DataBase {
      */
     boolean deleteVariable(int varID) {
         try {
-            String sql = "UPDATE variable SET isDeleted=? WHERE isDeleted=0 and variableID = ?";
+            String sql = "UPDATE `jproject`.`variable` SET `isDeleted`=? WHERE `isDeleted`=0 and `variableID` = ?";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setBoolean(1, true);
             stat.setInt(2, varID);
             int line = stat.executeUpdate();
-            Logger.getGlobal().info("更新记录数" + line);
+            Logger.getGlobal().info("更新记录数"+line);
             stat.close();
             return true;
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             return false;
         }
     }
@@ -814,10 +730,10 @@ public class DataBase {
      * @param varDevice      String 可以为空但不能为null
      * @return
      */
-    Vari addVariable(@NotNull String varString, boolean isCalculated, @NotNull String varDescription, @NotNull String varDevice, String varScope) throws LogicalException {
+    Vari addVariable(@NotNull String varString, boolean isCalculated, @NotNull String varDescription, @NotNull String varDevice) throws LogicalException {
         try {
             //测试预编译版本
-            String sql = "INSERT INTO variable (variable_string,variable_type,variable_description,variable_device, variable_scope) VALUES (?,?,?,?, ?)";
+            String sql = "INSERT INTO `jproject`.`variable` (`variable_string`,`variable_type`,`variable_description`,`variable_device`) VALUES (?,?,?,?)";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, varString);
             stat.setBoolean(2, isCalculated);
@@ -829,16 +745,12 @@ public class DataBase {
                 stat.setNull(4, Types.NULL);
             else
                 stat.setString(4, varDevice);
-            if (varScope.isEmpty())
-                stat.setNull(5, Types.NULL);
-            else
-                stat.setString(5, varScope);
             int line = stat.executeUpdate();
-            Logger.getGlobal().log(Level.INFO, "更新记录数" + line);
+            Logger.getGlobal().log(Level.INFO,"更新记录数"+line);
             stat.close();
             return getVar(varString);
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
             return null;
         }
     }
@@ -847,27 +759,21 @@ public class DataBase {
         List<Integer> validList = new ArrayList<>();
         List<Integer> invalidList = new ArrayList<>();
         try {
-            String sql = "SELECT variableID,variable_string FROM variable WHERE isDeleted=1";
+            String sql = "SELECT `variableID`,`variable_string` FROM `variable` WHERE isDeleted=1";
             Statement stat = conn.createStatement();
             ResultSet rSet = stat.executeQuery(sql);
             while (rSet.next()) {
                 int variableID = rSet.getInt(1);
                 String variableString = rSet.getString(2);
                 if (!variableString.isEmpty()) {
-                    Vari validVar = getVar(variableString);
-                    //如果变量库中不存在新的变量定义，则跳过替换步骤
-                    if (validVar == null)
-                        continue;
-                    else {
-                        validList.add(validVar.getVariableID());
-                        invalidList.add(variableID);
-                    }
+                    validList.add(getVar(variableString).getVariableID());
+                    invalidList.add(variableID);
                 }
             }
             rSet.close();
             stat.close();
-            String sql2 = "UPDATE formula SET equation_VarID=? WHERE isDeleted=0 and equation_VarID = ?";
-            String sql3 = "UPDATE formula SET restrictedVarID=? WHERE isDeleted=0 and restrictedVarID = ?";
+            String sql2 = "UPDATE `jproject`.`formula` SET `equation_VarID`=? WHERE `isDeleted`=0 and `equation_VarID` = ?";
+            String sql3 = "UPDATE `jproject`.`formula` SET `restrictedVarID`=? WHERE `isDeleted`=0 and `restrictedVarID` = ?";
             PreparedStatement stat2 = conn.prepareStatement(sql2);
             PreparedStatement stat3 = conn.prepareStatement(sql3);
             int count = 0;
@@ -883,9 +789,9 @@ public class DataBase {
             }
             stat2.close();
             stat3.close();
-            Logger.getGlobal().log(Level.INFO, "更新记录数：" + count);
+            Logger.getGlobal().log(Level.INFO,"更新记录数："+count);
         } catch (SQLException e) {
-            Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
+            Logger.getGlobal().log(Level.WARNING,"数据库错误",e);
         }
     }
 }

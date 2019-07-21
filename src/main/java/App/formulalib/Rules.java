@@ -12,7 +12,7 @@ class Rules {
     private int vID;
     private List<String[]> rulesList = new ArrayList();
 
-    Rules(int varID){
+    Rules(int varID) {
         vID = varID;
         DataBase db = new DataBase();
         ruleAmount = rulesFilter(db.getRulesForm(varID));
@@ -34,8 +34,7 @@ class Rules {
     double getUpperLimit(int i) {
         if (i < ruleAmount) {
             return Double.parseDouble(rulesList.get(i)[3]);
-        }
-        else throw new IndexOutOfBoundsException("访问越界");
+        } else throw new IndexOutOfBoundsException("访问越界");
     }
 
     double getLowerLimit(int i) {

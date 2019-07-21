@@ -101,13 +101,13 @@ public class ModifyResult {
         List<ParameterData> paramList = paramScopeTV.getItems();
         Map<String, String> scopeMap = new HashMap<>();
         for (ParameterData param : paramList) {
+            if (param.getParam_scope() == null || param.getParam_scope().equals("")) continue;
             scopeMap.put(param.getParam_name(), param.getParam_scope());
         }
 
         List<ParamAndValueData> pvList = modifyTV.getItems();
         for (ParamAndValueData pv : pvList) {
             String pName = pv.getParam_name();
-            if (scopeMap.get(pName) == null || scopeMap.get(pName).equals("")) continue;
 
             String tempScope = scopeMap.get(pName);
             String leftScope = tempScope.split("[,， ]")[0];
@@ -115,7 +115,6 @@ public class ModifyResult {
             if (pv.getParam_value() == null || pv.getParam_value().equals("") || Integer.valueOf(pv.getParam_value()) < Integer.valueOf(leftScope)) {
                 pv.setParam_value(leftScope);
             }
-
         }
 
         modifyTV.setItems(FXCollections.observableArrayList(pvList));
@@ -154,16 +153,6 @@ public class ModifyResult {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/SelectTheType.fxml");
         BorderPane bp = (BorderPane) Docker.get("selectTypeBorderPane");
         bp.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML

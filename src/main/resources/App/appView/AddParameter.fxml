@@ -49,11 +49,6 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </ComboBox>
-                  <TextField fx:id="paramNameTF" prefWidth="1200.0" promptText="参数名称" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </TextField>
                   <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
                         <Label minWidth="-Infinity" text="下限">
@@ -75,7 +70,12 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </TextArea>
-                  <ComboBox fx:id="paramTypeCB" editable="true" prefWidth="1200.0" promptText="参数类型：{已知；待求}" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ComboBox fx:id="paramTypeCB" prefWidth="1200.0" promptText="参数类型：{已知；待求}" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </ComboBox>
+                  <ComboBox fx:id="paramNameCB" prefWidth="1200.0" promptText="选择舾装件相应的参数名称" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>

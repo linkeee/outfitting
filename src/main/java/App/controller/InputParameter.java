@@ -96,7 +96,7 @@ public class InputParameter {
                 // 将List<ParameterData>转换为List<ParamAndValueData>
                 paramDataListContainer.clear();
                 // Todo 参数库的接口，提供需要用到的参数list
-                for (ParameterData parameterData : ParameterDb.getParameterList()) {
+                for (ParameterData parameterData : ParameterDb.getInputParamList()) {
                     // 将ParameterData的值对应转换到ParamAndValueData中
                     paramDataListContainer.add(DataModelUtil.getParamAndValueData(
                             String.valueOf(selectedProjId),
@@ -192,16 +192,6 @@ public class InputParameter {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Calculate.fxml");
         BorderPane bp = (BorderPane) Docker.get("selectTypeBorderPane");
         bp.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML

@@ -201,7 +201,7 @@ class Calculator {
                     break;
                 }
             }
-             if(j<0) {
+            if (j < 0) {
                 throw new LogicalException("括号不成对");
             }
         }

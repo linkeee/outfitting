@@ -56,6 +56,7 @@ public class KBParameter {
         stage.setScene(scene);
         stage.setTitle("添加");
         stage.showAndWait();
+//        paramTV.setItems(FXCollections.observableArrayList(ParameterDb.getParameterList()));
         paramTV.setItems(FXCollections.observableArrayList(ParameterDb.getParameterList()));
     }
 

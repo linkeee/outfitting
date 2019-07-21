@@ -27,7 +27,7 @@
                           <items>
                               <VBox alignment="TOP_CENTER">
                                   <children>
-                                      <Label text="舾装件/参数" />
+                                      <Label fx:id="projVersionLabel" />
                                       <TableView fx:id="TVParam" editable="true" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                                           <columns>
                                               <TableColumn fx:id="TV1TCOutfittingName" prefWidth="100.0" text="舾装件" />

@@ -16,7 +16,7 @@ public class AddParameter {
     private ComboBox<String> paramTypeCB;
 
     @FXML
-    private TextField paramNameTF;
+    private ComboBox<String> paramNameCB;
 
     @FXML
     private ComboBox<String> outfittingNameCB;
@@ -65,7 +65,7 @@ public class AddParameter {
 
         ParameterData parameterData = new ParameterData();
         parameterData.setOutfitting_name(outfittingNameCB.getValue());
-        parameterData.setParam_name(paramNameTF.getText());
+        parameterData.setParam_name(paramNameCB.getValue());
         parameterData.setParam_type(paramTypeCB.getValue());
         parameterData.setParam_scope(lowerTF.getText() + ", " + upperTF.getText());
         parameterData.setParam_description(paramDescTA.getText());
@@ -85,6 +85,7 @@ public class AddParameter {
 
     @FXML
     void initialize() {
+        paramNameCB.setItems(FXCollections.observableArrayList(Constant.getAllParamNameList()));
         outfittingNameCB.setItems(FXCollections.observableArrayList(Constant.getOutfittingName()));
         paramTypeCB.setItems(FXCollections.observableArrayList(Constant.paramType));
     }
@@ -96,7 +97,7 @@ public class AddParameter {
         isModify = true;
         selectedId = selectedParamId;
         outfittingNameCB.setValue(parameterData.getOutfitting_name());
-        paramNameTF.setText(parameterData.getParam_name());
+        paramNameCB.setValue(parameterData.getParam_name());
         paramTypeCB.setValue(parameterData.getParam_type());
         String[] temp = parameterData.getParam_scope().split("[, ， ]", 2);
         lowerTF.setText(temp[0].trim());

@@ -10,17 +10,27 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * 这里定义了包中所有的开放接口
+ * 这里定义了包中开放的UI接口和数据库查询接口
  */
 
 public class LibraryManager {
 
     /**
      * 公式库管理系统面板启动函数
+     *
      * @throws IOException
      */
     public void formulaManager() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../resources/App/appView/consoler.fxml"));
+        if (isDataBaseFileNull()) {
+            if (AlertWindows.newConfirmWindows("数据库文件丢失", "根目录下不存在formulalib.db", "根目录下没有已建立的formulalib.db，是否要新建空的数据库？\n选择取消则将直接退出系统")) {
+                DataBase db = new DataBase();
+                db.createTables();
+                db.close();
+            } else {
+                return;
+            }
+        }
+        Parent root = FXMLLoader.load(getClass().getResource("consoler.fxml"));
         Scene scene = new Scene(root);
         Stage primaryStage = new Stage();
         primaryStage.setTitle("公式库管理系统");
@@ -39,7 +49,7 @@ public class LibraryManager {
      * 查询变量的定义的接口
      *
      * @param varStr
-     * @return Vari
+     * @return Vari 如果公式库中没有对应定义则返回null
      * @throws LogicalException
      */
     public Vari getVar(@NotNull String varStr) throws LogicalException {
@@ -64,47 +74,31 @@ public class LibraryManager {
     }
 
     /**
-     * 计算入口
+     * 获取所有变量类型为“已知变量”的变量对象
      *
-     * @param varStr String
-     * @return double
-     * @throws LogicalException
+     * @return List<Vari>
      */
-    public double varToValue(@NotNull String varStr) throws LogicalException {
-        Interpreter interpreter = new Interpreter();
-        return interpreter.varToValue(varStr);
+    public List<Vari> getAllKnownVariable() {
+        DataBase db = new DataBase();
+        List<Vari> allKnownVar = db.getAllKnownVariable();
+        db.close();
+        return allKnownVar;
     }
 
     /**
-     * 计算入口
+     * 返回所有参数
      *
-     * @param var Vari
-     * @return double
-     * @throws LogicalException
-     */
-    public double varToValue(@NotNull Vari var) throws LogicalException {
-        return varToValue(var.getVarString());
-    }
-
-    /**
-     *  需要项目库实现的函数
-     * @param var
      * @return
      */
-    static double getValue(@NotNull Vari var) {
-        if (var.getIsCalculated()) {
-            throw new StringIndexOutOfBoundsException("非人工赋值变量，无法查询");
-        } else {
-            switch (var.getVariableID()) {
-                case 7:
-                    return 45;
-                case 8:
-                    return 3;
-                case 9:
-                    return 2.92;
-                default:
-                    throw new IllegalArgumentException("没有这样的变量ID");
-            }
-        }
+    public List<Vari> getAllVariable() {
+        DataBase db = new DataBase();
+        List<Vari> allVar = db.getAllVariable();
+        db.createTables();
+        db.close();
+        return allVar;
+    }
+
+    private boolean isDataBaseFileNull() {
+        return this.getClass().getResource("/formulalib.db") == null;
     }
 }
