@@ -13,19 +13,19 @@
          <children>
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
-                  <Label prefWidth="48.0" text="船舶类型" textAlignment="RIGHT" HBox.hgrow="NEVER" />
+                  <Label minWidth="-Infinity" prefWidth="48.0" text="船舶类型" textAlignment="RIGHT" HBox.hgrow="NEVER" />
                   <ComboBox fx:id="critShipTypeChoiceBox" editable="true" minWidth="10.0" prefWidth="150.0" promptText="船舶类型" />
-                  <Label prefWidth="36.0" text="船级社" textAlignment="RIGHT">
+                  <Label minWidth="-Infinity" prefWidth="36.0" text="船级社" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin></Label>
                   <ComboBox fx:id="critClassificationSocietyChoiceBox" editable="true" minWidth="10.0" prefWidth="150.0" promptText="船级社" />
-                  <Label prefWidth="48.0" text="舾装区域" textAlignment="RIGHT">
+                  <Label minWidth="-Infinity" prefWidth="48.0" text="舾装区域" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin></Label>
                   <TextField fx:id="guifanOutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" />
-                  <Label prefWidth="48.0" text="规范名称" textAlignment="RIGHT">
+                  <Label minWidth="-Infinity" prefWidth="48.0" text="规范名称" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin></Label>

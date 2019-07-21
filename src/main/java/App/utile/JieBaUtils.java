@@ -1,7 +1,6 @@
 package App.utile;
 
 
-import App.database.LayoutDb;
 import com.google.gson.Gson;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 
@@ -54,6 +53,7 @@ public class JieBaUtils {
                 }
             }
         }
+        stpws.replaceAll(String::toLowerCase);
         return stpws;
     }
 
@@ -71,9 +71,9 @@ public class JieBaUtils {
 
             Map<String, Double> doctfidf = tfidfCalculate(documents, dTokens);
             ret.put(entry.getKey(), gson.toJson(doctfidf));
-            System.out.println("--------------------------------------------------------文档" + entry.getKey() + "计算完成");
+            System.out.println("-------------------------------------------------------->>>文档" + entry.getKey() + ">>>计算完成");
         }
-        System.out.println("-------------------------------------------------------> 计算完成");
+        System.out.println("------------------------------------------------------->>>计算完成");
         return ret;
     }
 
@@ -85,7 +85,7 @@ public class JieBaUtils {
      */
     public Map<String, Double> getSortedRelativityMap(String inputStr, Map<String, String> indexAndTfIdfMap) {
         List<String> itokens = getTokens(inputStr);
-        System.out.println(itokens);
+        System.out.println("------------------------------->>>输入------->>>" + itokens);
 
         Map<String, Double> nonSortValueMap = new HashMap<>();
         for (Map.Entry<String, String> entry : indexAndTfIdfMap.entrySet()) {
@@ -99,22 +99,23 @@ public class JieBaUtils {
             }
         }
 
-        System.out.println(nonSortValueMap.toString());
+        System.out.println("------------------------------->>>未排序结果>>>" + nonSortValueMap.toString());
         Map<String, Double> sortValueMap = new LinkedHashMap<>();
         nonSortValueMap.entrySet().stream().sorted(Map.Entry.<String, Double>comparingByValue().reversed()).forEachOrdered(x -> sortValueMap.put(x.getKey(), x.getValue()));
-        System.out.println(sortValueMap.toString());
+        System.out.println("------------------------------->>>排序后结果>>>" + sortValueMap.toString());
         return sortValueMap;
     }
 
     /**
-     * 将传入字符串分词，去除停用词后，以list返回
+     * 将传入字符串分词，去除停用词后，以list返回。
      *
      * @param sentence 待分词字符串
-     * @return 分词结果list
+     * @return 分词结果list。英文都转换为小写，inputStr也是用该方法进行分词的，所以可以忽略大小写进行检索
      */
     private List<String> getTokens(String sentence) {
         JiebaSegmenter jiebaSegmenter = new JiebaSegmenter();
         List<String> strings = jiebaSegmenter.sentenceProcess(sentence);
+        strings.replaceAll(String::toLowerCase);
 
         List<String> stopwords = stpws;//这句话要改成从数据库读取stopwords
         strings.removeAll(stopwords);

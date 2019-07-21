@@ -14,17 +14,6 @@ import java.util.List;
 
 public class ParameterDb extends DatabaseItem {
 
-    /**
-     * 返回所有参数
-     *
-     * @return
-     */
-    public List<Vari> getAllVariable() {
-        DataBase db = new DataBase();
-        List<Vari> allVar = db.getAllVariable();
-        db.close();
-        return allVar;
-    }
 
     public static List<ParameterData> getInputParamList() {
         DataBase db = new DataBase();

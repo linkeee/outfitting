@@ -86,12 +86,12 @@
             <children>
                 <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
                     <children>
-                        <Label text="舾装件" />
+                        <Label minWidth="-Infinity" prefHeight="15.0" prefWidth="43.0" text="舾装件" />
                         <ComboBox fx:id="itemNameCB" editable="true" prefWidth="150.0" promptText="舾装件名称" />
-                        <Label text="船舶类型">
-                            <padding>
-                                <Insets left="30.0" />
-                            </padding>
+                        <Label minWidth="-Infinity" prefHeight="15.0" prefWidth="53.0" text="船舶类型">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
                         </Label>
                         <ComboBox fx:id="shipTypeCB" editable="true" prefWidth="150.0" promptText="船舶类型" />
                     </children>

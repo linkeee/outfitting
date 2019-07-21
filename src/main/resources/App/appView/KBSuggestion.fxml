@@ -12,44 +12,39 @@
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane>
+            <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
-                  <TextField fx:id="soutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                  <Label text="船舶类型" />
-                  <Label prefHeight="20.0" text="船东公司" GridPane.columnIndex="2">
+                  <Label minWidth="-Infinity" prefHeight="15.0" prefWidth="54.0" text="船舶类型" />
+                  <ComboBox fx:id="schuanboTypeChoiceBox" editable="true" prefWidth="150.0" promptText="船舶类型" />
+                  <Label minWidth="-Infinity" prefHeight="20.0" prefWidth="62.0" text="船东公司">
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
                   </Label>
-                  <Label text="舾装区域" GridPane.columnIndex="4">
+                  <ComboBox fx:id="schuanDongChoiceBox" editable="true" prefWidth="150.0" promptText="船东公司" />
+                  <Label minWidth="-Infinity" prefHeight="19.0" prefWidth="62.0" text="舾装区域">
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
                   </Label>
-                  <ComboBox fx:id="schuanboTypeChoiceBox" editable="true" prefWidth="150.0" promptText="船舶类型" GridPane.columnIndex="1" />
-                  <ComboBox fx:id="schuanDongChoiceBox" editable="true" prefWidth="150.0" promptText="船东公司" GridPane.columnIndex="3" />
+                  <TextField fx:id="soutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" />
                </children>
-               <columnConstraints>
-                  <ColumnConstraints halignment="RIGHT" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="332.0" minWidth="10.0" prefWidth="113.0" />
-                  <ColumnConstraints halignment="RIGHT" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="438.0" minWidth="10.0" prefWidth="147.0" />
-                  <ColumnConstraints halignment="RIGHT" />
-                  <ColumnConstraints hgrow="ALWAYS" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" />
-               </rowConstraints>
                <VBox.margin>
-                  <Insets left="10.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
-            </GridPane>
+            </HBox>
             <Separator VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" spacing="20.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" spacing="20.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#showAddSuggestion" text="添加">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets />
                      </HBox.margin></Button>
                   <Button mnemonicParsing="false" onAction="#handleEditSuggestion" text="修改" />
                   <Button mnemonicParsing="false" onAction="#handleDeleteSuggestion" text="删除" />
@@ -61,6 +56,9 @@
                      </HBox.margin>
                   </TextField>
                </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
             </HBox>
             <Separator VBox.vgrow="ALWAYS" />
             <HBox VBox.vgrow="ALWAYS">
