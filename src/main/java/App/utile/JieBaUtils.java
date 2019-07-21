@@ -85,7 +85,7 @@ public class JieBaUtils {
      */
     public Map<String, Double> getSortedRelativityMap(String inputStr, Map<String, String> indexAndTfIdfMap) {
         List<String> itokens = getTokens(inputStr);
-        System.out.println("------------------------------->>>输入------->>>" + itokens);
+        System.out.println("-------------------->>>输入>>>" + itokens);
 
         Map<String, Double> nonSortValueMap = new HashMap<>();
         for (Map.Entry<String, String> entry : indexAndTfIdfMap.entrySet()) {
@@ -99,10 +99,10 @@ public class JieBaUtils {
             }
         }
 
-        System.out.println("------------------------------->>>未排序结果>>>" + nonSortValueMap.toString());
+        System.out.println("-------------------->>>未排序结果>>>" + nonSortValueMap.toString());
         Map<String, Double> sortValueMap = new LinkedHashMap<>();
         nonSortValueMap.entrySet().stream().sorted(Map.Entry.<String, Double>comparingByValue().reversed()).forEachOrdered(x -> sortValueMap.put(x.getKey(), x.getValue()));
-        System.out.println("------------------------------->>>排序后结果>>>" + sortValueMap.toString());
+        System.out.println("-------------------->>>排序后结果>>>" + sortValueMap.toString());
         return sortValueMap;
     }
 
