@@ -41,7 +41,7 @@ class Checker {
      * @return Boolean
      */
     static boolean isVarSpellCorrected(String var) {
-        String spellEx = "[A-Za-z][\\w]{0,2}";//正则表达式,等价于"[A-Za-z][A-Za-z0-9]{0,2}":只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串
+        String spellEx = "[A-Za-z]([\\w]|\\'){0,2}";//正则表达式,等价于"[A-Za-z][A-Za-z0-9]{0,2}":只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串
         Pattern varPattern = Pattern.compile(spellEx);
         Matcher varChecker = varPattern.matcher(var);
         Pattern cSymbol = Pattern.compile("(?i)(sin|cos|tan)");//匹配字符串中的sin、cos、tan，不区分大小写
@@ -79,9 +79,10 @@ class Checker {
      *
      * @param formula 输入字符串
      * @return Boolean
+     * todo 对带'变量的识别
      */
     private static boolean formulaSpellChecker(String formula) {
-        String spellEx = "^[\\w(-][\\w+\\-*/^.()]*[\\w)]$";//正则表达式，公式中只能包含大小写字母、+-*/^()，且只能以\w、（-开头，\w、)结尾
+        String spellEx = "^[\\w(-][\\w+\\-*/^.()']*[\\w)]$";//正则表达式，公式中只能包含大小写字母、+-*/^()，且只能以\w、（-开头，\w、)结尾
         final Pattern formulaSpell = Pattern.compile(spellEx);
         Matcher spellChecker = formulaSpell.matcher(formula);
         return spellChecker.matches();

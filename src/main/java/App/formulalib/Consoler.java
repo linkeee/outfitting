@@ -5,10 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -96,11 +94,10 @@ public class Consoler {
         btCheckAlteration.setOnAction(event -> buttonActionCheckAlteration());
 
         DataBase db = new DataBase();
-        List<Equation> list = new ArrayList<>();
         for (Vari vari : db.getAllVariable()) {
-            list.addAll(db.getFormulaList(vari));
+            equationList.addAll(db.getFormulaList(vari));
         }
-        tvTableFormula.setItems(FXCollections.observableArrayList(list));
+        db.close();
 
         resetVariableForm();
     }
