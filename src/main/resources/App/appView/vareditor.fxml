@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.Font?>
 <AnchorPane prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.formulalib.VarEditor">
    <children>
       <TitledPane collapsible="false" text="修改变量">
@@ -75,7 +73,7 @@
                                     <TextField fx:id="tfStringNewDevice" />
                                  </children>
                               </VBox>
-                              <VBox>
+                              <VBox alignment="TOP_CENTER">
                                  <children>
                                     <Label minWidth="-Infinity" text="上限" />
                                     <TextField fx:id="upperTF" promptText="上限" />
@@ -88,7 +86,6 @@
                         <Insets top="25.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" />
                   <HBox alignment="TOP_CENTER" spacing="100.0">
                      <children>
                         <Button fx:id="btSubmit" alignment="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="确定">

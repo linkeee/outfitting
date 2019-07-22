@@ -1,8 +1,7 @@
 package App.controller;
 
+import App.formulalib.LibraryManager;
 import App.utile.FxmlUtile;
-import App.utile.ProgressFrom;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -87,6 +86,7 @@ public class KnowledgeBaseMana {
 
     @FXML
     void initialize() {
+        new LibraryManager().formulaManager();
     }
 
 }
