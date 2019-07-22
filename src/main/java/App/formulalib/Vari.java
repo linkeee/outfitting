@@ -9,7 +9,7 @@ public class Vari {
     private final String varString;//变量名
     private final String varDescription;//可能为null请注意检查，变量描述
     private final String varDevice;//可能为null请注意检查，舾装件名称
-    private final String varScope;
+    private final String varScope;//可能为null请注意检查，变量范围
 
     Vari(int ID, String str, boolean isCalculated, String description, String device, String scope) {
         varID = ID;
