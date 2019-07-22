@@ -45,14 +45,14 @@
                 </Separator>
                 <HBox spacing="30.0" VBox.vgrow="ALWAYS">
                     <children>
-                          <TableView editable="true" tableMenuButtonVisible="true">
+                          <TableView fx:id="equationTV" editable="true" tableMenuButtonVisible="true">
                               <columnResizePolicy>
                                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                               </columnResizePolicy>
                               <columns>
-                                  <TableColumn prefWidth="75.0" text="参数名称" />
-                                  <TableColumn editable="false" prefWidth="75.0" text="公式" />
-                                  <TableColumn prefWidth="75.0" text="公式说明" />
+                                  <TableColumn fx:id="equaParamNameTC" prefWidth="75.0" text="参数名称" />
+                                  <TableColumn fx:id="equaEquaTC" editable="false" prefWidth="75.0" text="公式" />
+                                  <TableColumn fx:id="equaDescTC" prefWidth="75.0" text="公式说明" />
                               </columns>
                           </TableView>
                           <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">

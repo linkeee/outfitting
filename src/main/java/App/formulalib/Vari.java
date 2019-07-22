@@ -1,8 +1,8 @@
 package App.formulalib;
 
 public class Vari {
-    private final static String varType0String = "已知变量";
-    private final static String varType1String = "待求变量";
+    private final static String varType0String = "已知";
+    private final static String varType1String = "待求";
 
     private final int varID;//变量ID
     private final boolean isCalculatedVar;//是否为待算变量

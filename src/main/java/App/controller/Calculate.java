@@ -3,7 +3,10 @@ package App.controller;
 import App.dataModel.ParamAndValueData;
 import App.database.ParamValueDb;
 import App.database.ProjectDb;
+import App.formulalib.DataBase;
+import App.formulalib.Equation;
 import App.formulalib.LogicalException;
+import App.formulalib.Vari;
 import App.utile.Docker;
 import App.utile.FxmlUtile;
 import App.utile.MyDialog;
@@ -22,9 +25,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Calculate {
+    @FXML
+    private TableView<Equation> equationTV;
+
+    @FXML
+    private TableColumn<?, ?> equaParamNameTC, equaEquaTC, equaDescTC;
+
     @FXML
     private Label versionLabel;
 
@@ -67,7 +77,7 @@ public class Calculate {
     @FXML
     void calculateAction(ActionEvent event) {
         //todo 循环调用计算模块计算待求参数结果
-        App.formulalib.Calculate cal = new App.formulalib.Calculate(ParamValueDb.getParamOfType(Integer.valueOf(projLabel.getText()), versionLabel.getText(), 0));
+        App.formulalib.Calculate cal = new App.formulalib.Calculate(ParamValueDb.getParamOfType(ProjectDb.getIdByName(projLabel.getText()), versionLabel.getText(), 0));
         List<ParamAndValueData> list = projParamValueTV.getItems();
         for (ParamAndValueData p : list) {
             try {
@@ -146,6 +156,20 @@ public class Calculate {
         paramTypeTC.setCellValueFactory(new PropertyValueFactory<>("param_type"));
         paramDescriptionTC.setCellValueFactory(new PropertyValueFactory<>("param_description"));
         paramValueTC.setCellValueFactory(new PropertyValueFactory<>("param_value"));
+
+        equaParamNameTC.setCellValueFactory(new PropertyValueFactory<>("equationVarStr"));
+        equaEquaTC.setCellValueFactory(new PropertyValueFactory<>("equationRight"));
+        equaDescTC.setCellValueFactory(new PropertyValueFactory<>("description"));
+        DataBase db = new DataBase();
+        List<Equation> list = new ArrayList<>();
+        for (Vari vari : db.getAllVariable()) {
+            try {
+                list.addAll(db.getFormulaList(vari));
+            } catch (LogicalException e) {
+                e.printStackTrace();
+            }
+        }
+        equationTV.setItems(FXCollections.observableArrayList(list));
 
         Docker.set("isInputParamNextStep", false);
     }

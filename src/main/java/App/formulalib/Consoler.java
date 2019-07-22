@@ -8,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,7 +76,7 @@ public class Consoler {
     private Button btCheckAlteration;
 
     @FXML
-    private void initialize() {
+    private void initialize() throws LogicalException {
 //        exitWindow.setOnAction(event -> buttonActionExitSystem());
         choiceQueryType.setValue(queryType.get(0));
         choiceQueryType.setItems(queryType);
@@ -93,6 +94,13 @@ public class Consoler {
         btEditVariable.setOnAction(event -> buttonActionEditVariable());
         btDeleteVariable.setOnAction(event -> buttonActionDeleteVariable());
         btCheckAlteration.setOnAction(event -> buttonActionCheckAlteration());
+
+        DataBase db = new DataBase();
+        List<Equation> list = new ArrayList<>();
+        for (Vari vari : db.getAllVariable()) {
+            list.addAll(db.getFormulaList(vari));
+        }
+        tvTableFormula.setItems(FXCollections.observableArrayList(list));
 
         resetVariableForm();
     }
