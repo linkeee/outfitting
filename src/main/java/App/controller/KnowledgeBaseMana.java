@@ -1,8 +1,7 @@
 package App.controller;
 
+import App.formulalib.LibraryManager;
 import App.utile.FxmlUtile;
-import App.utile.ProgressFrom;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,34 +14,25 @@ import java.io.IOException;
 
 public class KnowledgeBaseMana {
 
+    FxmlUtile fxmlUtile = FxmlUtile.getInstance();
     @FXML
     private Button paramBtn;
-
     @FXML
     private Button formulaBtn;
-
     @FXML
     private BorderPane kbManaBorderPane;
-
     @FXML
     private Label KBLabel;
-
     @FXML
     private Button experienceBtn;
-
     @FXML
     private Button qualityCaseBtn;
-
     @FXML
     private VBox KBManaVbox;
-
     @FXML
     private Button suggestionBtn;
-
     @FXML
     private Button criterionBtn;
-
-    FxmlUtile fxmlUtile = FxmlUtile.getInstance();
 
     @FXML
     void goExperienceAction(ActionEvent event) throws IOException {
@@ -87,6 +77,7 @@ public class KnowledgeBaseMana {
 
     @FXML
     void initialize() {
+        new LibraryManager().formulaManager();
     }
 
 }

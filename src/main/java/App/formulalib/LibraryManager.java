@@ -1,9 +1,5 @@
 package App.formulalib;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -20,17 +16,21 @@ public class LibraryManager {
      *
      * @throws IOException
      */
-    public void formulaManager() throws IOException {
+    public void formulaManager() {
         if (isDataBaseFileNull()) {
-            if (AlertWindows.newConfirmWindows("数据库文件丢失", "根目录下不存在formulalib.db", "根目录下没有已建立的formulalib.db，是否要新建空的数据库？\n选择取消则将直接退出系统")) {
+            AlertWindows alert =new AlertWindows("数据库文件丢失","根目录下没有已建立的formulalib.db，将自动生成空的数据库");
+            DataBase db = new DataBase();
+            db.createTables();
+            db.close();
+            /*if (AlertWindows.newConfirmWindows("数据库文件丢失", "根目录下不存在formulalib.db", "根目录下没有已建立的formulalib.db，是否要新建空的数据库？\n选择取消则将直接退出系统")) {
                 DataBase db = new DataBase();
                 db.createTables();
                 db.close();
             } else {
                 return;
-            }
+            }*/
         }
-        Parent root = FXMLLoader.load(getClass().getResource("consoler.fxml"));
+/*        Parent root = FXMLLoader.load(getClass().getResource("consoler.fxml"));
         Scene scene = new Scene(root);
         Stage primaryStage = new Stage();
         primaryStage.setTitle("公式库管理系统");
@@ -42,7 +42,7 @@ public class LibraryManager {
             } else
                 event.consume();
         });
-        primaryStage.show();
+        primaryStage.show();*/
     }
 
     /**
@@ -99,6 +99,6 @@ public class LibraryManager {
     }
 
     private boolean isDataBaseFileNull() {
-        return this.getClass().getResource("/formulalib.db") == null;
+        return this.getClass().getResource("/App/formulalib/formulalib.db") == null;
     }
 }

@@ -233,7 +233,7 @@
                                                       <Insets bottom="10.0" top="10.0" />
                                                   </HBox.margin>
                                               </VBox>
-                                              <VBox alignment="CENTER" spacing="15.0" HBox.hgrow="ALWAYS">
+                                              <VBox alignment="CENTER" spacing="15.0">
                                                   <children>
                                                       <Button fx:id="btEditFormula" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="90.0" text="编辑公式" />
                                                       <Button fx:id="btDeleteFormula" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="86.0" text="删除公式" />

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.Font?>
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.formulalib.NewVarPane">
     <children>
         <TitledPane animated="false" collapsible="false" contentDisplay="CENTER" prefHeight="380.0" prefWidth="600.0" text="新增变量定义">
             <content>
-                <VBox alignment="CENTER" spacing="42.0">
+                <VBox alignment="CENTER" spacing="30.0">
                     <children>
                         <HBox alignment="CENTER_LEFT" spacing="50.0">
                             <children>
@@ -45,7 +43,7 @@
                         </FlowPane>
                         <FlowPane alignment="CENTER_LEFT">
                             <children>
-                                <HBox alignment="CENTER_LEFT" spacing="30.0">
+                                <HBox alignment="CENTER_LEFT" spacing="18.0">
                                     <children>
                                         <Label text="舾装件名称" />
                                         <TextField fx:id="tfStringNewDevice" prefWidth="400.0" promptText="请输入相关舾装件名称，如果没有请留空" />
@@ -68,7 +66,7 @@
                         </VBox>
                         <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" spacing="20.0">
                            <children>
-                              <VBox>
+                              <VBox alignment="TOP_CENTER">
                                  <children>
                                     <Label minWidth="-Infinity" text="上限" />
                                     <TextField fx:id="upperTF" promptText="上限" />
@@ -87,7 +85,7 @@
                         </HBox>
                     </children>
                     <padding>
-                        <Insets left="50.0" right="50.0" top="30.0" />
+                        <Insets left="50.0" right="50.0" top="10.0" />
                     </padding>
                 </VBox>
             </content>
