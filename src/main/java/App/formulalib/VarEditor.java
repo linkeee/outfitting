@@ -1,5 +1,6 @@
 package App.formulalib;
 
+import App.utile.FxmlUtile;
 import App.utile.MyDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,8 +49,8 @@ public class VarEditor {
         tfStringVariableType.setText(getVarTypeString(inVar.getIsCalculated()));
         tfStringOldDescription.setText(inVar.getVariableDescription());
         tfStringOldDevice.setText(inVar.getVarDevice());
-        lowerTF.setText(inVar.getVarScope().split(",")[0]);
-        upperTF.setText(inVar.getVarScope().split(",")[1]);
+        lowerTF.setText(inVar.getVarScope().split(",")[0].trim());
+        upperTF.setText(inVar.getVarScope().split(",")[1].trim());
         btSubmit.setOnAction(event -> buttonActionExitStage(true));
         btCancel.setOnAction(event -> buttonActionExitStage(false));
     }
@@ -72,7 +73,11 @@ public class VarEditor {
             cacheVari = null;
             isSubmit = false;
             VarEditor.inVar = inVar;
-            AnchorPane root = FXMLLoader.load(getClass().getResource("vareditor.fxml"));
+
+            FxmlUtile fxmlUtile = new FxmlUtile();
+            FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/vareditor.fxml");
+
+            AnchorPane root = loader.load();
             Scene newScene = new Scene(root);
             Stage secondStage = new Stage();
             secondStage.setResizable(false);
@@ -123,21 +128,21 @@ public class VarEditor {
         String newDevice = tfStringNewDevice.getText();
 
         if (!lowerTF.getText().equals("")) {
-            if (!lowerTF.getText().matches("^[0-9]+\\.{0,1}[0-9]{0,2}$")) {
+            if (!lowerTF.getText().matches("^[0-9]+\\.{0,1}[0-9]{0,50}$")) {
                 MyDialog.error("参数范围下限输入非法", "只能包含数字和小数点");
                 return null;
             }
         }
 
         if (!upperTF.getText().equals("")) {
-            if (!upperTF.getText().matches("^[0-9]+\\.{0,1}[0-9]{0,2}$")) {
+            if (!upperTF.getText().matches("^[0-9]+\\.{0,1}[0-9]{0,50}$")) {
                 MyDialog.error("参数范围上限输入非法", "只能包含数字和小数点");
                 return null;
             }
         }
 
         if (!lowerTF.getText().equals("") && !upperTF.getText().equals("")) {
-            if (Integer.valueOf(lowerTF.getText()) > Integer.valueOf(upperTF.getText())) {
+            if (Double.valueOf(lowerTF.getText()) > Double.valueOf(upperTF.getText())) {
                 MyDialog.error("参数范围输入非法", "下限大于上限");
                 return null;
             }

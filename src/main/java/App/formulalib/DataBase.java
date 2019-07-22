@@ -365,7 +365,7 @@ public class DataBase {
      * @param var Vari
      * @return List<Equation> 可能返回空的List，需做处理
      */
-    List<Equation> getFormulaList(Vari var) throws LogicalException {
+    public List<Equation> getFormulaList(Vari var) throws LogicalException {
         return getFormulaList(var.getVariableID());
     }
 

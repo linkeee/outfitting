@@ -96,7 +96,7 @@ public class InputParameter {
                 // 将List<ParameterData>转换为List<ParamAndValueData>
                 paramDataListContainer.clear();
                 // Todo 参数库的接口，提供需要用到的参数list
-                for (ParameterData parameterData : ParameterDb.getInputParamList()) {
+                for (ParameterData parameterData : ParameterDb.getParameterList()) {
                     // 将ParameterData的值对应转换到ParamAndValueData中
                     paramDataListContainer.add(DataModelUtil.getParamAndValueData(
                             String.valueOf(selectedProjId),
@@ -104,7 +104,8 @@ public class InputParameter {
                             parameterData.getParam_id(),
                             parameterData.getOutfitting_name(),
                             parameterData.getParam_name(),
-                            Integer.valueOf(parameterData.getParam_type()) == 1 ? "待求" : "已知",
+                            parameterData.getParam_type(),
+//                            Integer.valueOf(parameterData.getParam_type()) == 1 ? "待求" : "已知",
                             parameterData.getParam_description(),
                             null   // 参数值列留空等待用户输入
                     ));

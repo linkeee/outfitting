@@ -20,7 +20,7 @@ public class ParameterDb extends DatabaseItem {
         List<Vari> knownVari = db.getAllKnownVariable();
         List<ParameterData> ret = new ArrayList<>();
         for (Vari vari : knownVari) {
-            if (vari.getVarType().equals("已知变量")) {
+            if (vari.getVarType().equals("已知")) {
                 ParameterData parameterData = new ParameterData();
                 parameterData.setParam_id(String.valueOf(vari.getVariableID()));
                 parameterData.setParam_name(vari.getVarString());
