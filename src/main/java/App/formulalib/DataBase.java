@@ -38,7 +38,7 @@ public class DataBase {
         try {
             Class.forName(JDBC_DRIVER).newInstance();
             Logger.getGlobal().log(Level.INFO, "数据库驱动加载成功");
-            Connection newConn = DriverManager.getConnection(DB_URL.concat(rootPath).concat("formulalib.db"));
+            Connection newConn = DriverManager.getConnection(DB_URL.concat(rootPath).concat("App/formulalib/formulalib.db"));
             Logger.getGlobal().log(Level.INFO, "数据库连接成功");
             return newConn;
         } catch (SQLException e) {

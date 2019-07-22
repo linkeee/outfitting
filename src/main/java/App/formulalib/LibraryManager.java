@@ -99,6 +99,6 @@ public class LibraryManager {
     }
 
     private boolean isDataBaseFileNull() {
-        return this.getClass().getResource("/formulalib.db") == null;
+        return this.getClass().getResource("/App/formulalib/formulalib.db") == null;
     }
 }
