@@ -62,7 +62,7 @@ class Interpreter {
         Matcher spaceRemover = spacePattern.matcher(inVar);
         inVar = spaceRemover.replaceAll("");
         //变量名合法性检查
-        String regEx = "^[A-Za-z][A-Za-z0-9]{0,2}";//正则表达式:只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串
+        String regEx = "^[A-Za-z][A-Za-z0-9']{0,2}";//正则表达式:只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串
         final Pattern varPattern = Pattern.compile(regEx);
         Matcher varChecker = varPattern.matcher(inVar);
         if (varChecker.matches()) {
@@ -162,7 +162,7 @@ class Interpreter {
                     lengthOfFrag++;
                     break;
                 }
-                case 'S': {
+                /*case 'S': {
                     if (strFormula.substring(i, i + 3).equals("SIN")) {
                         lengthOfFrag = lengthOfFrag + 3;
                         i = i + 2;//TODO
@@ -182,7 +182,7 @@ class Interpreter {
                         i = i + 2;//TODO
                         break;
                     }
-                }
+                }*/
                 default: {
                     if (i - lengthOfFrag >= 0) {
                         processedFormula.append(strFormula, i - lengthOfFrag, i);

@@ -150,12 +150,12 @@
                                                 <children>
                                                     <TableView fx:id="tvTableVariable" nodeOrientation="LEFT_TO_RIGHT" prefHeight="160.0" tableMenuButtonVisible="true">
                                                         <columns>
-                                                            <TableColumn fx:id="tcTableVariableCol1" editable="false" minWidth="0.0" text="变量ID" />
-                                                            <TableColumn fx:id="tcTableVariableCol2" editable="false" minWidth="0.0" text="变量名" />
-                                                            <TableColumn fx:id="tcTableVariableCol3" editable="false" minWidth="0.0" text="变量类型" />
-                                                            <TableColumn fx:id="tcTableVariableCol4" minWidth="0.0" text="变量描述" />
-                                                            <TableColumn fx:id="tcTableVariableCol5" minWidth="0.0" text="设备描述" />
-                                                <TableColumn fx:id="tcTableVariableCol6" minWidth="0.0" text="变量范围" />
+                                                            <TableColumn fx:id="tcTableVariableCol1" editable="false" minWidth="40.0" text="变量ID" />
+                                                            <TableColumn fx:id="tcTableVariableCol2" editable="false" minWidth="40.0" text="变量名" />
+                                                            <TableColumn fx:id="tcTableVariableCol3" editable="false" minWidth="40.0" text="变量类型" />
+                                                            <TableColumn fx:id="tcTableVariableCol4" minWidth="40.0" text="变量描述" />
+                                                            <TableColumn fx:id="tcTableVariableCol5" minWidth="40.0" text="设备描述" />
+                                                <TableColumn fx:id="tcTableVariableCol6" minWidth="40.0" text="变量范围" />
                                                         </columns>
                                                         <StackPane.margin>
                                                             <Insets />

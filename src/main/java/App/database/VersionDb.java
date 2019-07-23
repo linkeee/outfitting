@@ -186,6 +186,7 @@ public class VersionDb extends DatabaseItem {
      */
     public static boolean deleteAVersionAndParam(int proj_id, String version_name) {
         ParamValueDb.deleteByProjVersion(proj_id, version_name);
+        SelectedTypeDb.deleteByProjIdAndVersion(proj_id, version_name);
         boolean flag = false;
         PreparedStatement ps = null;
         Connection connection = connectDB();

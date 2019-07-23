@@ -46,7 +46,7 @@
                               </VBox>
                               <VBox alignment="TOP_CENTER">
                                   <children>
-                                      <Label text="所选舾装件备选型号/厂商">
+                                      <Label fx:id="manuLabel">
                                           <VBox.margin>
                                               <Insets />
                                           </VBox.margin>

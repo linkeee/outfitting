@@ -68,7 +68,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label alignment="CENTER" text="知识主动供应" />
+                  <Label alignment="CENTER" text="知识重用" />
                </children>
                <HBox.margin>
                   <Insets top="30.0" />

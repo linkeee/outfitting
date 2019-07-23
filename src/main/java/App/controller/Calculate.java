@@ -123,16 +123,6 @@ public class Calculate {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ModifyResult.fxml");
         BorderPane bp = (BorderPane) Docker.get("selectTypeBorderPane");
         bp.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML
@@ -169,6 +159,7 @@ public class Calculate {
                 e.printStackTrace();
             }
         }
+        db.close();
         equationTV.setItems(FXCollections.observableArrayList(list));
 
         Docker.set("isInputParamNextStep", false);

@@ -95,34 +95,38 @@ public class SelectTheType {
     private ComboBox<String> versionCB;
 
     @FXML
-    private Label projVersionLabel;
+    private Label projVersionLabel, manuLabel;
 
     private ParamAndValueData selectedPv;
     private ManufacturerData selectedMf;
 
     private void refreshTwoTV() {
+        assert projCB.getValue() != null;
+        assert versionCB.getValue() != null;
+
+        // 该项目该版本下已经选择的厂商
         List<SelectedTypeData> selectedList = SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue());
+
+        // 已经选择的厂商列表中所有舾装件名称
         List<String> selectedOutfittingNameList = new ArrayList<>();
         for (SelectedTypeData s : selectedList) {
             selectedOutfittingNameList.add(s.getOutfitting_name());
         }
+
+        // 左上角现在需要显示的：还未选择厂商的舾装件
         List<ParamAndValueData> nowNeedToSelect = new ArrayList<>();
-        for (ParamAndValueData p : ParamValueDb.getParamByProjAndVersion(Integer.valueOf(projCB.getValue()), versionCB.getValue())) {
-            if (p.getOutfitting_name() == null || p.getOutfitting_name().equals("") || selectedOutfittingNameList.contains(p.getOutfitting_name())) continue;
+        for (ParamAndValueData p : ParamValueDb.getParamByProjAndVersion(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())) {
+            if (p.getOutfitting_name() == null || p.getOutfitting_name().equals("") || selectedOutfittingNameList.contains(p.getOutfitting_name()))
+                continue;
             nowNeedToSelect.add(p);
         }
         TVParam.setItems(FXCollections.observableArrayList(nowNeedToSelect));
         TVList.setItems(FXCollections.observableArrayList(selectedList));
     }
 
-    private void refreshOneTV() {
-
-    }
-
     @FXML
     void addAction(ActionEvent event) {
         SelectedTypeDb.insert(selectedPv, selectedMf);
-//        TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
         refreshTwoTV();
     }
 
@@ -131,11 +135,7 @@ public class SelectTheType {
         projCB.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
         projCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> versionCB.setItems(FXCollections.observableArrayList(VersionDb.getVersionNameListOfProj(ProjectDb.getIdByName(newValue)))));
         versionCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
-
-
-            TVParam.setItems(FXCollections.observableArrayList(ParamValueDb.getParamByProjAndVersion(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
-            TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
+            refreshTwoTV();
             projVersionLabel.setText("项目：" + projCB.getValue() + "\r\n" + "版本：" + versionCB.getValue() + "\r\n" + "计算结果");
         });
 
@@ -172,7 +172,6 @@ public class SelectTheType {
                     delBtn.setOnMouseClicked(click -> {
                         SelectedTypeData std = this.getTableView().getItems().get(this.getIndex());
                         SelectedTypeDb.delete(std);
-//                        TVList.setItems(FXCollections.observableArrayList(SelectedTypeDb.getSelectedType(ProjectDb.getIdByName(projCB.getValue()), versionCB.getValue())));
                         refreshTwoTV();
                     });
                 }
@@ -180,8 +179,14 @@ public class SelectTheType {
         });
 
         TVParam.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            selectedPv = newValue;
-            TVType.setItems(FXCollections.observableArrayList(ManufacturerDb.getManuDataByOutfittiingName(newValue.getOutfitting_name())));
+            if (newValue == null) {
+                manuLabel.setText("");
+                TVType.setItems(null);
+            } else {
+                selectedPv = newValue;
+                manuLabel.setText(newValue.getOutfitting_name() + "-->厂商列表");
+                TVType.setItems(FXCollections.observableArrayList(ManufacturerDb.getManuDataByOutfittiingName(newValue.getOutfitting_name())));
+            }
         });
 
         TVType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectedMf = newValue);

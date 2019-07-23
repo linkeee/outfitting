@@ -17,6 +17,26 @@ import static App.database.DatabaseItem.connectDB;
 
 public class SelectedTypeDb {
 
+    public static boolean deleteByProjIdAndVersion(int projId, String versionName) {
+        boolean flag = false;
+        PreparedStatement ps = null;
+        Connection connection = connectDB();
+        String sql = "delete from " + Constant.selectedTypeTableName + " where proj_id = ? and version_name = ?";
+        try {
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, projId);
+            ps.setString(2, versionName);
+
+            int i = ps.executeUpdate();
+            if (i == 1) flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeDatabase(ps, null, connection);
+        }
+        return flag;
+    }
+
     public static boolean delete(SelectedTypeData selectedTypeData) {
         boolean flag = false;
         PreparedStatement ps = null;
