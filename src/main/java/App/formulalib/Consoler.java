@@ -435,20 +435,18 @@ public class Consoler {
         resetVariableForm();
     }
 
-    private void buttonActionEditVariable(){
-        Vari vari=tvTableVariable.getSelectionModel().getSelectedItem();
-        if (vari!=null) {
-            VarEditor varEditor=new VarEditor();
+    private void buttonActionEditVariable() {
+        Vari vari = tvTableVariable.getSelectionModel().getSelectedItem();
+        if (vari != null) {
+            VarEditor varEditor = new VarEditor();
             Vari editedVar = varEditor.show(vari);
-            if (editedVar!=null)
-            {
-                DataBase db =new DataBase();
+            if (editedVar != null) {
+                DataBase db = new DataBase();
                 db.updateVariable(editedVar);
                 db.close();
                 resetVariableForm();
-            }
-            else return;
-        }else return;
+            } else return;
+        } else return;
     }
 
     /**

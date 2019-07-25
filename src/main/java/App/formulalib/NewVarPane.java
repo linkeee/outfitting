@@ -1,17 +1,17 @@
 package App.formulalib;
 
 import App.utile.FxmlUtile;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.StringConverter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NewVarPane {
+    private final ObservableList<Integer> accuracyDigits = FXCollections.observableArrayList(0, 1, 2, 3, 4);
     private final ToggleGroup variableType = new ToggleGroup();
     @FXML
     private TextField tfStringNewVariable;
@@ -26,6 +27,10 @@ public class NewVarPane {
     private TextField tfStringNewDescription;
     @FXML
     private TextField tfStringNewDevice;
+    @FXML
+    private TextField tfStringUnit;
+    @FXML
+    private ComboBox<Integer> cbIntDigit;
     @FXML
     private TextField lowerTF, upperTF;
     @FXML
@@ -45,12 +50,27 @@ public class NewVarPane {
         rbBooleanVariableType1.setSelected(true);
         rbBooleanVariableType1.requestFocus();
         btAddNewVariable.setDisable(true);
+        cbIntDigit.setConverter(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object.toString();
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        });
+        cbIntDigit.setItems(accuracyDigits);
+        //默认保留2位小数
+        cbIntDigit.setValue(2);
 
         btCheckNewVariable.setOnAction(event -> buttonActionCheckNewVariable());
         btAddNewVariable.setOnAction(event -> buttonActionAddNewVariable());
         btCancel.setOnAction(event -> buttonActionExitStage());
     }
-//todo
+
+    //todo
     public void show() {
         try {
             FxmlUtile fxmlUtile = new FxmlUtile();
@@ -97,6 +117,8 @@ public class NewVarPane {
             String varDescription = tfStringNewDescription.getText();
             String varDevice = tfStringNewDevice.getText();
             boolean varType = (variableType.getSelectedToggle() == rbBooleanVariableType2);
+            int digit = cbIntDigit.getValue();
+            String varUnit = tfStringUnit.getText();
             StringBuilder confirmInfo = new StringBuilder("变量名：" + varString + "\n变量类型：");
             if (varType)
                 confirmInfo.append("待求变量");
@@ -105,7 +127,7 @@ public class NewVarPane {
             confirmInfo.append("\n变量描述：" + varDescription + "\n设备说明：" + varDevice);
             if (AlertWindows.newConfirmWindows("确认添加变量", "确认添加新变量？", confirmInfo.toString())) {
                 DataBase db = new DataBase();
-                Vari result = db.addVariable(varString, varType, varDescription, varDevice, lowerTF.getText().trim() + ", " + upperTF.getText().trim());
+                Vari result = db.addVariable(varString, varType, varDescription, varDevice, lowerTF.getText().trim() + ", " + upperTF.getText().trim(), digit, varUnit);
                 if (result == null) {
                     AlertWindows alert = new AlertWindows("添加变量", "数据库通讯错误，添加变量失败！");
                 } else {
@@ -152,6 +174,7 @@ public class NewVarPane {
         tfStringNewVariable.clear();
         tfStringNewDescription.clear();
         tfStringNewDevice.clear();
+        tfStringUnit.clear();
         lowerTF.clear();
         upperTF.clear();
         //初始化使Type1被选中，保证两项必有一项被选中

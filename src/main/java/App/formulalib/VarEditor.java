@@ -2,15 +2,19 @@ package App.formulalib;
 
 import App.utile.FxmlUtile;
 import App.utile.MyDialog;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.StringConverter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -19,6 +23,7 @@ import java.util.logging.Logger;
 
 
 public class VarEditor {
+    private final ObservableList<Integer> accuracyDigits = FXCollections.observableArrayList(0, 1, 2, 3, 4, 5);
     @FXML
     private TextField tfStringVariableID;
     @FXML
@@ -36,6 +41,10 @@ public class VarEditor {
     @FXML
     private TextField lowerTF, upperTF;
     @FXML
+    private TextField tfStringUnit;
+    @FXML
+    private ComboBox<Integer> cbIntDigit;
+    @FXML
     private Button btSubmit;
     @FXML
     private Button btCancel;
@@ -51,6 +60,20 @@ public class VarEditor {
         tfStringOldDevice.setText(inVar.getVarDevice());
         lowerTF.setText(inVar.getVarScope().split(",")[0].trim());
         upperTF.setText(inVar.getVarScope().split(",")[1].trim());
+        tfStringUnit.setText(inVar.getVarUnit());
+        cbIntDigit.setConverter(new StringConverter<Integer>() {
+            @Override
+            public String toString(Integer object) {
+                return object.toString();
+            }
+
+            @Override
+            public Integer fromString(String string) {
+                return Integer.valueOf(string);
+            }
+        });
+        cbIntDigit.setItems(accuracyDigits);
+        cbIntDigit.setValue(inVar.getAccuracyDigit());
         btSubmit.setOnAction(event -> buttonActionExitStage(true));
         btCancel.setOnAction(event -> buttonActionExitStage(false));
     }
@@ -65,6 +88,7 @@ public class VarEditor {
 
     /**
      * 显示修改变量定义的面板
+     *
      * @param inVar 待修改的变量
      * @return 修改后的Vari，当取消按钮关闭窗口时，返回可能为null请注意处理
      */
@@ -106,7 +130,7 @@ public class VarEditor {
     private void buttonActionExitStage(boolean isSubmit) {
         if (isSubmit) {
             cacheVari = editedVar(inVar);
-            if (AlertWindows.newConfirmWindows("修改变量定义", "确认修改该变量的定义？","旧定义："+inVar.toString()+"\n新定义："+cacheVari.toString())) {
+            if (AlertWindows.newConfirmWindows("修改变量定义", "确认修改该变量的定义？", "旧定义：" + inVar.toString() + "\n新定义：" + cacheVari.toString())) {
                 VarEditor.isSubmit = true;
                 inVar = null;
             } else
@@ -126,6 +150,8 @@ public class VarEditor {
     private Vari editedVar(@NotNull Vari oldVar) {
         String newDescription = tfStringNewDescription.getText();
         String newDevice = tfStringNewDevice.getText();
+        int accuracyDigits = cbIntDigit.getValue();
+        String varUnit = tfStringUnit.getText();
 
         if (!lowerTF.getText().equals("")) {
             if (!lowerTF.getText().matches("^[0-9]+\\.{0,1}[0-9]{0,50}$")) {
@@ -148,6 +174,6 @@ public class VarEditor {
             }
         }
 
-        return new Vari(oldVar.getVariableID(), oldVar.getVarString(), oldVar.getIsCalculated(), newDescription, newDevice, lowerTF.getText().trim() + ", " + upperTF.getText().trim());
+        return new Vari(oldVar.getVariableID(), oldVar.getVarString(), oldVar.getIsCalculated(), newDescription, newDevice, lowerTF.getText().trim() + ", " + upperTF.getText().trim(), accuracyDigits, varUnit);
     }
 }

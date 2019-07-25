@@ -17,7 +17,7 @@ class Interpreter {
         }
     }
 
-    //搜索变量字符串(至少有一位)
+    //从头开始搜索首个变量字符串(至少有一位)
     private static String findvar(String str) {
         int lengthOfvar = 1;
         int lengthOfstr = str.length();
@@ -62,7 +62,7 @@ class Interpreter {
         Matcher spaceRemover = spacePattern.matcher(inVar);
         inVar = spaceRemover.replaceAll("");
         //变量名合法性检查
-        String regEx = "^[A-Za-z][A-Za-z0-9]{0,2}";//正则表达式:只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串
+        String regEx = "^[A-Za-z][A-Za-z0-9]{0,2}[']{0,2}";//正则表达式:只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串,可有0-2位的符号’修饰
         final Pattern varPattern = Pattern.compile(regEx);
         Matcher varChecker = varPattern.matcher(inVar);
         if (varChecker.matches()) {
@@ -133,64 +133,112 @@ class Interpreter {
         }
     }
 
-    //公式解析
+    /**
+     * 公式解析，支持SIN/COS/TAN/SQRT
+     *
+     * @param strFormula 待解析的代数式串
+     * @return String 只包含运算符和数值的简单代数式
+     * @throws LogicalException
+     */
+
     private String formulaAnalyzer(String strFormula) throws LogicalException {
         int lengthOfFormula = strFormula.length();
         int lengthOfFrag = 0;
         StringBuffer processedFormula = new StringBuffer();
         for (int i = 0; i < lengthOfFormula; i++) {
-            //文本过滤器
-            switch (strFormula.charAt(i)) {
-                case '+':
-                case '-':
-                case '*':
-                case '/':
-                case '^':
-                case '(':
-                case ')':
-                case '.':
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9': {
-                    lengthOfFrag++;
-                    break;
-                }
-                case 'S': {
-                    if (strFormula.substring(i, i + 3).equals("SIN")) {
-                        lengthOfFrag = lengthOfFrag + 3;
-                        i = i + 2;//TODO
+            //文本过滤器，先检查剩余字串长度是否在3及以上
+            if (i + 3 > lengthOfFormula) {
+                switch (strFormula.charAt(i)) {
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                    case '^':
+                    case '(':
+                    case ')':
+                    case '.':
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9': {
+                        lengthOfFrag++;
                         break;
                     }
-                }
-                case 'C': {
-                    if (strFormula.substring(i, i + 3).equals("COS")) {
-                        lengthOfFrag = lengthOfFrag + 3;
-                        i = i + 2;//TODO
-                        break;
+                    default: {
+                        if (i - lengthOfFrag >= 0) {
+                            processedFormula.append(strFormula, i - lengthOfFrag, i);
+                            String varNew = findvar(strFormula.substring(i));
+                            processedFormula.append(varToexpression(varNew));
+                            i = i + varNew.length() - 1;
+                            lengthOfFrag = 0;
+                        } else throw new LogicalException("出现未知错误");
                     }
                 }
-                case 'T': {
-                    if (strFormula.substring(i, i + 3).equals("TAN")) {
-                        lengthOfFrag = lengthOfFrag + 3;
-                        i = i + 2;//TODO
+            } else {
+                switch (strFormula.charAt(i)) {
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                    case '^':
+                    case '(':
+                    case ')':
+                    case '.':
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9': {
+                        lengthOfFrag++;
                         break;
                     }
-                }
-                default: {
-                    if (i - lengthOfFrag >= 0) {
-                        processedFormula.append(strFormula, i - lengthOfFrag, i);
-                        String varNew = findvar(strFormula.substring(i));
-                        processedFormula.append(varToexpression(varNew));
-                        i = i + varNew.length() - 1;
-                        lengthOfFrag = 0;
-                    } else throw new LogicalException("出现未知错误");
+                    case 'S': {
+                        if (strFormula.substring(i, i + 3).equals("SIN")) {
+                            lengthOfFrag = lengthOfFrag + 3;
+                            i = i + 2;
+                            break;
+                        } else if (i + 4 < lengthOfFormula) {
+                            if (strFormula.substring(i, i + 4).equals("SQRT")) {
+                                lengthOfFrag = lengthOfFrag + 4;
+                                i = i + 3;
+                                break;
+                            }
+                        }
+                    }
+                    case 'C': {
+                        if (strFormula.substring(i, i + 3).equals("COS")) {
+                            lengthOfFrag = lengthOfFrag + 3;
+                            i = i + 2;
+                            break;
+                        }
+                    }
+                    case 'T': {
+                        if (strFormula.substring(i, i + 3).equals("TAN")) {
+                            lengthOfFrag = lengthOfFrag + 3;
+                            i = i + 2;
+                            break;
+                        }
+                    }
+                    default: {
+                        if (i - lengthOfFrag >= 0) {
+                            processedFormula.append(strFormula, i - lengthOfFrag, i);
+                            String varNew = findvar(strFormula.substring(i));
+                            processedFormula.append(varToexpression(varNew));
+                            i = i + varNew.length() - 1;
+                            lengthOfFrag = 0;
+                        } else throw new LogicalException("出现未知错误");
+                    }
                 }
             }
         }

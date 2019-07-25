@@ -10,14 +10,22 @@ public class Vari {
     private final String varDescription;//可能为null请注意检查，变量描述
     private final String varDevice;//可能为null请注意检查，舾装件名称
     private final String varScope;//可能为null请注意检查，变量范围
+    private final int accuracyDigit;//精确到的小数位数设置
+    private final String varUnit;//变量的单位，可为空不可为null
 
-    Vari(int ID, String str, boolean isCalculated, String description, String device, String scope) {
+    Vari(int ID, String str, boolean isCalculated, String description, String device, String scope, int accuracyDigit, String unit) {
         varID = ID;
         isCalculatedVar = isCalculated;
         varString = str;
         varDescription = description;
         varDevice = device;
         varScope = scope;
+        if (accuracyDigit < 0) {
+            this.accuracyDigit = 0;
+        } else {
+            this.accuracyDigit = accuracyDigit;
+        }
+        varUnit = unit;
     }
 
     @Override
@@ -92,5 +100,13 @@ public class Vari {
 
     public String getVarScope() {
         return varScope;
+    }
+
+    public int getAccuracyDigit() {
+        return accuracyDigit;
+    }
+
+    public String getVarUnit() {
+        return varUnit;
     }
 }

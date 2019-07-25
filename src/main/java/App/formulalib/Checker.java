@@ -22,11 +22,11 @@ class Checker {
      * @throws LogicalException
      */
     static String formulaFormatChecker(String newInput) throws LogicalException {
-        String newFormula = fixComplexSymbol(removeSpaceCharacter(newInput));
+        String newFormula = characterCorrection(fixComplexSymbol(removeSpaceCharacter(newInput)));
         if (formulaSpellChecker(newFormula)) {
             if (isBracketSymmetric(newFormula)) {
                 if (isSymbolCorrected(newFormula)) {
-                    if (isCSymbolCorrected(newFormula, "SIN") && isCSymbolCorrected(newFormula, "COS") && isCSymbolCorrected(newFormula, "TAN")) {
+                    if (isCSymbolCorrected(newFormula, "SIN") && isCSymbolCorrected(newFormula, "COS") && isCSymbolCorrected(newFormula, "TAN") && isCSymbolCorrected(newFormula, "SQRT")) {
                         return newFormula;
                     } else throw new LogicalException("代数式错误", "代数式中的含有非法函数！");
                 } else throw new LogicalException("代数式错误", "代数式中运算符使用错误！");
@@ -41,7 +41,7 @@ class Checker {
      * @return Boolean
      */
     static boolean isVarSpellCorrected(String var) {
-        String spellEx = "[A-Za-z]([\\w]|\\'){0,2}";//正则表达式,等价于"[A-Za-z][A-Za-z0-9]{0,2}":只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串
+        String spellEx = "[A-Za-z][\\w]{0,2}[']{0,2}";//正则表达式,等价于"[A-Za-z][A-Za-z0-9]{0,2}[']{0,2}":只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串，可有0-2位的符号’修饰
         Pattern varPattern = Pattern.compile(spellEx);
         Matcher varChecker = varPattern.matcher(var);
         Pattern cSymbol = Pattern.compile("(?i)(sin|cos|tan)");//匹配字符串中的sin、cos、tan，不区分大小写
@@ -75,14 +75,40 @@ class Checker {
     }
 
     /**
+     *
+     */
+
+    static String characterCorrection(String input) {
+        int lengthOfInput = input.length();
+        char[] corrrected = new char[lengthOfInput];
+        for (int i = 0; i < lengthOfInput; ++i) {
+            switch (input.charAt(i)) {
+                case '（':
+                    corrrected[i] = '(';
+                    break;
+                case '）':
+                    corrrected[i] = ')';
+                    break;
+                case '‘':
+                case '’':
+                    corrrected[i] = '\'';
+                    break;
+                default:
+                    corrrected[i] = input.charAt(i);
+                    break;
+            }
+        }
+        return new String(corrrected);
+    }
+
+    /**
      * 公式字符串拼写检查
      *
      * @param formula 输入字符串
      * @return Boolean
-     * todo 对带'变量的识别
      */
     private static boolean formulaSpellChecker(String formula) {
-        String spellEx = "^[\\w(-][\\w+\\-*/^.()']*[\\w)]$";//正则表达式，公式中只能包含大小写字母、+-*/^()，且只能以\w、（-开头，\w、)结尾
+        String spellEx = "^[\\w(-][\\w+\\-*/^.()']*[\\w)]$";//正则表达式，公式中只能包含大小写字母、+-*/^()'，且只能以\w、（-开头，\w、)结尾
         final Pattern formulaSpell = Pattern.compile(spellEx);
         Matcher spellChecker = formulaSpell.matcher(formula);
         return spellChecker.matches();
@@ -211,13 +237,13 @@ class Checker {
     }
 
     /**
-     * 多字符运算符处理，去除所有的SIN\COS\TAN
+     * 多字符运算符处理，去除所有的SIN\COS\TAN\SQRT
      *
      * @param sFormula 原代数式字符串
-     * @return String 去除SIN\COS\TAN后的字符串
+     * @return String 去除SIN\COS\TAN\SQRT后的字符串
      */
     static String removeComplexSymbol(String sFormula) {
-        final Pattern symPattern = Pattern.compile("(?i)(sin)|(cos)|(cos)");
+        final Pattern symPattern = Pattern.compile("(?i)(sin)|(cos)|(tan)|(sqrt)");
         Matcher symMatcher = symPattern.matcher(sFormula);
         return symMatcher.replaceAll("");
     }
@@ -316,27 +342,24 @@ class Checker {
     }
 
     /**
-     * 多字符运算符处理，返回SIN\COS\TAN全部换成大写
+     * 多字符运算符处理，返回SIN\COS\TAN\SQRT全部换成大写
      *
      * @param sFormula 输入字符串
-     * @return String SIN\COS\TAN全部大写的式子
+     * @return String SIN\COS\TAN\SQRT全部大写的式子
      */
     private static String fixComplexSymbol(String sFormula) {
         final Pattern sinPattern = Pattern.compile("(?i)(sin)");
         final Pattern cosPattern = Pattern.compile("(?i)(cos)");
         final Pattern tanPattern = Pattern.compile("(?i)(tan)");
+        final Pattern sqrtPattern = Pattern.compile("(?i)(sqrt)");
         Matcher sinMatcher = sinPattern.matcher(sFormula);
-        String str11 = sinMatcher.replaceAll("");
-        String str21 = sinMatcher.replaceAll("SIN");
-        Matcher cos1 = cosPattern.matcher(str11);
-        Matcher cos2 = cosPattern.matcher(str21);
-        String str12 = cos1.replaceAll("");
-        String str22 = cos2.replaceAll("COS");
-        Matcher tan1 = tanPattern.matcher(str12);
-        Matcher tan2 = tanPattern.matcher(str22);
-        String str13 = tan1.replaceAll("");
-        String str23 = tan2.replaceAll("TAN");
-        return str23;
+        String str1 = sinMatcher.replaceAll("SIN");
+        Matcher cos2 = cosPattern.matcher(str1);
+        String str2 = cos2.replaceAll("COS");
+        Matcher tan2 = tanPattern.matcher(str2);
+        String str3 = tan2.replaceAll("TAN");
+        Matcher sqrt2 = sqrtPattern.matcher(str3);
+        return sqrt2.replaceAll("SQRT");
     }
 
     /**
