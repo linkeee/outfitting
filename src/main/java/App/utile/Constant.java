@@ -75,6 +75,7 @@ public class Constant {
         List<String> list3 = CriterionDb.getShipTypeList();
         List<String> list4 = LayoutDb.getShipTypeList();
         Set<String> set = new LinkedHashSet<>();
+        set.add("All");
         set.addAll(list1);
         set.addAll(list2);
         set.addAll(list3);
@@ -91,7 +92,9 @@ public class Constant {
      */
     public static List<String> getChuanjisheList() {
         List<String> list = CriterionDb.getChuanJiSheList();
-        Set<String> set = new LinkedHashSet<>(list);
+        Set<String> set = new LinkedHashSet<>();
+        set.add("All");
+        set.addAll(list);
         set.remove("");
         set.remove(null);
         return new ArrayList<>(set);
@@ -104,7 +107,9 @@ public class Constant {
      */
     public static List<String> getShipOwnerCompany() {
         List<String> list = SuggestionDb.getChuandongCompanyList();
-        Set<String> set = new LinkedHashSet<>(list);
+        Set<String> set = new LinkedHashSet<>();
+        set.add("All");
+        set.addAll(list);
         set.remove("");
         set.remove(null);
         return new ArrayList<>(set);
@@ -119,6 +124,7 @@ public class Constant {
         List<String> list1 = ParameterDb.getOutfittingName();
         List<String> list2 = LayoutDb.getOutfittingName();
         Set<String> set = new LinkedHashSet<>();
+        set.add("All");
         set.addAll(list1);
         set.addAll(list2);
         set.remove("");

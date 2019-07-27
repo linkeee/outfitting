@@ -7,37 +7,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KBCriterion">
+<AnchorPane stylesheets="@KBCriterion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KBCriterion">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="5.0">
-               <children>
-                  <Label minWidth="-Infinity" prefWidth="48.0" text="船舶类型" textAlignment="RIGHT" HBox.hgrow="NEVER" />
-                  <ComboBox fx:id="critShipTypeChoiceBox" editable="true" minWidth="10.0" prefWidth="150.0" promptText="船舶类型" />
-                  <Label minWidth="-Infinity" prefWidth="36.0" text="船级社" textAlignment="RIGHT">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin></Label>
-                  <ComboBox fx:id="critClassificationSocietyChoiceBox" editable="true" minWidth="10.0" prefWidth="150.0" promptText="船级社" />
-                  <Label minWidth="-Infinity" prefWidth="48.0" text="舾装区域" textAlignment="RIGHT">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin></Label>
-                  <TextField fx:id="guifanOutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" />
-                  <Label minWidth="-Infinity" prefWidth="48.0" text="规范名称" textAlignment="RIGHT">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin></Label>
-                  <TextField fx:id="guifanNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="规范名称" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator />
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" spacing="20.0">
                <children>
+                  <TextField fx:id="criterionQueryTextField" prefWidth="300.0" promptText="输入自然语言进行检索">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#handleCriterionQuery" text="搜索">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#showAddGuiFan" text="添加">
                      <HBox.margin>
                         <Insets />
@@ -45,16 +30,26 @@
                   <Button mnemonicParsing="false" onAction="#handleEditGuiFan" text="修改" />
                   <Button mnemonicParsing="false" onAction="#handleDeleteGuiFan" text="删除" />
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetGuiFan" text="重置" />
-                  <Button defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleCriterionQuery" text="搜索" visible="false">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                  <TextField fx:id="criterionQueryTextField" disable="true" prefWidth="300.0" visible="false">
+                  <Button fx:id="openfilterBtn" mnemonicParsing="false" onAction="#openfilterAction" text="高级过滤" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="filterHbox" alignment="CENTER_LEFT" minHeight="0.0" spacing="5.0">
+               <children>
+                  <Label minHeight="23.0" minWidth="-Infinity" prefWidth="48.0" text="船舶类型" textAlignment="RIGHT" HBox.hgrow="NEVER" />
+                  <ComboBox fx:id="critShipTypeChoiceBox" minHeight="23.0" minWidth="10.0" prefWidth="150.0" promptText="船舶类型" />
+                  <Label minHeight="23.0" minWidth="-Infinity" prefWidth="36.0" text="船级社" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets left="30.0" />
+                     </HBox.margin></Label>
+                  <ComboBox fx:id="critClassificationSocietyChoiceBox" minHeight="23.0" minWidth="10.0" prefWidth="150.0" promptText="船级社" />
+                  <Button fx:id="closefilterBtn" mnemonicParsing="false" onAction="#closefilterAction" text="关闭过滤">
+                     <HBox.margin>
+                        <Insets left="20.0" />
                      </HBox.margin>
-                  </TextField>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -82,6 +77,7 @@
                   <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label minHeight="-Infinity" minWidth="-Infinity" text="规范内容" textAlignment="RIGHT" wrapText="true" />
+                        <Label text="点击左侧表内的文件地址打开原文件查看图片" textFill="RED" />
                         <TextArea fx:id="guifanTextArea" promptText="规范内容" wrapText="true" VBox.vgrow="ALWAYS" />
                      </children>
                      <padding>

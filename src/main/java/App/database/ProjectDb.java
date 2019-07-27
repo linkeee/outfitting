@@ -153,7 +153,7 @@ public class ProjectDb extends DatabaseItem {
             preparedStatement = connection.prepareStatement("select * from project order by proj_id+0");
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            projectNameList.add(null);
+            projectNameList.add("");
 
             while (resultSet.next()) {
                 projectNameList.add(resultSet.getString("proj_name"));

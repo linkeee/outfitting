@@ -25,10 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ModifyResult {
 
@@ -109,11 +106,12 @@ public class ModifyResult {
         for (ParamAndValueData pv : pvList) {
             String pName = pv.getParam_name();
 
-            String tempScope = scopeMap.get(pName);
-            String leftScope = tempScope.split("[,， ]")[0];
-
-            if (pv.getParam_value() == null || pv.getParam_value().equals("") || Double.valueOf(pv.getParam_value()) < Double.valueOf(leftScope)) {
-                pv.setParam_value(leftScope);
+            if (scopeMap.containsKey(pName)) {
+                String tempScope = scopeMap.get(pName);
+                String leftScope = tempScope.split(", ")[0];
+                if (pv.getParam_value() == null || pv.getParam_value().equals("") || Double.valueOf(pv.getParam_value()) < Double.valueOf(leftScope)) {
+                    pv.setParam_value(leftScope);
+                }
             }
         }
 
@@ -165,7 +163,14 @@ public class ModifyResult {
         paramTypeTC.setCellValueFactory(new PropertyValueFactory<>("param_type"));
         paramDescTC.setCellValueFactory(new PropertyValueFactory<>("param_description"));
         valueTC.setCellValueFactory(new PropertyValueFactory<>("param_value"));
-        paramScopeTV.setItems(FXCollections.observableArrayList(ParameterDb.getParameterList()));
+        // (.*?)\d+(.*?)
+        List<ParameterData> list = new ArrayList<>();
+        for (ParameterData p : ParameterDb.getParameterList()) {
+            if (!p.getParam_scope().equals("")) {
+                list.add(p);
+            }
+        }
+        paramScopeTV.setItems(FXCollections.observableArrayList(list));
 
         projChooserCB.setItems(FXCollections.observableArrayList(ProjectDb.getProjectNameList()));
         projChooserCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

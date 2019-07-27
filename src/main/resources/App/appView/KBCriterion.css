@@ -1,0 +1,7 @@
+.button {
+    -fx-background-color: white;
+    /*设置圆角大小*/
+    -fx-background-radius: 0;
+    -fx-font-size: 15;
+    -fx-text-fill: black;
+}

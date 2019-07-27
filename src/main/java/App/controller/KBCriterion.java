@@ -6,13 +6,12 @@ import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
 import App.utile.JieBaUtils;
 import App.utile.ProgressFrom;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -20,11 +19,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class KBCriterion {
@@ -63,12 +65,14 @@ public class KBCriterion {
     private TextField criterionQueryTextField;
 
     @FXML
-    private TextField guifanNameTextField;
+    private HBox filterHbox;
 
     @FXML
-    private TextField guifanOutfittingTypeTextField;
-    private String criterionFile;
+    private Button openfilterBtn, closefilterBtn;
+
     private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
+    //规范搜索增加修改删除
+    private AddCriterion acc = AddCriterion.getInstance();
 
     private void refreshTfIdf() {
         Task task = new Task() {
@@ -80,28 +84,86 @@ public class KBCriterion {
             }
         };
         ProgressFrom progressFrom = new ProgressFrom(task, "正在更新文本TF-IDF值，请稍后...");
-        progressFrom.activateProgressBar();
+//        progressFrom.activateProgressBar();
     }
 
-    //规范搜索增加修改删除
-    private AddCriterion acc = AddCriterion.getInstance();
+    private final String[] shiptype = {"All"};
+    private final String[] classification = {"All"};
 
     @FXML
-    private void handleCriterionQuery() throws SQLException {
-        guifanTable.setItems(CriterionDb.query(
-                criterionQueryTextField.getText(),
-                critShipTypeChoiceBox.getValue(),
-                critClassificationSocietyChoiceBox.getValue(),
-                guifanNameTextField.getText(),
-                guifanOutfittingTypeTextField.getText()
-        ));
+    void openfilterAction() {
+        filterHbox.setDisable(false);
+        filterHbox.setVisible(true);
+        filterHbox.setMaxHeight(20);
+        openfilterBtn.setDisable(true);
+        openfilterBtn.setVisible(false);
+        critShipTypeChoiceBox.setValue("All");
+        critClassificationSocietyChoiceBox.setValue("All");
+
+        if (filterHbox.isVisible()) {
+            List<CriterionData> allList = CriterionDb.getCriterionDataList();
+            critShipTypeChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                shiptype[0] = newValue;
+                List<CriterionData> list = new LinkedList<>();
+                for (CriterionData c : allList) {
+                    if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All"))) list.add(c);
+                }
+                guifanTable.setItems(FXCollections.observableArrayList(list));
+            });
+            critClassificationSocietyChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                classification[0] = newValue;
+                List<CriterionData> list = new LinkedList<>();
+                for (CriterionData c : allList) {
+                    if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All"))) list.add(c);
+                }
+                guifanTable.setItems(FXCollections.observableArrayList(list));
+            });
+        }
+    }
+
+    @FXML
+    void closefilterAction() {
+        critClassificationSocietyChoiceBox.setValue("All");
+        critShipTypeChoiceBox.setValue("All");
+        filterHbox.setDisable(true);
+        filterHbox.setVisible(false);
+        filterHbox.setMaxHeight(0);
+        openfilterBtn.setDisable(false);
+        openfilterBtn.setVisible(true);
+        guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
+    }
+
+    @FXML
+    private void handleCriterionQuery() {
+        if (filterHbox.isVisible()) {
+            List<CriterionData> allList = CriterionDb.getCriterionDataList();
+            List<CriterionData> list = new LinkedList<>();
+            for (CriterionData c : allList) {
+                if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All"))) list.add(c);
+            }
+            guifanTable.setItems(FXCollections.observableArrayList(list));
+        }
+
+        // 将输入进行分词
+        String inputStr = criterionQueryTextField.getText().trim();
+        if (inputStr.equals("")) return;
+        // 拼接目前table中显示的条目的{id:{tfidf}}
+        Map<String, String> idtfidfmap = new HashMap<>();
+        for (CriterionData c : guifanTable.getItems()) {
+            System.out.println("--------------------------" + c.getCriId());
+            idtfidfmap.put(c.getCriId(), c.getTfIdfMapStr());
+        }
+        // 文档id的排序
+        Map<String, Double> map = jieBaUtils.getSortedRelativityMap(inputStr, idtfidfmap);
+        java.util.List<String> list1 = new LinkedList<>(map.keySet());
+        List<CriterionData> orderedDataList = CriterionDb.getOrderedDataList(list1);
+        guifanTable.setItems(FXCollections.observableArrayList(orderedDataList));
     }
 
     @FXML
     private void handleResetGuiFan() {
         guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
-        showGuiFanDetails(null);
-        refresh();
+        guifanTextArea.setText(null);
     }
 
     @FXML
@@ -139,6 +201,7 @@ public class KBCriterion {
     void initialize() {
         critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(Constant.getChuanjisheList()));
+        critShipTypeChoiceBox.setValue("All"); critClassificationSocietyChoiceBox.setValue("All");
         //添加规范
         g32.setCellValueFactory(new PropertyValueFactory<>("criShipType"));
         criterionClassificationSocietyTC.setCellValueFactory(new PropertyValueFactory<>("criShipCompany"));
@@ -148,71 +211,38 @@ public class KBCriterion {
         criterionUrlTC.setCellValueFactory(new PropertyValueFactory<>("criFilePath"));
         criterionUrlTC.setCellFactory(param -> new HyperlinkTableCell<>());
 
-        guifanTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CriterionData>() {
-            @Override
-            public void changed(ObservableValue<? extends CriterionData> observable, CriterionData oldValue, CriterionData newValue) {
-                if (newValue != null) {
-                    showGuiFanDetails(newValue);
-                    criterionFile = newValue.getCriFilePath();
-                }
-            }
-        });
-
         guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
 
+        final String[] criterionFile = {""};
         MenuItem criterionItem1 = new MenuItem("打开文件");
-        criterionItem1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Desktop.getDesktop().open(new File(criterionFile));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        criterionItem1.setOnAction(event -> {
+            try {
+                Desktop.getDesktop().open(new File(criterionFile[0]));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         MenuItem criterionItem2 = new MenuItem("打开文件夹");
-        criterionItem2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    Desktop.getDesktop().open(new File(new File(criterionFile).getParent()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        criterionItem2.setOnAction(event -> {
+            try {
+                Desktop.getDesktop().open(new File(new File(criterionFile[0]).getParent()));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
         ContextMenu criterionMenu = new ContextMenu();
         criterionMenu.getItems().addAll(criterionItem1, criterionItem2);
-        guifanTable.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-            @Override
-            public void handle(ContextMenuEvent event) {
-                criterionMenu.show(guifanTable, event.getScreenX(), event.getScreenY());
-            }
-        });
-        guifanTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                criterionMenu.hide();
-            }
-        });
-    }
+        guifanTable.setOnContextMenuRequested(event -> criterionMenu.show(guifanTable, event.getScreenX(), event.getScreenY()));
+        guifanTable.setOnMouseClicked(event -> criterionMenu.hide());
 
-    //在对应格子中显示选择的属性
-    private void showGuiFanDetails(CriterionData guifanData) {
-        if (guifanData != null) {
-            guifanNameTextField.setText(guifanData.getCriName());
-            critShipTypeChoiceBox.setValue(guifanData.getCriShipType());
-            guifanOutfittingTypeTextField.setText(guifanData.getCriOutfittingRegion());
-            critClassificationSocietyChoiceBox.setValue(guifanData.getCriShipCompany());
-            guifanTextArea.setText(guifanData.getCriContent());
-            System.out.println(guifanData.getCriFilePath());
-        } else {
-            guifanNameTextField.setText("");
-            critShipTypeChoiceBox.setValue(null);
-            guifanOutfittingTypeTextField.setText("");
-            critClassificationSocietyChoiceBox.setValue(null);
-            guifanTextArea.setText("");
-        }
+        guifanTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                System.out.println(newValue.getCriId());
+                guifanTextArea.setText(newValue.getCriContent());
+                criterionFile[0] = newValue.getCriFilePath();
+            }
+        });
+
+        closefilterAction();
     }
 }

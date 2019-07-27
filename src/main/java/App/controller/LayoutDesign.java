@@ -92,18 +92,28 @@ public class LayoutDesign {
 
     @FXML
     void searchAction(ActionEvent event) {
-
         String inputStr = searchTF.getText().trim();
+        if (inputStr.equals("")) return;
+
+        List<LayoutData> allList = LayoutDb.getAllLayoutData();
+        List<LayoutData> list = new LinkedList<>();
+        for (LayoutData l : allList) {
+            if ((l.getOutfitting_name().equals(itemName[0]) || itemName[0].equals("All")) && (l.getShipType().equals(shipType[0]) || shipType[0].equals("All"))) list.add(l);
+        }
+        table.setItems(FXCollections.observableArrayList(list));
+
         Map<String, Double> map = jieBaUtils.getSortedRelativityMap(inputStr, LayoutDb.getIndexAndTfIdfMapStr());
-        List<String> list = new LinkedList<>(map.keySet());
-        List<LayoutData> orderedDataList = LayoutDb.getOrderedDataList(list);
+        List<String> list1 = new LinkedList<>(map.keySet());
+        List<LayoutData> orderedDataList = LayoutDb.getOrderedDataList(list1);
         table.setItems(FXCollections.observableArrayList(orderedDataList));
     }
 
     @FXML
     void resetAction(ActionEvent event) {
+        shipTypeCB.setValue("All");
+        itemNameCB.setValue("All");
         refresh();
-        searchTF.setText(null);
+        searchTF.setText("");
         titledPane.setExpanded(false);
     }
 
@@ -115,12 +125,15 @@ public class LayoutDesign {
     }
 
     private String file = null;
+    private final String[] itemName = {"All"};
+    private final String[] shipType = {"All"};
 
     @FXML
     void initialize() {
-
         shipTypeCB.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         itemNameCB.setItems(FXCollections.observableArrayList(Constant.getOutfittingName()));
+        shipTypeCB.setValue("All");
+        itemNameCB.setValue("All");
         itemNameTC.setCellValueFactory(new PropertyValueFactory<>("outfitting_name"));
         shipTypeTC.setCellValueFactory(new PropertyValueFactory<>("shipType"));
         shipNumTC.setCellValueFactory(new PropertyValueFactory<>("shipNum"));
@@ -155,12 +168,28 @@ public class LayoutDesign {
         menu.getItems().addAll(item1, item2);
         table.setOnContextMenuRequested(event -> menu.show(table, event.getScreenX(), event.getScreenY()));
         table.setOnMouseClicked(event -> menu.hide());
+
+        List<LayoutData> allList = LayoutDb.getAllLayoutData();
+        itemNameCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            itemName[0] = newValue;
+            List<LayoutData> list = new LinkedList<>();
+            for (LayoutData l : allList) {
+                if ((l.getOutfitting_name().equals(itemName[0]) || itemName[0].equals("All")) && (l.getShipType().equals(shipType[0]) || shipType[0].equals("All"))) list.add(l);
+            }
+            table.setItems(FXCollections.observableArrayList(list));
+        });
+        shipTypeCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            shipType[0] = newValue;
+            List<LayoutData> list = new LinkedList<>();
+            for (LayoutData l : allList) {
+                if ((l.getOutfitting_name().equals(itemName[0]) || itemName[0].equals("All")) && (l.getShipType().equals(shipType[0]) || shipType[0].equals("All"))) list.add(l);
+            }
+            table.setItems(FXCollections.observableArrayList(list));
+        });
     }
 
     private void showDetails(LayoutData layoutData) {
         if (layoutData != null) {
-            itemNameCB.setValue(layoutData.getOutfitting_name());
-            shipTypeCB.setValue(layoutData.getShipType());
             shipNumTF.setText(layoutData.getShipNum());
             coefTF.setText(layoutData.getShipTypeCoefficient());
             loadTF.setText(layoutData.getShipLoad());
@@ -170,8 +199,6 @@ public class LayoutDesign {
             draughtTF.setText(layoutData.getShipDraught());
             contentTA.setText(layoutData.getLayoutContent());
         } else {
-            itemNameCB.setValue("");
-            shipTypeCB.setValue("");
             shipNumTF.setText("");
             coefTF.setText("");
             loadTF.setText("");

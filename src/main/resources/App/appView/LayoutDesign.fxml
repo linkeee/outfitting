@@ -74,6 +74,7 @@
         <VBox spacing="5.0" BorderPane.alignment="CENTER">
             <children>
                 <Label text="布局方案" />
+            <Label text="点击左侧表内的文件地址打开原文件查看图片" textFill="RED" />
                 <TextArea fx:id="contentTA" editable="false" prefWidth="300.0" promptText="布局方案内容" wrapText="true" VBox.vgrow="ALWAYS" />
             </children>
             <BorderPane.margin>

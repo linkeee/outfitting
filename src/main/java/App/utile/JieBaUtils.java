@@ -81,6 +81,7 @@ public class JieBaUtils {
      * 返回文档索引和相应的价值，并按价值高低降序排列
      *
      * @param inputStr 检索字符串
+     * @param indexAndTfIdfMap  {文档ID:{word1:TFIDF, word2: TFIDF, ...}}
      * @return 排序好的文档索引和价值
      */
     public Map<String, Double> getSortedRelativityMap(String inputStr, Map<String, String> indexAndTfIdfMap) {
