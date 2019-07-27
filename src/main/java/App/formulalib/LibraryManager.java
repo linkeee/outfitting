@@ -18,7 +18,7 @@ public class LibraryManager {
      */
     public void formulaManager() {
         if (isDataBaseFileNull()) {
-            AlertWindows alert =new AlertWindows("数据库文件丢失","根目录下没有已建立的formulalib.db，将自动生成空的数据库");
+            AlertWindows alert = new AlertWindows("数据库文件丢失", "根目录下没有已建立的formulalib.db，将自动生成空的数据库");
             DataBase db = new DataBase();
             db.createTables();
             db.close();

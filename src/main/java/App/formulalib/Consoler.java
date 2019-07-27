@@ -63,7 +63,7 @@ public class Consoler {
     @FXML
     private TableView<Vari> tvTableVariable;
     @FXML
-    private TableColumn tcTableVariableCol1, tcTableVariableCol2, tcTableVariableCol3, tcTableVariableCol4, tcTableVariableCol5, tcTableVariableCol6;
+    private TableColumn tcTableVariableCol1, tcTableVariableCol2, tcTableVariableCol3, tcTableVariableCol4, tcTableVariableCol5, tcTableVariableCol6,tcTableVariableCol7;
     @FXML
     private Button btNewVariable;
     @FXML
@@ -578,6 +578,7 @@ public class Consoler {
         tcTableVariableCol4.setCellValueFactory(new PropertyValueFactory<>("variableDescription"));
         tcTableVariableCol5.setCellValueFactory(new PropertyValueFactory<>("varDevice"));
         tcTableVariableCol6.setCellValueFactory(new PropertyValueFactory<>("varScope"));
+        tcTableVariableCol7.setCellValueFactory(new PropertyValueFactory<>("varUnit"));
         tvTableVariable.setItems(variableList);
     }
 }
