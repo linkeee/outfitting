@@ -71,9 +71,9 @@ public class JieBaUtils {
 
             Map<String, Double> doctfidf = tfidfCalculate(documents, dTokens);
             ret.put(entry.getKey(), gson.toJson(doctfidf));
-            System.out.println("-------------------------------------------------------->>>文档" + entry.getKey() + ">>>计算完成");
+            System.out.println("------------------->>>文档" + entry.getKey() + "计算完成--->>>继续计算下一个文档");
         }
-        System.out.println("------------------------------------------------------->>>计算完成");
+        System.out.println("------------------------------------->>>计算完成");
         return ret;
     }
 

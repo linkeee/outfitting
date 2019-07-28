@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.awt.*;
 import java.io.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,11 @@ public class LayoutDesign {
         }
         table.setItems(FXCollections.observableArrayList(list));
 
-        Map<String, Double> map = jieBaUtils.getSortedRelativityMap(inputStr, LayoutDb.getIndexAndTfIdfMapStr());
+        Map<String, String> idtfidfmap = new HashMap<>();
+        for (LayoutData l : table.getItems()) {
+            idtfidfmap.put(l.getId(), l.getTfIdfMapStr());
+        }
+        Map<String, Double> map = jieBaUtils.getSortedRelativityMap(inputStr, idtfidfmap);
         List<String> list1 = new LinkedList<>(map.keySet());
         List<LayoutData> orderedDataList = LayoutDb.getOrderedDataList(list1);
         table.setItems(FXCollections.observableArrayList(orderedDataList));

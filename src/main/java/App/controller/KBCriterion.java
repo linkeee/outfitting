@@ -142,6 +142,8 @@ public class KBCriterion {
                 if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All"))) list.add(c);
             }
             guifanTable.setItems(FXCollections.observableArrayList(list));
+        } else {
+            guifanTable.setItems(FXCollections.observableArrayList(CriterionDb.getCriterionDataList()));
         }
 
         // 将输入进行分词
@@ -150,7 +152,6 @@ public class KBCriterion {
         // 拼接目前table中显示的条目的{id:{tfidf}}
         Map<String, String> idtfidfmap = new HashMap<>();
         for (CriterionData c : guifanTable.getItems()) {
-            System.out.println("--------------------------" + c.getCriId());
             idtfidfmap.put(c.getCriId(), c.getTfIdfMapStr());
         }
         // 文档id的排序
@@ -237,7 +238,6 @@ public class KBCriterion {
 
         guifanTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                System.out.println(newValue.getCriId());
                 guifanTextArea.setText(newValue.getCriContent());
                 criterionFile[0] = newValue.getCriFilePath();
             }
