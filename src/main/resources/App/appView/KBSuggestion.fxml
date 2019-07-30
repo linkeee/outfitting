@@ -12,36 +12,14 @@
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="5.0">
-               <children>
-                  <Label minWidth="-Infinity" prefHeight="15.0" prefWidth="54.0" text="船舶类型" />
-                  <ComboBox fx:id="schuanboTypeChoiceBox" editable="true" prefWidth="150.0" promptText="船舶类型" />
-                  <Label minWidth="-Infinity" prefHeight="20.0" prefWidth="62.0" text="船东公司">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <ComboBox fx:id="schuanDongChoiceBox" editable="true" prefWidth="150.0" promptText="船东公司" />
-                  <Label minWidth="-Infinity" prefHeight="19.0" prefWidth="62.0" text="舾装区域">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="soutfittingTypeTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" spacing="20.0">
                <children>
+                  <TextField fx:id="suggestionQueryTextField" prefWidth="300.0" promptText="输入自然语言进行检索">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSuggestionQuery" text="搜索" />
                   <Button mnemonicParsing="false" onAction="#showAddSuggestion" text="添加">
                      <HBox.margin>
                         <Insets />
@@ -49,12 +27,30 @@
                   <Button mnemonicParsing="false" onAction="#handleEditSuggestion" text="修改" />
                   <Button mnemonicParsing="false" onAction="#handleDeleteSuggestion" text="删除" />
                   <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetSuggestion" text="重置" />
-                  <Button defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleSuggestionQuery" text="搜索" visible="false" />
-                  <TextField fx:id="suggestionQueryTextField" disable="true" prefWidth="300.0" visible="false">
+                  <Button fx:id="filterBtn" mnemonicParsing="false" onAction="#filterAction" text="高级过滤" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="filterHbox" alignment="CENTER_LEFT" minHeight="0.0" spacing="5.0">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="54.0" text="船舶类型" />
+                  <ComboBox fx:id="schuanboTypeChoiceBox" minHeight="23.0" prefWidth="150.0" promptText="船舶类型" />
+                  <Label prefHeight="20.0" prefWidth="62.0" text="船东公司">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>
-                  </TextField>
+                  </Label>
+                  <ComboBox fx:id="schuanDongChoiceBox" minHeight="23.0" prefWidth="150.0" promptText="船东公司" />
+                  <Button fx:id="closefilterBtn" mnemonicParsing="false" onAction="#closefilterAction" text="关闭过滤">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -99,6 +95,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Label>
+                        <Label text="点击左侧表内的文件地址打开原文件查看图片" textFill="RED" />
                         <TextArea fx:id="sugContentTA" promptText="意见内容" wrapText="true" />
                      </children>
                      <HBox.margin>

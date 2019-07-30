@@ -8,8 +8,6 @@ import App.utile.JieBaUtils;
 import App.utile.ProgressFrom;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -17,8 +15,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.awt.*;
@@ -31,45 +27,34 @@ import java.util.Map;
 
 public class KBCriterion {
 
+    private final String[] shiptype = {"All"};
+    private final String[] classification = {"All"};
     @FXML
     private TableColumn<?, ?> g33;
-
     @FXML
     private TableColumn<?, ?> g32;
-
     @FXML
     private TextArea guifanTextArea;
-
     @FXML
     private TableColumn<?, ?> g35;
-
     @FXML
     private ComboBox<String> critShipTypeChoiceBox;
-
     @FXML
     private TableColumn<?, ?> g34;
-
     @FXML
     private TableView<CriterionData> guifanTable;
-
     @FXML
     private TableColumn<CriterionData, String> criterionUrlTC;
-
     @FXML
     private ComboBox<String> critClassificationSocietyChoiceBox;
-
     @FXML
     private TableColumn<?, ?> criterionClassificationSocietyTC;
-
     @FXML
     private TextField criterionQueryTextField;
-
     @FXML
     private HBox filterHbox;
-
     @FXML
     private Button openfilterBtn, closefilterBtn;
-
     private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
     //规范搜索增加修改删除
     private AddCriterion acc = AddCriterion.getInstance();
@@ -87,14 +72,12 @@ public class KBCriterion {
 //        progressFrom.activateProgressBar();
     }
 
-    private final String[] shiptype = {"All"};
-    private final String[] classification = {"All"};
-
     @FXML
     void openfilterAction() {
         filterHbox.setDisable(false);
         filterHbox.setVisible(true);
-        filterHbox.setMaxHeight(20);
+        filterHbox.setMinHeight(20);
+        filterHbox.setMaxHeight(25);
         openfilterBtn.setDisable(true);
         openfilterBtn.setVisible(false);
         critShipTypeChoiceBox.setValue("All");
@@ -106,7 +89,8 @@ public class KBCriterion {
                 shiptype[0] = newValue;
                 List<CriterionData> list = new LinkedList<>();
                 for (CriterionData c : allList) {
-                    if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All"))) list.add(c);
+                    if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All")))
+                        list.add(c);
                 }
                 guifanTable.setItems(FXCollections.observableArrayList(list));
             });
@@ -114,7 +98,8 @@ public class KBCriterion {
                 classification[0] = newValue;
                 List<CriterionData> list = new LinkedList<>();
                 for (CriterionData c : allList) {
-                    if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All"))) list.add(c);
+                    if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All")))
+                        list.add(c);
                 }
                 guifanTable.setItems(FXCollections.observableArrayList(list));
             });
@@ -127,6 +112,7 @@ public class KBCriterion {
         critShipTypeChoiceBox.setValue("All");
         filterHbox.setDisable(true);
         filterHbox.setVisible(false);
+        filterHbox.setMinHeight(0);
         filterHbox.setMaxHeight(0);
         openfilterBtn.setDisable(false);
         openfilterBtn.setVisible(true);
@@ -139,7 +125,8 @@ public class KBCriterion {
             List<CriterionData> allList = CriterionDb.getCriterionDataList();
             List<CriterionData> list = new LinkedList<>();
             for (CriterionData c : allList) {
-                if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All"))) list.add(c);
+                if ((c.getCriShipType().equals(shiptype[0]) || shiptype[0].equals("All")) && (c.getCriShipCompany().equals(classification[0]) || classification[0].equals("All")))
+                    list.add(c);
             }
             guifanTable.setItems(FXCollections.observableArrayList(list));
         } else {
@@ -202,7 +189,8 @@ public class KBCriterion {
     void initialize() {
         critShipTypeChoiceBox.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
         critClassificationSocietyChoiceBox.setItems(FXCollections.observableArrayList(Constant.getChuanjisheList()));
-        critShipTypeChoiceBox.setValue("All"); critClassificationSocietyChoiceBox.setValue("All");
+        critShipTypeChoiceBox.setValue("All");
+        critClassificationSocietyChoiceBox.setValue("All");
         //添加规范
         g32.setCellValueFactory(new PropertyValueFactory<>("criShipType"));
         criterionClassificationSocietyTC.setCellValueFactory(new PropertyValueFactory<>("criShipCompany"));

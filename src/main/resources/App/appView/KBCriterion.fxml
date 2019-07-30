@@ -38,13 +38,13 @@
             </HBox>
             <HBox fx:id="filterHbox" alignment="CENTER_LEFT" minHeight="0.0" spacing="5.0">
                <children>
-                  <Label minHeight="23.0" minWidth="-Infinity" prefWidth="48.0" text="船舶类型" textAlignment="RIGHT" HBox.hgrow="NEVER" />
-                  <ComboBox fx:id="critShipTypeChoiceBox" minHeight="23.0" minWidth="10.0" prefWidth="150.0" promptText="船舶类型" />
-                  <Label minHeight="23.0" minWidth="-Infinity" prefWidth="36.0" text="船级社" textAlignment="RIGHT">
+                  <Label minHeight="23.0" prefWidth="48.0" text="船舶类型" textAlignment="RIGHT" />
+                  <ComboBox fx:id="critShipTypeChoiceBox" minHeight="23.0" prefWidth="150.0" promptText="船舶类型" />
+                  <Label minHeight="23.0" prefWidth="36.0" text="船级社" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin></Label>
-                  <ComboBox fx:id="critClassificationSocietyChoiceBox" minHeight="23.0" minWidth="10.0" prefWidth="150.0" promptText="船级社" />
+                  <ComboBox fx:id="critClassificationSocietyChoiceBox" minHeight="23.0" prefWidth="150.0" promptText="船级社" />
                   <Button fx:id="closefilterBtn" mnemonicParsing="false" onAction="#closefilterAction" text="关闭过滤">
                      <HBox.margin>
                         <Insets left="20.0" />

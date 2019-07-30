@@ -11,47 +11,38 @@
     <children>
         <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-            <HBox alignment="CENTER_LEFT" spacing="5.0">
-               <children>
-                        <Label minWidth="-Infinity" prefHeight="15.0" prefWidth="53.0" text="船舶类型" />
-                        <ComboBox fx:id="experienceshipType1" editable="true" prefWidth="150.0" promptText="船舶类型" />
-                        <Label minWidth="-Infinity" prefHeight="15.0" prefWidth="54.0" text="舾装区域">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin></Label>
-                        <TextField fx:id="experienceOutfittingTypeTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="舾装区域" />
-                        <Label minWidth="-Infinity" prefHeight="19.0" prefWidth="89.0" text="经验知识名称">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                        </Label>
-                        <TextField fx:id="experienceNameTextField1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="10.0" prefWidth="150.0" promptText="经验知识名称" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-                <Separator />
-                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" spacing="20.0" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" spacing="20.0">
                     <children>
+                        <TextField fx:id="experienceQueryTextField" prefWidth="300.0" promptText="输入自然语言进行检索">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </TextField>
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleExperienceQuery" text="搜索" />
                         <Button mnemonicParsing="false" onAction="#showAddExperience" text="添加" />
                         <Button mnemonicParsing="false" onAction="#handleEditExperience" text="修改" />
                         <Button mnemonicParsing="false" onAction="#handleDeleteExperience" text="删除" />
                         <Button cancelButton="true" mnemonicParsing="false" onAction="#handleResetExperience" text="重置" />
-                        <Button defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleExperienceQuery" text="搜索" visible="false" />
-                        <TextField fx:id="experienceQueryTextField" disable="true" prefWidth="300.0" visible="false">
-                            <HBox.margin>
-                                <Insets left="30.0" />
-                            </HBox.margin>
-                        </TextField>
+                  <Button fx:id="filterBtn" mnemonicParsing="false" onAction="#filterAction" text="高级过滤" />
                     </children>
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </HBox>
+            <HBox fx:id="filterHbox" alignment="CENTER_LEFT" spacing="5.0">
+               <children>
+                        <Label prefWidth="53.0" text="船舶类型" />
+                        <ComboBox fx:id="experienceshipType1" prefWidth="150.0" promptText="船舶类型" />
+                  <Button fx:id="closefilterBtn" mnemonicParsing="false" onAction="#closefilterAction" text="关闭过滤">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
                 <Separator />
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
@@ -73,6 +64,7 @@
                         <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                             <children>
                                 <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="80.0" text="经验知识内容" />
+                        <Label text="点击左侧表内的文件地址打开源文件查看图片" textFill="RED" />
                                 <TextArea fx:id="experienceTextArea1" promptText="经验知识内容" wrapText="true" VBox.vgrow="ALWAYS" />
                             </children>
                             <padding>

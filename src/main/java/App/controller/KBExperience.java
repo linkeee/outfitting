@@ -6,64 +6,51 @@ import App.utile.Constant;
 import App.utile.HyperlinkTableCell;
 import App.utile.JieBaUtils;
 import App.utile.ProgressFrom;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class KBExperience {
 
+    private final String[] shiptype = {"All"};
     @FXML
     private TableColumn<?, ?> e53;
-
-    @FXML
-    private TextField experienceNameTextField1;
-
     @FXML
     private TableColumn<?, ?> e52;
-
     @FXML
     private TableColumn<?, ?> e55;
-
     @FXML
     private ComboBox<String> experienceshipType1;
-
     @FXML
     private TextArea experienceTextArea1;
-
     @FXML
     private TableColumn<?, ?> e54;
-
     @FXML
     private TextField experienceQueryTextField;
-
     @FXML
     private TableView<ExperienceData> experienceTable1;
-
     @FXML
     private TableColumn<ExperienceData, String> expFilePathTC;
-
     @FXML
-    private TextField experienceOutfittingTypeTextField1;
-
-    private String expFile;
-
+    private Button filterBtn, closefilterBtn;
+    @FXML
+    private HBox filterHbox;
     //经验修改，增加，删除
     private AddExperience aec = AddExperience.getInstance();
     private JieBaUtils jieBaUtils = JieBaUtils.getInstance();
@@ -78,29 +65,84 @@ public class KBExperience {
             }
         };
         ProgressFrom progressFrom = new ProgressFrom(task, "正在更新文本TF-IDF值，请稍后...");
-        progressFrom.activateProgressBar();
+//        progressFrom.activateProgressBar();
+    }
+
+    @FXML
+    void filterAction() {
+        filterHbox.setDisable(false);
+        filterHbox.setVisible(true);
+        filterHbox.setMinHeight(20);
+        filterHbox.setMaxHeight(25);
+        filterBtn.setDisable(true);
+        filterBtn.setVisible(false);
+        experienceshipType1.setValue("All");
+
+        if (filterHbox.isVisible()) {
+            List<ExperienceData> allList = ExperienceDb.getExpDataList();
+            experienceshipType1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                shiptype[0] = newValue;
+                List<ExperienceData> list = new LinkedList<>();
+                for (ExperienceData e : allList) {
+                    if ((e.getExpShipType().equals(shiptype[0]) || shiptype[0].equals("All")))
+                        list.add(e);
+                }
+                experienceTable1.setItems(FXCollections.observableArrayList(list));
+            });
+        }
+    }
+
+    @FXML
+    void closefilterAction() {
+        experienceshipType1.setValue("All");
+        filterHbox.setDisable(true);
+        filterHbox.setVisible(false);
+        filterHbox.setMinHeight(0);
+        filterHbox.setMaxHeight(0);
+        filterBtn.setDisable(false);
+        filterBtn.setVisible(true);
+        experienceTable1.setItems(FXCollections.observableArrayList(ExperienceDb.getExpDataList()));
     }
 
     private void refresh() {
         experienceTable1.setItems(FXCollections.observableArrayList(ExperienceDb.getExpDataList()));
         experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
-        showExperienceDetails(null);
         refreshTfIdf();
     }
 
     @FXML
     private void handleExperienceQuery() throws SQLException {
-        experienceTable1.setItems(ExperienceDb.query(
-                experienceshipType1.getValue(),
-                experienceOutfittingTypeTextField1.getText(),
-                experienceNameTextField1.getText(),
-                experienceQueryTextField.getText()
-        ));
+        if (filterHbox.isVisible()) {
+            List<ExperienceData> allList = ExperienceDb.getExpDataList();
+            List<ExperienceData> list = new LinkedList<>();
+            for (ExperienceData e : allList) {
+                if ((e.getExpShipType().equals(shiptype[0]) || shiptype[0].equals("All")))
+                    list.add(e);
+            }
+            experienceTable1.setItems(FXCollections.observableArrayList(list));
+        } else {
+            experienceTable1.setItems(FXCollections.observableArrayList(ExperienceDb.getExpDataList()));
+        }
+
+        // 将输入进行分词
+        String inputStr = experienceQueryTextField.getText().trim();
+        if (inputStr.equals("")) return;
+        // 拼接目前table中显示的条目的{id:{tfidf}}
+        Map<String, String> idtfidfmap = new HashMap<>();
+        for (ExperienceData e : experienceTable1.getItems()) {
+            idtfidfmap.put(e.getExpId(), e.getTfIdfMapStr());
+        }
+        // 文档id的排序
+        Map<String, Double> map = jieBaUtils.getSortedRelativityMap(inputStr, idtfidfmap);
+        java.util.List<String> list1 = new LinkedList<>(map.keySet());
+        List<ExperienceData> orderedDataList = ExperienceDb.getOrderedDataList(list1);
+        experienceTable1.setItems(FXCollections.observableArrayList(orderedDataList));
     }
 
     @FXML
     private void handleResetExperience() {
-        refresh();
+        experienceTable1.setItems(FXCollections.observableArrayList(ExperienceDb.getExpDataList()));
+        experienceTextArea1.setText(null);
     }
 
     @FXML
@@ -129,6 +171,7 @@ public class KBExperience {
     void initialize() {
         //经验表里添加经验内容
         experienceshipType1.setItems(FXCollections.observableArrayList(Constant.getShipTypeList()));
+        experienceshipType1.setValue("All");
         e52.setCellValueFactory(new PropertyValueFactory<>("expShipType"));
         e53.setCellValueFactory(new PropertyValueFactory<>("expOutfittingRegion"));
         e54.setCellValueFactory(new PropertyValueFactory<>("expName"));
@@ -136,19 +179,13 @@ public class KBExperience {
         expFilePathTC.setCellValueFactory(new PropertyValueFactory<>("expFilePath"));
         expFilePathTC.setCellFactory(param -> new HyperlinkTableCell<>());
 
-        experienceTable1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                showExperienceDetails(newValue);
-                expFile = newValue.getExpFilePath();
-            }
-        });
-
         experienceTable1.setItems(FXCollections.observableArrayList(ExperienceDb.getExpDataList()));
 
+        final String[] filepath = {""};
         MenuItem expItem1 = new MenuItem("打开文件");
         expItem1.setOnAction(event -> {
             try {
-                Desktop.getDesktop().open(new File(expFile));
+                Desktop.getDesktop().open(new File(filepath[0]));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -156,7 +193,7 @@ public class KBExperience {
         MenuItem expItem2 = new MenuItem("打开文件夹");
         expItem2.setOnAction(event -> {
             try {
-                Desktop.getDesktop().open(new File(new File(expFile).getParent()));
+                Desktop.getDesktop().open(new File(new File(filepath[0]).getParent()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -165,21 +202,15 @@ public class KBExperience {
         expMenu.getItems().addAll(expItem1, expItem2);
         experienceTable1.setOnContextMenuRequested(event -> expMenu.show(experienceTable1, event.getScreenX(), event.getScreenY()));
         experienceTable1.setOnMouseClicked(event -> expMenu.hide());
-    }
 
-    //在对应格子中显示选择的属性
-    private void showExperienceDetails(ExperienceData experienceData) {
-        if (experienceData != null) {
-            experienceNameTextField1.setText(experienceData.getExpName());
-            experienceOutfittingTypeTextField1.setText(experienceData.getExpOutfittingRegion());
-            experienceTextArea1.setText(experienceData.getExpContent());
-            experienceshipType1.setValue(experienceData.getExpShipType());
-        } else {
-            experienceNameTextField1.setText("");
-            experienceOutfittingTypeTextField1.setText("");
-            experienceTextArea1.setText("");
-            experienceshipType1.setValue(null);
-        }
+        experienceTable1.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                experienceTextArea1.setText(newValue.getExpContent());
+                filepath[0] = newValue.getExpFilePath();
+            }
+        });
+
+        closefilterAction();
     }
 
 }

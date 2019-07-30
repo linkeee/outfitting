@@ -104,7 +104,7 @@ public class KBLayout {
             }
         };
         ProgressFrom progressFrom = new ProgressFrom(task, "正在更新文本TF-IDF值，请稍后...");
-        progressFrom.activateProgressBar();
+//        progressFrom.activateProgressBar();
     }
 
     @FXML
