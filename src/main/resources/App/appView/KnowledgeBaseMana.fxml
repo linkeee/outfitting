@@ -16,8 +16,6 @@
                 <Button fx:id="criterionBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goCriterionAction" prefHeight="40.0" prefWidth="170.0" text="设计规范库" textAlignment="LEFT" />
                 <Button fx:id="layoutBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#layoutAction" prefHeight="40.0" prefWidth="170.0" text="布局案例库" />
                 <Button fx:id="formulaBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goFormulaAction" prefHeight="40.0" prefWidth="170.0" text="公式库" />
-                <Button fx:id="paramBtn" alignment="CENTER_LEFT" disable="true" mnemonicParsing="false" onAction="#goParamAction" prefHeight="40.0" prefWidth="170.0" text="舾装件参数库" visible="false" />
-                <Button fx:id="qualityCaseBtn" alignment="CENTER_LEFT" disable="true" mnemonicParsing="false" onAction="#goQualityCaseAction" prefHeight="40.0" prefWidth="170.0" text="质量案例库" textAlignment="LEFT" visible="false" />
             </children>
         </VBox>
     </left>

@@ -63,7 +63,7 @@ public class Consoler {
     @FXML
     private TableView<Vari> tvTableVariable;
     @FXML
-    private TableColumn tcTableVariableCol1, tcTableVariableCol2, tcTableVariableCol3, tcTableVariableCol4, tcTableVariableCol5, tcTableVariableCol6;
+    private TableColumn tcTableVariableCol1, tcTableVariableCol2, tcTableVariableCol3, tcTableVariableCol4, tcTableVariableCol5, tcTableVariableCol6,tcTableVariableCol7;
     @FXML
     private Button btNewVariable;
     @FXML
@@ -435,20 +435,18 @@ public class Consoler {
         resetVariableForm();
     }
 
-    private void buttonActionEditVariable(){
-        Vari vari=tvTableVariable.getSelectionModel().getSelectedItem();
-        if (vari!=null) {
-            VarEditor varEditor=new VarEditor();
+    private void buttonActionEditVariable() {
+        Vari vari = tvTableVariable.getSelectionModel().getSelectedItem();
+        if (vari != null) {
+            VarEditor varEditor = new VarEditor();
             Vari editedVar = varEditor.show(vari);
-            if (editedVar!=null)
-            {
-                DataBase db =new DataBase();
+            if (editedVar != null) {
+                DataBase db = new DataBase();
                 db.updateVariable(editedVar);
                 db.close();
                 resetVariableForm();
-            }
-            else return;
-        }else return;
+            } else return;
+        } else return;
     }
 
     /**
@@ -580,6 +578,7 @@ public class Consoler {
         tcTableVariableCol4.setCellValueFactory(new PropertyValueFactory<>("variableDescription"));
         tcTableVariableCol5.setCellValueFactory(new PropertyValueFactory<>("varDevice"));
         tcTableVariableCol6.setCellValueFactory(new PropertyValueFactory<>("varScope"));
+        tcTableVariableCol7.setCellValueFactory(new PropertyValueFactory<>("varUnit"));
         tvTableVariable.setItems(variableList);
     }
 }

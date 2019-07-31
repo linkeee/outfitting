@@ -79,6 +79,8 @@ public class UserDb extends DatabaseItem {
             PreparedStatement preparedStatement = connection.prepareStatement("select * from user order by id");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                if (resultSet.getString("user_role").equals("超级管理员"))
+                    continue;
                 UserData userData = new UserData();
                 userData.setId(String.valueOf(resultSet.getInt("id")));
                 userData.setJobNum(resultSet.getString("user_jobNum"));

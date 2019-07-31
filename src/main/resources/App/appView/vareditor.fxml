@@ -4,111 +4,138 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.formulalib.VarEditor">
-   <children>
-      <TitledPane collapsible="false" text="修改变量">
-         <content>
-            <VBox spacing="20.0">
-               <children>
-                  <HBox alignment="TOP_CENTER" spacing="20.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                           <children>
-                              <Label text="变量ID" />
-                              <TextField fx:id="tfStringVariableID" editable="false" prefHeight="23.0" prefWidth="90.0" />
-                           </children>
+<AnchorPane prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="App.formulalib.VarEditor">
+    <children>
+        <TitledPane collapsible="false" text="修改变量">
+            <content>
+                <VBox spacing="20.0">
+                    <children>
+                        <HBox alignment="TOP_CENTER" spacing="20.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label text="变量ID"/>
+                                        <TextField fx:id="tfStringVariableID" editable="false" prefHeight="23.0"
+                                                   prefWidth="90.0"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="10.0">
+                                    <children>
+                                        <Label text="变量名"/>
+                                        <TextField fx:id="tfStringVariable" editable="false" prefHeight="24.0"
+                                                   prefWidth="90.0"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label text="变量类型"/>
+                                        <TextField fx:id="tfStringVariableType" editable="false" prefHeight="24.0"
+                                                   prefWidth="100.0"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="20.0"/>
+                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="10.0">
-                           <children>
-                              <Label text="变量名" />
-                              <TextField fx:id="tfStringVariable" editable="false" prefHeight="24.0" prefWidth="90.0" />
-                           </children>
+                        <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="45.0" spacing="150.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label text="计量单位"/>
+                                        <TextField fx:id="tfStringUnit" prefHeight="27.0" prefWidth="80.0"
+                                                   promptText="单位符号"/>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" layoutX="179.0" layoutY="10.0" spacing="20.0">
+                                    <children>
+                                        <Label text="数值精确位数"/>
+                                        <ComboBox fx:id="cbIntDigit" editable="true" prefWidth="90.0"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets bottom="-20.0"/>
+                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                           <children>
-                              <Label text="变量类型" />
-                              <TextField fx:id="tfStringVariableType" editable="false" prefHeight="24.0" prefWidth="100.0" />
-                           </children>
+                        <HBox alignment="TOP_CENTER" spacing="30.0">
+                            <children>
+                                <VBox alignment="TOP_CENTER" spacing="20.0">
+                                    <children>
+                                        <VBox alignment="TOP_CENTER" spacing="10.0">
+                                            <children>
+                                                <Label text="旧变量描述"/>
+                                                <TextField fx:id="tfStringOldDescription" editable="false"
+                                                           prefWidth="200.0"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox alignment="TOP_CENTER" spacing="10.0">
+                                            <children>
+                                                <Label text="旧设备说明"/>
+                                                <TextField fx:id="tfStringOldDevice" editable="false"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox alignment="TOP_CENTER">
+                                            <children>
+                                                <Label minWidth="-Infinity" text="下限"/>
+                                                <TextField fx:id="lowerTF" promptText="下限"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                                <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                    <children>
+                                        <VBox alignment="TOP_CENTER" spacing="10.0">
+                                            <children>
+                                                <Label text="新变量描述"/>
+                                                <TextField fx:id="tfStringNewDescription" prefWidth="200.0"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox alignment="TOP_CENTER" spacing="10.0">
+                                            <children>
+                                                <Label text="新设备说明"/>
+                                                <TextField fx:id="tfStringNewDevice"/>
+                                            </children>
+                                        </VBox>
+                                        <VBox alignment="TOP_CENTER">
+                                            <children>
+                                                <Label minWidth="-Infinity" text="上限"/>
+                                                <TextField fx:id="upperTF" promptText="上限"/>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="25.0"/>
+                            </VBox.margin>
                         </HBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="TOP_CENTER" spacing="30.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" spacing="20.0">
-                           <children>
-                              <VBox alignment="TOP_CENTER" spacing="10.0">
-                                 <children>
-                                    <Label text="旧变量描述" />
-                                    <TextField fx:id="tfStringOldDescription" editable="false" prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" spacing="10.0">
-                                 <children>
-                                    <Label text="旧设备说明" />
-                                    <TextField fx:id="tfStringOldDevice" editable="false" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER">
-                                 <children>
-                                    <Label minWidth="-Infinity" text="下限" />
-                                    <TextField fx:id="lowerTF" promptText="下限" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" spacing="20.0">
-                           <children>
-                              <VBox alignment="TOP_CENTER" spacing="10.0">
-                                 <children>
-                                    <Label text="新变量描述" />
-                                    <TextField fx:id="tfStringNewDescription" prefWidth="200.0" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" spacing="10.0">
-                                 <children>
-                                    <Label text="新设备说明" />
-                                    <TextField fx:id="tfStringNewDevice" />
-                                 </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER">
-                                 <children>
-                                    <Label minWidth="-Infinity" text="上限" />
-                                    <TextField fx:id="upperTF" promptText="上限" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="25.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="TOP_CENTER" spacing="100.0">
-                     <children>
-                        <Button fx:id="btSubmit" alignment="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="确定">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btCancel" alignment="CENTER" cancelButton="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="取消">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-         </content>
-         <font>
-            <Font size="19.0" />
-         </font>
-      </TitledPane>
-   </children>
+                        <HBox alignment="TOP_CENTER" spacing="100.0">
+                            <children>
+                                <Button fx:id="btSubmit" alignment="CENTER" defaultButton="true" mnemonicParsing="false"
+                                        prefHeight="40.0" prefWidth="80.0" text="确定">
+                                    <font>
+                                        <Font size="15.0"/>
+                                    </font>
+                                </Button>
+                                <Button fx:id="btCancel" alignment="CENTER" cancelButton="true" mnemonicParsing="false"
+                                        prefHeight="40.0" prefWidth="80.0" text="取消">
+                                    <font>
+                                        <Font size="15.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+            <font>
+                <Font size="19.0"/>
+            </font>
+        </TitledPane>
+    </children>
 </AnchorPane>

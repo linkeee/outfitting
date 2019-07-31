@@ -50,8 +50,6 @@ public class UserManagement {
     private TableColumn<UserData, String> positionColumn;
     @FXML
     private TableColumn<UserData, String> roleColumn;
-    private ObservableList<String> positionList = FXCollections.observableArrayList("设计人员", "主管", "主任", "部长");
-    private ObservableList<String> roleList = FXCollections.observableArrayList("用户", "管理员", "超级管理员");
 
     @FXML
     void initialize() {

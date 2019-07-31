@@ -68,7 +68,7 @@ public class DataBase {
      */
     void createTables() {
         try {
-            String sql1 = "CREATE TABLE variable ([variableID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[variable_string] TEXT NOT NULL,[variable_type] BOOLEAN NOT NULL DEFAULT (-1),[variable_description] TEXT NULL DEFAULT NULL,[variable_device] TEXT NULL DEFAULT NULL,[isDeleted] BOOLEAN NOT NULL DEFAULT '0', [variable_scope] TEXT NULL DEFAULT NULL);";
+            String sql1 = "CREATE TABLE variable ([variableID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[variable_string] TEXT NOT NULL,[variable_type] BOOLEAN NOT NULL DEFAULT (-1),[variable_description] TEXT NULL DEFAULT NULL,[variable_device] TEXT NULL DEFAULT NULL,[isDeleted] BOOLEAN NOT NULL DEFAULT '0', [variable_scope] TEXT NULL DEFAULT NULL,[accuracyDigit] INTEGER NOT NULL DEFAULT '2',[varUnit] TEXT NOT NULL)";
             String sql2 = "CREATE TABLE formula ([equationID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[equation_right]TEXT NOT NULL,[equation_VarID]INTEGER NOT NULL,[description]TEXT NULL DEFAULT NULL,[restrictedVarID]INTEGER NULL DEFAULT NULL,[lowerBound]REAL NULL DEFAULT NULL,[upperBound]REAL NULL DEFAULT NULL,[rule_more]TEXT NULL DEFAULT NULL,[rule_description]TEXT NULL DEFAULT NULL,[isDeleted]BOOLEAN NOT NULL DEFAULT '0');";
             Statement stat = conn.createStatement();
             stat.addBatch("PRAGMA encoding = \"UTF-8\";");
@@ -137,12 +137,12 @@ public class DataBase {
      */
     Vari getVar(@NotNull String varStr) throws LogicalException {
         try {
-            String sql = "SELECT variableID,variable_type,variable_description,variable_device, variable_scope FROM variable WHERE isDeleted=0 and variable_string= ?";
+            String sql = "SELECT variableID,variable_type,variable_description,variable_device, variable_scope,accuracyDigit,varUnit FROM variable WHERE isDeleted=0 and variable_string= ?";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, varStr);
             ResultSet rSet = stat.executeQuery();
             if (rSet.next()) {
-                Vari a = new Vari(rSet.getInt(1), varStr, rSet.getBoolean(2), rSet.getString(3), rSet.getString(4), rSet.getString(5));
+                Vari a = new Vari(rSet.getInt(1), varStr, rSet.getBoolean(2), rSet.getString(3), rSet.getString(4), rSet.getString(5), rSet.getInt(6), rSet.getString(7));
                 rSet.close();
                 stat.close();
                 return a;
@@ -167,7 +167,7 @@ public class DataBase {
     Vari getVar(int varID) throws LogicalException {
         try {
             Statement stmt = conn.createStatement();
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0 and variableID=".concat(String.valueOf(varID));
+            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope,accuracyDigit,varUnit FROM variable WHERE isDeleted=0 and variableID=".concat(String.valueOf(varID));
             ResultSet rSet = stmt.executeQuery(sql);
             if (rSet.next()) {
                 String vardescription = null;
@@ -176,7 +176,7 @@ public class DataBase {
                     vardescription = rSet.getString(4);
                 if (rSet.getObject(5) != null)
                     vardevice = rSet.getString(5);
-                Vari a = new Vari(varID, rSet.getString(2), rSet.getBoolean(3), vardescription, vardevice, rSet.getString(6));
+                Vari a = new Vari(varID, rSet.getString(2), rSet.getBoolean(3), vardescription, vardevice, rSet.getString(6), rSet.getInt(7), rSet.getString(8));
                 rSet.close();
                 stmt.close();
                 return a;
@@ -384,7 +384,7 @@ public class DataBase {
     }
 
     /**
-     * 根据输入信息查询符合输入条件的变量，函数未使用未使用PreparedStatement
+     * 根据输入信息查询符合输入条件的变量，函数未使用PreparedStatement
      *
      * @param strVar         忽略大小写，不能有空格，不能为null，如果没有这一项请传入""
      * @param varDescription 不能有空格,不能为null，如果没有这一项请传入""，模糊匹配，写得越少越好
@@ -395,7 +395,7 @@ public class DataBase {
         List<Vari> varList = new LinkedList<>();
         String varString = strVar.toLowerCase();
         try {
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0";
+            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope,accuracyDigit,varUnit FROM variable WHERE isDeleted=0";
             if (!varString.isEmpty()) {
                 sql = sql + " and lower(variable_string)='" + varString + "'";
             }
@@ -419,7 +419,7 @@ public class DataBase {
                 if (rSet.getObject(5) != null) {
                     variableDevice = rSet.getString(5);
                 }
-                Vari var = new Vari(variableID, variableString, variableType, variableDescription, variableDevice, rSet.getString(6));
+                Vari var = new Vari(variableID, variableString, variableType, variableDescription, variableDevice, rSet.getString(6), rSet.getInt(7), rSet.getString(8));
                 varList.add(var);
             }
             rSet.close();
@@ -438,7 +438,7 @@ public class DataBase {
     public List<Vari> getAllVariable() {
         List<Vari> varList = new ArrayList<>();
         try {
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0";
+            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope,accuracyDigit,varUnit FROM variable WHERE isDeleted=0";
             Statement stat = conn.createStatement();
             ResultSet rSet = stat.executeQuery(sql);
             while (rSet.next()) {
@@ -453,7 +453,7 @@ public class DataBase {
                 if (rSet.getObject(5) != null) {
                     variableDevice = rSet.getString(5);
                 }
-                Vari var = new Vari(variableID, variableString, variableType, varDescription, variableDevice, rSet.getString(6));
+                Vari var = new Vari(variableID, variableString, variableType, varDescription, variableDevice, rSet.getString(6), rSet.getInt(7), rSet.getString(8));
                 varList.add(var);
             }
             rSet.close();
@@ -472,7 +472,7 @@ public class DataBase {
     public List<Vari> getAllKnownVariable() {
         List<Vari> varList = new ArrayList<>();
         try {
-            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope FROM variable WHERE isDeleted=0 and variable_type=0";
+            String sql = "SELECT variableID,variable_string,variable_type,variable_description,variable_device,variable_scope,accuracyDigit,varUnit FROM variable WHERE isDeleted=0 and variable_type=0";
             Statement stat = conn.createStatement();
             ResultSet rSet = stat.executeQuery(sql);
             while (rSet.next()) {
@@ -487,7 +487,7 @@ public class DataBase {
                 if (rSet.getObject(5) != null) {
                     variableDevice = rSet.getString(5);
                 }
-                Vari var = new Vari(variableID, variableString, variableType, varDescription, variableDevice, rSet.getString(6));
+                Vari var = new Vari(variableID, variableString, variableType, varDescription, variableDevice, rSet.getString(6), rSet.getInt(7), rSet.getString(8));
                 varList.add(var);
             }
             rSet.close();
@@ -616,7 +616,7 @@ public class DataBase {
 
     boolean updateVariable(@NotNull Vari inVar) {
         try {
-            String sql = "UPDATE variable SET [variable_description]=?,[variable_device]=?,[variable_scope]=? WHERE variableID = ? and isDeleted=0";
+            String sql = "UPDATE variable SET [variable_description]=?,[variable_device]=?,[variable_scope]=?,[accuracyDigit]=?,[varUnit]=? WHERE variableID = ? and isDeleted=0";
             PreparedStatement stat = conn.prepareStatement(sql);
             if (inVar.getVariableDescription().isEmpty())
                 stat.setNull(1, Types.NULL);
@@ -626,8 +626,10 @@ public class DataBase {
                 stat.setNull(2, Types.NULL);
             else
                 stat.setString(2, inVar.getVarDevice());
-            stat.setString(3,inVar.getVarScope());
-            stat.setInt(4, inVar.getVariableID());
+            stat.setString(3, inVar.getVarScope());
+            stat.setInt(4, inVar.getAccuracyDigit());
+            stat.setString(5, inVar.getVarUnit());
+            stat.setInt(6, inVar.getVariableID());
             int line = stat.executeUpdate();
             Logger.getGlobal().info("更新记录数" + line);
             return true;
@@ -814,10 +816,10 @@ public class DataBase {
      * @param varDevice      String 可以为空但不能为null
      * @return
      */
-    Vari addVariable(@NotNull String varString, boolean isCalculated, @NotNull String varDescription, @NotNull String varDevice, String varScope) throws LogicalException {
+    Vari addVariable(@NotNull String varString, boolean isCalculated, @NotNull String varDescription, @NotNull String varDevice, String varScope, int accuracyDigit, String varUnit) throws LogicalException {
         try {
             //测试预编译版本
-            String sql = "INSERT INTO variable (variable_string,variable_type,variable_description,variable_device, variable_scope) VALUES (?,?,?,?, ?)";
+            String sql = "INSERT INTO variable (variable_string,variable_type,variable_description,variable_device, variable_scope,accuracyDigit,varUnit) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, varString);
             stat.setBoolean(2, isCalculated);
@@ -833,6 +835,8 @@ public class DataBase {
                 stat.setNull(5, Types.NULL);
             else
                 stat.setString(5, varScope);
+            stat.setInt(6, accuracyDigit);
+            stat.setString(7, varUnit);
             int line = stat.executeUpdate();
             Logger.getGlobal().log(Level.INFO, "更新记录数" + line);
             stat.close();

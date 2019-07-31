@@ -1,6 +1,7 @@
 package App.controller;
 
 import App.Main;
+import App.database.DBTableCreate;
 import App.utile.Docker;
 import App.utile.FxmlUtile;
 import App.utile.MyDialog;
@@ -57,14 +58,8 @@ public class Home {
     }
 
     @FXML
-    void goTemp(ActionEvent event) throws IOException {
-        Temp temp = new Temp();
-        temp.showTemp();
-        closeHomeWindows(event);
-    }
-
-    @FXML
     void initialize() {
+        DBTableCreate.createAllTableIfNotExists();
         switch (Docker.get("userRole").toString()) {
             case "管理员":
                 button1.setDisable(false);

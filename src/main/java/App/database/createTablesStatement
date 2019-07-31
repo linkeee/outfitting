@@ -1,4 +1,4 @@
-CREATE TABLE `criterion` (
+CREATE TABLE IF NOT EXISTS `criterion` (
   `criId` int(11) NOT NULL AUTO_INCREMENT,
   `criShipType` varchar(100) binary DEFAULT NULL,
   `criShipCompany` varchar(100) binary DEFAULT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE `criterion` (
   FULLTEXT KEY `criShipType` (`criShipType`,`criShipCompany`,`criOutfittingRegion`,`criName`,`criContent`,`criFilePath`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `experience` (
+CREATE TABLE IF NOT EXISTS `experience` (
   `expId` int(11) NOT NULL AUTO_INCREMENT,
   `expShipType` varchar(20) binary DEFAULT NULL,
   `expOutfittingRegion` varchar(20) binary DEFAULT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `experience` (
   FULLTEXT KEY `expShipType` (`expShipType`,`expOutfittingRegion`,`expName`,`expContent`,`expFilePath`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `layout` (
+CREATE TABLE IF NOT EXISTS `layout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `outfitting_name` varchar(50) binary DEFAULT NULL,
   `ship_type` varchar(50) binary DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `layout` (
   FULLTEXT KEY `layout_content` (`layout_content`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `manufacturer` (
+CREATE TABLE IF NOT EXISTS `manufacturer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `outfitting_name` varchar(100) binary NOT NULL,
   `manufacturer_name` varchar(100) binary DEFAULT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE `manufacturer` (
   FULLTEXT KEY `outfitting_name` (`outfitting_name`,`manufacturer_name`,`outfitting_type`,`remark`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `paramandvalue` (
+CREATE TABLE IF NOT EXISTS `paramandvalue` (
   `proj_id` int(100) NOT NULL,
   `version_name` varchar(100) binary NOT NULL,
   `param_id` int(100) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `paramandvalue` (
   FULLTEXT KEY `version_name` (`version_name`,`outfitting_name`,`param_name`,`param_description`,`param_value`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `parameter` (
+CREATE TABLE IF NOT EXISTS `parameter` (
   `param_id` int(100) NOT NULL,
   `outfitting_name` varchar(100) binary DEFAULT NULL,
   `param_name` varchar(100) binary NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE `parameter` (
   FULLTEXT KEY `outfitting_name` (`outfitting_name`,`param_name`,`param_description`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `project` (
+CREATE TABLE IF NOT EXISTS `project` (
   `proj_id` int(100) NOT NULL AUTO_INCREMENT,
   `proj_name` varchar(100) binary NOT NULL,
   `proj_create_time` varchar(100) binary NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE `project` (
   FULLTEXT KEY `proj_name` (`proj_name`,`proj_create_time`,`proj_modify_time`,`proj_creator`,`proj_description`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `selectedtype` (
+CREATE TABLE IF NOT EXISTS `selectedtype` (
   `proj_id` int(100) NOT NULL,
   `version_name` varchar(100) binary NOT NULL,
   `outfitting_name` varchar(100) binary NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE `selectedtype` (
   FULLTEXT KEY `outfitting_name` (`outfitting_name`,`param_name`,`param_description`,`manufacturer_name`,`outfitting_type`,`remark`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `suggestion` (
+CREATE TABLE IF NOT EXISTS `suggestion` (
   `sugId` int(11) NOT NULL AUTO_INCREMENT,
   `sugShipCompany` varchar(20) binary DEFAULT NULL,
   `sugShipType` varchar(20) binary DEFAULT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE `suggestion` (
   FULLTEXT KEY `sugShipCompany` (`sugShipCompany`,`sugShipType`,`sugOutfittingRegion`,`sugProblemDescribe`,`sugSolutionDescribe`,`sugContent`,`sugFilePath`) /*!50100 WITH PARSER `ngram` */
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_jobNum` varchar(500) binary DEFAULT NULL,
   `user_name` varchar(500) binary DEFAULT NULL,
@@ -127,7 +127,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `version` (
+CREATE TABLE IF NOT EXISTS `version` (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `proj_id` int(100) NOT NULL,
   `version_name` varchar(100) binary NOT NULL,

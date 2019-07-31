@@ -1,19 +1,12 @@
 package App;
 
-import App.dataModel.ParamAndValueData;
-import com.google.gson.Gson;
-
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.math.BigDecimal;
 
 public class Test {
-    public static void main(String[] args) throws IOException {
-        List<String> list = new ArrayList<>();
-        list.add("ijfsl");
-        list.add("lfis");
-        list.add("fnkil");
-        list.replaceAll(String::toUpperCase);
-        System.out.println(list.toString());
+    public static void main(String[] args) {
+        double d = 11.636324232;
+        BigDecimal b = new BigDecimal(d);
+        d = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        System.out.println(d);
     }
 }

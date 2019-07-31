@@ -16,8 +16,6 @@ public class KnowledgeBaseMana {
 
     FxmlUtile fxmlUtile = FxmlUtile.getInstance();
     @FXML
-    private Button paramBtn;
-    @FXML
     private Button formulaBtn;
     @FXML
     private BorderPane kbManaBorderPane;
@@ -25,8 +23,6 @@ public class KnowledgeBaseMana {
     private Label KBLabel;
     @FXML
     private Button experienceBtn;
-    @FXML
-    private Button qualityCaseBtn;
     @FXML
     private VBox KBManaVbox;
     @FXML
@@ -62,17 +58,6 @@ public class KnowledgeBaseMana {
     void goFormulaAction(ActionEvent event) throws IOException {
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/consoler.fxml");
         kbManaBorderPane.setCenter(loader.load());
-    }
-
-    @FXML
-    void goParamAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KBParameter.fxml");
-        kbManaBorderPane.setCenter(loader.load());
-    }
-
-    @FXML
-    void goQualityCaseAction(ActionEvent event) {
-
     }
 
     @FXML

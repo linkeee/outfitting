@@ -1,7 +1,9 @@
 package App.controller;
 
 import App.dataModel.ParamAndValueData;
+import App.dataModel.ParameterData;
 import App.database.ParamValueDb;
+import App.database.ParameterDb;
 import App.database.ProjectDb;
 import App.formulalib.DataBase;
 import App.formulalib.Equation;
@@ -25,8 +27,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Calculate {
     @FXML
@@ -76,12 +81,20 @@ public class Calculate {
 
     @FXML
     void calculateAction(ActionEvent event) {
-        //todo 循环调用计算模块计算待求参数结果
+        List<ParameterData> paramlist = ParameterDb.getParameterList();
+        Map<String, Integer> paramaccu = new HashMap<>();
+        for (ParameterData p : paramlist) {
+            paramaccu.put(p.getParam_id(), Integer.valueOf(p.getParam_accuracy()));
+        }
+
         App.formulalib.Calculate cal = new App.formulalib.Calculate(ParamValueDb.getParamOfType(ProjectDb.getIdByName(projLabel.getText()), versionLabel.getText(), 0));
         List<ParamAndValueData> list = projParamValueTV.getItems();
         for (ParamAndValueData p : list) {
             try {
-                p.setParam_value(String.valueOf(cal.varToValue(p.getParam_name())));
+                double d = cal.varToValue(p.getParam_name());
+                BigDecimal b = new BigDecimal(d);
+                d = b.setScale(paramaccu.get(p.getProj_id()), BigDecimal.ROUND_HALF_UP).doubleValue();
+                p.setParam_value(String.valueOf(d));
             } catch (LogicalException e) {
                 MyDialog.error("错误", e.toString());
                 e.printStackTrace();

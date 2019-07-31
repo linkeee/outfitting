@@ -17,7 +17,6 @@
    <top>
       <VBox alignment="CENTER_LEFT">
          <children>
-            <Button mnemonicParsing="false" onAction="#goTemp" opacity="0.0" text="Button" />
             <Label fx:id="titleLabel" text="舾装智能设计">
                <font>
                   <Font size="18.0" />
