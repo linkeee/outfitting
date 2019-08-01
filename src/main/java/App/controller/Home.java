@@ -59,7 +59,6 @@ public class Home {
 
     @FXML
     void initialize() {
-        DBTableCreate.createAllTableIfNotExists();
         switch (Docker.get("userRole").toString()) {
             case "管理员":
                 button1.setDisable(false);

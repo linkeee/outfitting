@@ -13,11 +13,17 @@ public class DatabaseItem {
         final Connection conn;
         try {
             String driver = "com.mysql.cj.jdbc.Driver";
+//            String driver = "org.sqlite.JDBC";
+//            String driver = "com.mysql.jdbc.Driver";
             Class.forName(driver);
+
             String url = "jdbc:mysql://localhost:3306/jproject?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT&useSSL=false";
+//            String url = "jdbc:sqlite:jproject.db";
+//            String url = "jdbc:mysql://localhost:3306/jproject?characterEncoding=UTF-8";
             String user = "root";
             String password = "sa";
             conn = DriverManager.getConnection(url, user, password);
+
             return conn;
         } catch (Exception ex) {
             ex.printStackTrace();

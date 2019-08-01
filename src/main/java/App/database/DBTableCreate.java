@@ -129,7 +129,7 @@ public class DBTableCreate {
     private static String s10 = "CREATE TABLE IF NOT EXISTS `user` (\n" +
             "  `id` int(11) NOT NULL AUTO_INCREMENT,\n" +
             "  `user_jobNum` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,\n" +
-            "  `user_name` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,\n" +
+            "  `user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,\n" +
             "  `user_tel` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,\n" +
             "  `user_position` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,\n" +
             "  `user_role` varchar(500) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,\n" +
@@ -138,8 +138,16 @@ public class DBTableCreate {
             "  UNIQUE KEY `user_name_UNIQUE` (`user_name`)\n" +
             ") ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;\n";
 
+//    private static String s11 = "CREATE TABLE IF NOT EXISTS `version` (\n" +
+//            "              `id` int(100) NOT NULL AUTO_INCREMENT,\n" +
+//            "              `proj_id` int(100) NOT NULL,\n" +
+//            "              `version_name` varchar(100) binary NOT NULL,\n" +
+//            "              `version_description` varchar(1000) binary DEFAULT NULL,\n" +
+//            "              PRIMARY KEY (`id`)\n" +
+//            "            ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;";
+
     private static String s11 = "CREATE TABLE IF NOT EXISTS `version` (\n" +
-            "  `id` int(100) NOT NULL AUTO_INCREMENT,\n" +
+            "  `id` int(11) NOT NULL AUTO_INCREMENT,\n" +
             "  `proj_id` int(100) NOT NULL,\n" +
             "  `version_name` varchar(100) binary NOT NULL,\n" +
             "  `version_description` varchar(1000) binary DEFAULT NULL,\n" +
@@ -149,18 +157,7 @@ public class DBTableCreate {
     private static String s12 = "INSERT INTO user (user_name, user_role, user_password) VALUES ('root', '超级管理员', 'root') ON DUPLICATE KEY UPDATE user_role='超级管理员', user_password='root';";
 
     public static void main(String[] args) {
-        executeSql(s1);
-        executeSql(s2);
-        executeSql(s3);
-        executeSql(s4);
-        executeSql(s5);
-        executeSql(s6);
-        executeSql(s7);
-        executeSql(s8);
-        executeSql(s9);
-        executeSql(s10);
-        executeSql(s11);
-        executeSql(s12);
+        createAllTableIfNotExists();
     }
 
     public static void createAllTableIfNotExists() {
@@ -186,6 +183,7 @@ public class DBTableCreate {
                 statement = connection.createStatement();
             }
             if (statement != null) {
+//                statement.execute(sql);
                 statement.executeLargeUpdate(sql);
             }
             System.out.println("Execute successfully!");

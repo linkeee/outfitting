@@ -2,6 +2,7 @@ package App.controller;
 
 import App.Main;
 import App.dataModel.UserData;
+import App.database.DBTableCreate;
 import App.database.UserDb;
 import App.utile.Docker;
 import App.utile.FxmlUtile;
@@ -38,6 +39,7 @@ public class LoginWindows {
 
     @FXML
     void initialize() {
+        DBTableCreate.createAllTableIfNotExists();
         password.setTooltip(new Tooltip("密码由6~18位字母、数字和下划线组成，区分大小写，且必须以字母开头。"));
     }
 
