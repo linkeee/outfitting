@@ -2,6 +2,7 @@ package App.formulalib;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,12 +13,12 @@ import java.util.logging.Logger;
 
 public class DataBase {
     private static final String JDBC_DRIVER = "org.sqlite.JDBC";
-    private static final String DB_URL = "jdbc:sqlite:/";
-    private final String rootPath;
-    private Connection conn;
+//    private static final String DB_URL = "jdbc:sqlite:/";
+//    private final String rootPath;
+    public Connection conn;
 
     public DataBase() {
-        rootPath = this.getClass().getResource("/").getPath();
+//        rootPath = this.getClass().getResource("/").getPath();
         try {
             conn = getConnection();
         } catch (Exception e) {
@@ -36,9 +37,12 @@ public class DataBase {
      */
     private Connection getConnection() throws IllegalAccessException, InstantiationException, IOException {
         try {
-            Class.forName(JDBC_DRIVER).newInstance();
-            Logger.getGlobal().log(Level.INFO, "数据库驱动加载成功");
-            Connection newConn = DriverManager.getConnection(DB_URL.concat(rootPath).concat("App/formulalib/formulalib.db"));
+//            Class.forName(JDBC_DRIVER).newInstance();
+//            Logger.getGlobal().log(Level.INFO, "数据库驱动加载成功");
+//            Connection newConn = DriverManager.getConnection(DB_URL.concat(rootPath).concat("App/formulalib/formulalib.db"));
+
+            Class.forName(JDBC_DRIVER);
+            Connection newConn = DriverManager.getConnection("jdbc:sqlite:src/main/java/App/db/formula.db");
             Logger.getGlobal().log(Level.INFO, "数据库连接成功");
             return newConn;
         } catch (SQLException e) {
@@ -68,8 +72,8 @@ public class DataBase {
      */
     void createTables() {
         try {
-            String sql1 = "CREATE TABLE variable ([variableID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[variable_string] TEXT NOT NULL,[variable_type] BOOLEAN NOT NULL DEFAULT (-1),[variable_description] TEXT NULL DEFAULT NULL,[variable_device] TEXT NULL DEFAULT NULL,[isDeleted] BOOLEAN NOT NULL DEFAULT '0', [variable_scope] TEXT NULL DEFAULT NULL,[accuracyDigit] INTEGER NOT NULL DEFAULT '2',[varUnit] TEXT NOT NULL)";
-            String sql2 = "CREATE TABLE formula ([equationID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[equation_right]TEXT NOT NULL,[equation_VarID]INTEGER NOT NULL,[description]TEXT NULL DEFAULT NULL,[restrictedVarID]INTEGER NULL DEFAULT NULL,[lowerBound]REAL NULL DEFAULT NULL,[upperBound]REAL NULL DEFAULT NULL,[rule_more]TEXT NULL DEFAULT NULL,[rule_description]TEXT NULL DEFAULT NULL,[isDeleted]BOOLEAN NOT NULL DEFAULT '0');";
+            String sql1 = "CREATE TABLE IF NOT EXISTS variable ([variableID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[variable_string] TEXT NOT NULL,[variable_type] BOOLEAN NOT NULL DEFAULT (-1),[variable_description] TEXT NULL DEFAULT NULL,[variable_device] TEXT NULL DEFAULT NULL,[isDeleted] BOOLEAN NOT NULL DEFAULT '0', [variable_scope] TEXT NULL DEFAULT NULL,[accuracyDigit] INTEGER NOT NULL DEFAULT '2',[varUnit] TEXT NOT NULL)";
+            String sql2 = "CREATE TABLE IF NOT EXISTS formula ([equationID] INTEGER PRIMARY KEY ASC AUTOINCREMENT NOT NULL UNIQUE,[equation_right]TEXT NOT NULL,[equation_VarID]INTEGER NOT NULL,[description]TEXT NULL DEFAULT NULL,[restrictedVarID]INTEGER NULL DEFAULT NULL,[lowerBound]REAL NULL DEFAULT NULL,[upperBound]REAL NULL DEFAULT NULL,[rule_more]TEXT NULL DEFAULT NULL,[rule_description]TEXT NULL DEFAULT NULL,[isDeleted]BOOLEAN NOT NULL DEFAULT '0');";
             Statement stat = conn.createStatement();
             stat.addBatch("PRAGMA encoding = \"UTF-8\";");
             stat.addBatch(sql1);
@@ -891,5 +895,14 @@ public class DataBase {
         } catch (SQLException e) {
             Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
         }
+    }
+
+    String getTopPath(Class cls)
+    {
+        String path=cls.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        int firstIndex = path.lastIndexOf(System.getProperty("path.separator"))+1;
+        int lastIndex = path.lastIndexOf(File.separator)+1;
+        path=path.substring(firstIndex,lastIndex);
+        return path;
     }
 }

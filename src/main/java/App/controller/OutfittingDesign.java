@@ -1,8 +1,6 @@
 package App.controller;
 
 import App.utile.FxmlUtile;
-import App.utile.ProgressFrom;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,8 +49,8 @@ public class OutfittingDesign {
     }
 
     private void setStyle(Button btn, Button... buttons) {
-        btn.setStyle("-fx-background-size: 25px; -fx-background-color: rgb(0, 150, 255)");
-        for (Button button : buttons) button.setStyle("-fx-background-size: 20px; -fx-background-color: rgb(0, 100, 255)");
+        btn.setStyle("-fx-background-size: 25px; -fx-background-color: rgb(16, 110, 190)");
+        for (Button button : buttons) button.setStyle("-fx-background-size: 20px; -fx-background-color: rgb(0, 95, 190)");
     }
 
     @FXML
@@ -94,7 +92,7 @@ public class OutfittingDesign {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("舾装设计");
-        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/javaIcon.png"));
         stage.show();
     }
 

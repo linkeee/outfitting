@@ -33,37 +33,19 @@ public class Export {
 
     @FXML
     void exportResultAction(ActionEvent event) throws IOException {
-        setStyle("-fx-background-color: white; -fx-text-fill: black", "-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white");
+        FxmlUtile.setStyle(exportResultBtn, exportItemListBtn);
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ExportResult.fxml");
         exportBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                ExportResult controller = loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML
     void exportItemListAction(ActionEvent event) {
-        setStyle("-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white", "-fx-background-color: white; -fx-text-fill: black");
-
+        FxmlUtile.setStyle(exportItemListBtn, exportResultBtn);
     }
 
     @FXML
     void initialize() {
 
-    }
-
-    private void setStyle(String btn1Style, String btn2Style) {
-        exportResultBtn.setStyle(btn1Style);
-//        exportResultBtn.setStyle("-fx-background-color: white; -fx-text-fill: black");
-
-        exportItemListBtn.setStyle(btn2Style);
     }
 }

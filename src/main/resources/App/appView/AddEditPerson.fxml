@@ -67,22 +67,22 @@
             <ComboBox fx:id="roleComboBox" prefHeight="30.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ImageView fitHeight="16.0" fitWidth="16.0" GridPane.columnIndex="2">
                <image>
-                  <Image url="@images/used/星.png" />
+                  <Image url="@images/used/star.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="16.0" fitWidth="16.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <image>
-                  <Image url="@images/used/星.png" />
+                  <Image url="@images/used/star.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="16.0" fitWidth="16.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <image>
-                  <Image url="@images/used/星.png" />
+                  <Image url="@images/used/star.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="16.0" fitWidth="16.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <image>
-                  <Image url="@images/used/星.png" />
+                  <Image url="@images/used/star.png" />
                </image>
             </ImageView>
             </children>

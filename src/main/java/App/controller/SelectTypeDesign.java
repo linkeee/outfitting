@@ -37,107 +37,47 @@ public class SelectTypeDesign {
 
     @FXML
     void createProjectAction(ActionEvent event) throws IOException {
-        setStyle(createProjBtn);
+        FxmlUtile.setStyle(createProjBtn, inputParamBtn, calculateBtn, correctBtn, selectTypeBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/CreateProject.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                CreateProject controller = loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML
     void inputParameterAction(ActionEvent event) throws IOException {
-        setStyle(inputParamBtn);
+        FxmlUtile.setStyle(inputParamBtn, createProjBtn, calculateBtn, correctBtn, selectTypeBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/InputParameter.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                InputParameter controller = loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML
     void calculateAction(ActionEvent event) throws IOException {
-        setStyle(calculateBtn);
+        FxmlUtile.setStyle(calculateBtn, createProjBtn, inputParamBtn, correctBtn, selectTypeBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/Calculate.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                Calculate calculate = loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML
     void modifyResultAction(ActionEvent event) throws IOException {
-        setStyle(correctBtn);
+        FxmlUtile.setStyle(correctBtn, createProjBtn, inputParamBtn, calculateBtn, selectTypeBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/ModifyResult.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                ModifyResult controller = loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
     }
 
     @FXML
     void selectTypeAction(ActionEvent event) throws IOException {
-        setStyle(selectTypeBtn);
+        FxmlUtile.setStyle(selectTypeBtn, createProjBtn, inputParamBtn, calculateBtn, correctBtn);
 
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/SelectTheType.fxml");
         selectTypeBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                SelectTheType controller = loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
-    }
-
-    private void setStyle(Button selectedButton) {
-        List<Button> buttons = new ArrayList<>();
-        buttons.add(createProjBtn); buttons.add(inputParamBtn); buttons.add(calculateBtn); buttons.add(correctBtn); buttons.add(selectTypeBtn);
-        selectedButton.setStyle("-fx-background-color: white; -fx-text-fill: black");
-        buttons.remove(selectedButton);
-        for (Button button : buttons) {
-            button.setStyle("-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white");
-        }
     }
 
 }

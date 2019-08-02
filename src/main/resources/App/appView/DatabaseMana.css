@@ -1,5 +1,5 @@
 #DBManaLabel {
-    -fx-background-color: rgb(0, 120, 255);
+    -fx-background-color: rgb(16, 110, 190);
     -fx-font-family: "仿宋";
     -fx-font-weight: bold;
     -fx-font-size: 18;
@@ -8,11 +8,11 @@
 }
 
 #DBManaVbox {
-    -fx-background-color: rgb(0, 150, 255);
+    -fx-background-color: rgb(16, 110, 190);
 }
 
 .button {
-    -fx-background-color: rgb(0, 150, 255);
+    -fx-background-color: rgb(16, 110, 190);
     /*设置圆角大小*/
     -fx-background-radius: 0;
     -fx-font-size: 15;

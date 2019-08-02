@@ -85,7 +85,7 @@
     <top>
         <VBox BorderPane.alignment="CENTER">
             <children>
-            <Label fx:id="titleLabel" text="布局设计" />
+            <Label fx:id="titleLabel" text="布局设计" underline="true" />
             <Separator prefWidth="200.0" />
                 <HBox alignment="CENTER_LEFT" spacing="20.0" VBox.vgrow="ALWAYS">
                     <children>

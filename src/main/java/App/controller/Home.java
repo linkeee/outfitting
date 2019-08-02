@@ -1,10 +1,8 @@
 package App.controller;
 
 import App.Main;
-import App.database.DBTableCreate;
 import App.utile.Docker;
 import App.utile.FxmlUtile;
-import App.utile.MyDialog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,7 +83,7 @@ public class Home {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.setTitle("Home");
-        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/javaIcon.png"));
         stage.show();
     }
 

@@ -115,9 +115,9 @@ public class LayoutDesign {
 
     @FXML
     void resetAction(ActionEvent event) {
+        refresh();
         shipTypeCB.setValue("All");
         itemNameCB.setValue("All");
-        refresh();
         searchTF.setText("");
         titledPane.setExpanded(false);
     }

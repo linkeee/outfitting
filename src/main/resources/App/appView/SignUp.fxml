@@ -67,27 +67,27 @@
                   <ComboBox fx:id="positionCB" editable="true" prefWidth="3000.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS" />
                   <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2">
                      <image>
-                        <Image url="@images/used/星.png" />
+                        <Image url="@images/used/star.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <image>
-                        <Image url="@images/used/星.png" />
+                        <Image url="@images/used/star.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <image>
-                        <Image url="@images/used/星.png" />
+                        <Image url="@images/used/star.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <image>
-                        <Image url="@images/used/星.png" />
+                        <Image url="@images/used/star.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="12.0" fitWidth="12.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <image>
-                        <Image url="@images/used/星.png" />
+                        <Image url="@images/used/star.png" />
                      </image>
                   </ImageView>
                   <Label text="密码由6~18位字母、数字和下划线组成，区分大小写，且必须以字母开头。" textFill="RED" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="2">

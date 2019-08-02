@@ -165,7 +165,7 @@ public class SelectTheType {
                     this.setText(null);
                     this.setGraphic(null);
                 } else {
-                    ImageView view = new ImageView(new Image("App/appView/images/used/垃圾桶.png"));
+                    ImageView view = new ImageView(new Image("App/appView/images/used/litterbin.png"));
                     Button delBtn = new Button("", view);
                     delBtn.setStyle("-fx-pref-height: 10px; -fx-pref-width: 10px; -fx-background-size: 5px, 5px; -fx-background-radius: 5; -fx-background-color: #ffa500");
                     this.setGraphic(delBtn);

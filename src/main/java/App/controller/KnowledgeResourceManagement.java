@@ -3,12 +3,9 @@ package App.controller;
 import java.io.IOException;
 
 import App.utile.FxmlUtile;
-import App.utile.ProgressFrom;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,12 +30,18 @@ public class KnowledgeResourceManagement {
 
     @FXML
     void goKBMana(ActionEvent event) throws IOException {
-        loadKbManagement();
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KnowledgeBaseMana.fxml");
+        knowledgeResourceBorderPane.setCenter(loader.load());
+        KBBtn.setStyle("-fx-background-color: rgb(16, 110, 190); -fx-background-size: 25px");
+        DBBtn.setStyle("-fx-background-color: rgb(0, 95, 190); -fx-background-size: 20px");
     }
 
     @FXML
     void goDBMana(ActionEvent event) throws IOException {
-        loadDBMana();
+        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/DatabaseMana.fxml");
+        knowledgeResourceBorderPane.setCenter(loader.load());
+        DBBtn.setStyle("-fx-background-color: rgb(16, 110, 190); -fx-background-size: 25px");
+        KBBtn.setStyle("-fx-background-color: rgb(0, 95, 190); -fx-background-size: 20px");
     }
 
     @FXML
@@ -50,7 +53,7 @@ public class KnowledgeResourceManagement {
 
     @FXML
     void initialize() throws IOException {
-        loadKbManagement();
+        goKBMana(new ActionEvent());
         KBBtn.setTooltip(new Tooltip("知识库管理"));
         DBBtn.setTooltip(new Tooltip("数据库管理"));
         backHomeBtn.setTooltip(new Tooltip("返回上一级"));
@@ -66,7 +69,7 @@ public class KnowledgeResourceManagement {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.setTitle("企业数据与知识管理");
-        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/javaIcon.png"));
         stage.show();
     }
 
@@ -76,15 +79,4 @@ public class KnowledgeResourceManagement {
     }
 
     FxmlUtile fxmlUtile = FxmlUtile.getInstance();
-
-    //用borderpane加载知识库管理界面
-    private void loadKbManagement() throws IOException {
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/KnowledgeBaseMana.fxml");
-        knowledgeResourceBorderPane.setCenter(loader.load());
-    }
-
-    private void loadDBMana() throws IOException {
-        FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/DatabaseMana.fxml");
-        knowledgeResourceBorderPane.setCenter(loader.load());
-    }
 }

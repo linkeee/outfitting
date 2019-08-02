@@ -17,7 +17,7 @@ public class CriterionDb extends DatabaseItem {
     public static Map<String, String> getIndexAndContentMap() {
         Map<String, String> map = new HashMap<>();
         for (CriterionData criterionData : getCriterionDataList()) {
-            map.put(String.valueOf(criterionData.getCriId()), criterionData.getCriContent());
+            map.put(String.valueOf(criterionData.getCriId()), criterionData.getCriName() + criterionData.getCriOutfittingRegion() + criterionData.getCriContent());
         }
         return map;
     }

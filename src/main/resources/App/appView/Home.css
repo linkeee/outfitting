@@ -39,19 +39,19 @@
 }
 
 #button1 {
-    -fx-background-image: url("images/彩色书本知识树.png");
+    -fx-background-image: url("images/used/colorfulbookstree.png");
 }
 
 #button2 {
-    -fx-background-image: url("images/红色卡通船.png");
+    -fx-background-image: url("images/used/redboatincarton.png");
 }
 
 #button3 {
-    -fx-background-image: url("images/放大镜查电脑图标.png");
+    -fx-background-image: url("images/used/magnifier.png");
 }
 
 #button4 {
-    -fx-background-image: url("images/用户文件夹.png");
+    -fx-background-image: url("images/used/users.png");
 }
 
 #button5 {

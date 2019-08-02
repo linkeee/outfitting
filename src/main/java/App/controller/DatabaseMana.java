@@ -32,16 +32,7 @@ public class DatabaseMana {
         FxmlUtile fxmlUtile = new FxmlUtile();
         FXMLLoader loader = fxmlUtile.getFxmlLoader("App/appView/DBManufacturer.fxml");
         DBManaBorderPane.setCenter(loader.load());
-
-        Task task = new Task() {
-            @Override
-            protected Object call() throws Exception {
-                loader.getController();
-                return null;
-            }
-        };
-        ProgressFrom progressFrom = new ProgressFrom(task, "加载中，请稍后...");
-        progressFrom.activateProgressBar();
+        FxmlUtile.setStyle(manufacturerBtn);
     }
 
     @FXML

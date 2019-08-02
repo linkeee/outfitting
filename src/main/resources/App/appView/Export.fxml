@@ -13,7 +13,7 @@
         <VBox fx:id="buttonVBox" BorderPane.alignment="CENTER">
             <children>
                 <Label fx:id="firstNameLabel" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="170.0"
-                       text="导出文件" textFill="WHITE" wrapText="true" VBox.vgrow="NEVER">
+                       text="导出文件" textFill="WHITE" underline="true" wrapText="true" VBox.vgrow="NEVER">
                     <font>
                         <Font name="System Bold Italic" size="16.0"/>
                     </font>

@@ -17,7 +17,7 @@ public class SuggestionDb extends DatabaseItem {
     public static Map<String, String> getIndexAndContentMap() {
         Map<String, String> map = new HashMap<>();
         for (SuggestionData suggestionData : getSugDataList()) {
-            map.put(String.valueOf(suggestionData.getSugId()), suggestionData.getSugProblemDescribe()+suggestionData.getSugSolutionDescribe()+suggestionData.getSugContent());
+            map.put(String.valueOf(suggestionData.getSugId()), suggestionData.getSugOutfittingRegion() + suggestionData.getSugProblemDescribe()+suggestionData.getSugSolutionDescribe()+suggestionData.getSugContent());
         }
         return map;
     }

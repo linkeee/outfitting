@@ -1,13 +1,11 @@
 package App.controller;
 
 import App.Main;
-import App.dataModel.UserData;
 import App.database.DBTableCreate;
 import App.database.UserDb;
 import App.utile.Docker;
 import App.utile.FxmlUtile;
 import App.utile.MyDialog;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -95,7 +93,7 @@ public class LoginWindows {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setTitle("注册");
-        stage.getIcons().add(new Image("App/appView/images/used/注册.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/signup.png"));
         stage.showAndWait();
     }
 
@@ -108,7 +106,7 @@ public class LoginWindows {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.setTitle("重置密码");
-        stage.getIcons().add(new Image("App/appView/images/used/重置密码.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/resetpassword.png"));
 
         SignUp controller = loader.getController();
         controller.setDisable();

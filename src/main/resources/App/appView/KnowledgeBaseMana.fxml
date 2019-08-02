@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-
-<BorderPane fx:id="kbManaBorderPane" prefHeight="600.0" prefWidth="1100.0" stylesheets="@KnowledgeBaseMana.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.controller.KnowledgeBaseMana">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="kbManaBorderPane" prefHeight="600.0" prefWidth="1100.0"
+            stylesheets="@KnowledgeBaseMana.css" xmlns="http://javafx.com/javafx/8"
+            fx:controller="App.controller.KnowledgeBaseMana">
     <left>
         <VBox fx:id="KBManaVbox" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="KBLabel" prefHeight="40.0" prefWidth="170.0" text="知识库管理" />
-                <Button fx:id="experienceBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goExperienceAction" prefHeight="40.0" prefWidth="170.0" text="经验知识库" textAlignment="LEFT" />
-                <Button fx:id="suggestionBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goSuggestionAction" prefHeight="40.0" prefWidth="170.0" text="船东船检意见库" textAlignment="LEFT" />
-                <Button fx:id="criterionBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goCriterionAction" prefHeight="40.0" prefWidth="170.0" text="设计规范库" textAlignment="LEFT" />
-                <Button fx:id="layoutBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#layoutAction" prefHeight="40.0" prefWidth="170.0" text="布局案例库" />
-                <Button fx:id="formulaBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goFormulaAction" prefHeight="40.0" prefWidth="170.0" text="公式库" />
+                <Label fx:id="KBLabel" prefHeight="40.0" prefWidth="170.0" text="知识库管理" underline="true"/>
+                <Button fx:id="experienceBtn" alignment="CENTER_LEFT" mnemonicParsing="false"
+                        onAction="#goExperienceAction" prefHeight="40.0" prefWidth="170.0" text="经验知识库"
+                        textAlignment="LEFT"/>
+                <Button fx:id="suggestionBtn" alignment="CENTER_LEFT" mnemonicParsing="false"
+                        onAction="#goSuggestionAction" prefHeight="40.0" prefWidth="170.0" text="船东船检意见库"
+                        textAlignment="LEFT"/>
+                <Button fx:id="criterionBtn" alignment="CENTER_LEFT" mnemonicParsing="false"
+                        onAction="#goCriterionAction" prefHeight="40.0" prefWidth="170.0" text="设计规范库"
+                        textAlignment="LEFT"/>
+                <Button fx:id="layoutBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#layoutAction"
+                        prefHeight="40.0" prefWidth="170.0" text="布局案例库"/>
+                <Button fx:id="formulaBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goFormulaAction"
+                        prefHeight="40.0" prefWidth="170.0" text="公式库"/>
             </children>
         </VBox>
     </left>

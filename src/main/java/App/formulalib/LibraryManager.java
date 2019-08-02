@@ -2,6 +2,7 @@ package App.formulalib;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -99,6 +100,8 @@ public class LibraryManager {
     }
 
     private boolean isDataBaseFileNull() {
-        return this.getClass().getResource("/App/formulalib/formulalib.db") == null;
+        System.out.println(LibraryManager.class.getClassLoader().getResource(System.getProperty("user.dir") + File.separator + "src/main/java/App/db/formula.db") == null);
+        return LibraryManager.class.getClassLoader().getResource(System.getProperty("user.dir") + File.separator + "src/main/java/App/db/formula.db") == null;
+//        return this.getClass().getResource("../db/formula.db") == null;
     }
 }

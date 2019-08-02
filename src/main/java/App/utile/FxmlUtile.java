@@ -24,6 +24,6 @@ public class FxmlUtile {
 
     public static void setStyle(Button btn, Button... buttons) {
         btn.setStyle("-fx-background-color: white; -fx-text-fill: black");
-        for (Button button : buttons) button.setStyle("-fx-background-color: rgb(0, 150, 255); -fx-text-fill: white");
+        for (Button button : buttons) button.setStyle("-fx-background-color: rgb(16, 110, 190); -fx-text-fill: white");
     }
 }

@@ -1,8 +1,6 @@
 package App.controller;
 
 import App.utile.FxmlUtile;
-import App.utile.ProgressFrom;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,7 +70,7 @@ public class KnowledgeSupply {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Knowledge supply!");
-        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/javaIcon.png"));
         stage.show();
     }
 

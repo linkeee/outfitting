@@ -12,7 +12,7 @@
     <left>
         <VBox fx:id="DBManaVbox" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="DBManaLabel" prefHeight="40.0" prefWidth="170.0" text="数据库管理" />
+                <Label fx:id="DBManaLabel" prefHeight="40.0" prefWidth="170.0" text="数据库管理" underline="true" />
                 <Button fx:id="manufacturerBtn" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#goManufacturerAction" prefHeight="40.0" prefWidth="170.0" text="设备厂商数据库" />
             </children>
         </VBox>

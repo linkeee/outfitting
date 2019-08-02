@@ -16,7 +16,7 @@ public class ExperienceDb extends DatabaseItem {
     public static Map<String, String> getIndexAndContentMap() {
         Map<String, String> map = new HashMap<>();
         for (ExperienceData experienceData : getExpDataList()) {
-            map.put(String.valueOf(experienceData.getExpId()), experienceData.getExpContent());
+            map.put(String.valueOf(experienceData.getExpId()), experienceData.getExpName() + experienceData.getExpOutfittingRegion() + experienceData.getExpContent());
         }
         return map;
     }

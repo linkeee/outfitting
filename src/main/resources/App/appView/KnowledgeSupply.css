@@ -20,7 +20,7 @@
 }
 
 #recommendBtn {
-    -fx-background-image: url("images/used/检索-未选中.png");
+    -fx-background-image: url("images/used/searchnotfocus.png");
     -fx-background-size: 30px;
 }
 
@@ -30,7 +30,7 @@
 }
 
 #backBtn {
-    -fx-background-image: url("images/used/首页.png");
+    -fx-background-image: url("images/used/homepage.png");
     -fx-background-size: 25px;
 }
 

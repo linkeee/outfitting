@@ -14,7 +14,7 @@
 }
 
 #deleteVersionBtn {
-    -fx-background-image: url("images/used/删除.png");
+    -fx-background-image: url("images/used/delete.png");
     -fx-background-color: #ffffff;
     -fx-pref-height: 30px;
     -fx-pref-width: 30px;

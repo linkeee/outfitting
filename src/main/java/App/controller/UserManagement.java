@@ -7,7 +7,6 @@ import App.utile.FxmlUtile;
 import App.utile.MyDialog;
 import App.utile.ProgressFrom;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -154,7 +153,7 @@ public class UserManagement {
         progressFrom.activateProgressBar();
 
         stage.setTitle("User management!");
-        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/javaIcon.png"));
         stage.show();
         return loader.getController();
     }

@@ -29,7 +29,7 @@ public class Main extends Application {
         Scene scene = new Scene(login);
         stage.setTitle("Welcome to sign in!");
         stage.setScene(scene);
-        stage.getIcons().add(new Image("App/appView/images/used/java图标.png"));
+        stage.getIcons().add(new Image("App/appView/images/used/javaIcon.png"));
         stage.show();
     }
 
