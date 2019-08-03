@@ -99,9 +99,11 @@ public class LibraryManager {
         return allVar;
     }
 
+    /**
+     * 检查数据库文件是否存在
+     * @return Boolean 存在与否
+     */
     private boolean isDataBaseFileNull() {
-        System.out.println(LibraryManager.class.getClassLoader().getResource(System.getProperty("user.dir") + File.separator + "src/main/java/App/db/formula.db") == null);
-        return LibraryManager.class.getClassLoader().getResource(System.getProperty("user.dir") + File.separator + "src/main/java/App/db/formula.db") == null;
-//        return this.getClass().getResource("../db/formula.db") == null;
+        return !(new File(DataBase.getJarPath(this.getClass()) + "formulalib.db").exists());
     }
 }

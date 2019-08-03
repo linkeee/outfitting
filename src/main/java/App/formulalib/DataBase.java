@@ -1,5 +1,6 @@
 package App.formulalib;
 
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -13,12 +14,12 @@ import java.util.logging.Logger;
 
 public class DataBase {
     private static final String JDBC_DRIVER = "org.sqlite.JDBC";
-//    private static final String DB_URL = "jdbc:sqlite:/";
-//    private final String rootPath;
+    private static final String DB_URL = "jdbc:sqlite:" + File.separator + File.separator;
+    private final String rootPath;
     public Connection conn;
 
     public DataBase() {
-//        rootPath = this.getClass().getResource("/").getPath();
+        rootPath = getJarPath(this.getClass());
         try {
             conn = getConnection();
         } catch (Exception e) {
@@ -28,7 +29,7 @@ public class DataBase {
     }
 
     /**
-     * SQLite的JDBC会在数据库文件不存在时自动新建空的db文件，我们使用getResource("/").getPath()获取项目根目录拼接formulalib.db的地址，因此只要做好前置过滤，手动写建立表结构的函数即可
+     * SQLite的JDBC会在数据库文件不存在时自动新建空的db文件，我们使用getJarPath()获取Jar同级目录拼接formulalib.db的地址，因此只要做好前置过滤，手动写建立表结构的函数即可
      *
      * @return Connection
      * @throws IllegalAccessException
@@ -37,12 +38,10 @@ public class DataBase {
      */
     private Connection getConnection() throws IllegalAccessException, InstantiationException, IOException {
         try {
-//            Class.forName(JDBC_DRIVER).newInstance();
-//            Logger.getGlobal().log(Level.INFO, "数据库驱动加载成功");
-//            Connection newConn = DriverManager.getConnection(DB_URL.concat(rootPath).concat("App/formulalib/formulalib.db"));
-
             Class.forName(JDBC_DRIVER);
-            Connection newConn = DriverManager.getConnection("jdbc:sqlite:src/main/java/App/db/formula.db");
+            Logger.getGlobal().log(Level.INFO, "数据库驱动加载成功");
+            String dbPath = DB_URL.concat(rootPath).concat("formulalib.db");
+            Connection newConn = DriverManager.getConnection(dbPath);
             Logger.getGlobal().log(Level.INFO, "数据库连接成功");
             return newConn;
         } catch (SQLException e) {
@@ -897,12 +896,16 @@ public class DataBase {
         }
     }
 
-    String getTopPath(Class cls)
-    {
-        String path=cls.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-        int firstIndex = path.lastIndexOf(System.getProperty("path.separator"))+1;
-        int lastIndex = path.lastIndexOf(File.separator)+1;
-        path=path.substring(firstIndex,lastIndex);
+    /**
+     * 获取Jar文件所在的同级目录
+     * @param cls 需要传入一个Jar里面的Class，可以使用this.getClass()传入
+     * @return 使用通用分隔符'/'的路径
+     */
+    static String getJarPath(Class cls) {
+        String path = cls.getProtectionDomain().getCodeSource().getLocation().getPath();
+        int firstIndex = path.indexOf('/')+1;
+        int lastIndex = path.lastIndexOf('/') + 1;
+        path = path.substring(firstIndex, lastIndex);
         return path;
     }
 }
