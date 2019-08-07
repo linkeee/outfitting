@@ -17,6 +17,8 @@ public class DatabaseItem {
 //            String driver = "com.mysql.jdbc.Driver";
             Class.forName(driver);
 
+//            String url = "jdbc:mysql://223.104.213.207:3306/jproject?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT&useSSL=false";
+
             String url = "jdbc:mysql://localhost:3306/jproject?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT&useSSL=false";
 //            String url = "jdbc:sqlite:jproject.db";
 //            String url = "jdbc:mysql://localhost:3306/jproject?characterEncoding=UTF-8";

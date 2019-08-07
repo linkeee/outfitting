@@ -36,7 +36,10 @@ public class LoginWindows {
     private Button signInButton;
 
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
+        Runtime.getRuntime().exec("mysqld --install");
+        Runtime.getRuntime().exec("net start mysql");
+        Runtime.getRuntime().exec("mysql -uroot -psa --execute \"create database jproject;\"");
         DBTableCreate.createAllTableIfNotExists();
         password.setTooltip(new Tooltip("密码由6~18位字母、数字和下划线组成，区分大小写，且必须以字母开头。"));
     }
