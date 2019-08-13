@@ -84,6 +84,7 @@ class Calculator {
             factors.add(NumberStr2Dou(transform_Algebraic.substring(transform_Algebraic.length() - lengthOfnum)));
             lengthOfnum = 0;
         }
+        System.out.println(Arithmetic(factors, operators));
         return Arithmetic(factors, operators);
     }
 

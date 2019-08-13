@@ -2,7 +2,6 @@ package App.formulalib;
 
 import App.dataModel.ParamAndValueData;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,13 +60,15 @@ class Interpreter {
         final Pattern spacePattern = Pattern.compile(spaceEx);
         Matcher spaceRemover = spacePattern.matcher(inVar);
         inVar = spaceRemover.replaceAll("");
-        //变量名合法性检查
-        String regEx = "^[A-Za-z][A-Za-z0-9]{0,2}[']{0,2}";//正则表达式:只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串,可有0-2位的符号’修饰
+        //变量名合法性检查,正则表达式:只允许大小写字母开头，由大小写字母与0-9数字构成的1-3位字符串,可有0-2位的符号’修饰
+        String regEx = "^[A-Za-z][A-Za-z0-9]{0,2}[']{0,2}";
         final Pattern varPattern = Pattern.compile(regEx);
         Matcher varChecker = varPattern.matcher(inVar);
         if (varChecker.matches()) {
             return inVar;
-        } else throw new IllegalArgumentException("查询变量名非法，请检查输入");
+        } else {
+            throw new IllegalArgumentException("查询变量名非法，请检查输入");
+        }
     }
 
     //计算判断变量的实际值

@@ -4,7 +4,6 @@ package App.formulalib;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,21 +21,20 @@ public class DataBase {
         rootPath = getJarPath(this.getClass());
         try {
             conn = getConnection();
+            if (!isTableExist()) {
+                createTables();
+            }
         } catch (Exception e) {
             Logger.getGlobal().log(Level.SEVERE, "数据库对象初始化失败", e);
         }
-
     }
 
     /**
      * SQLite的JDBC会在数据库文件不存在时自动新建空的db文件，我们使用getJarPath()获取Jar同级目录拼接formulalib.db的地址，因此只要做好前置过滤，手动写建立表结构的函数即可
      *
      * @return Connection
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     * @throws IOException
      */
-    private Connection getConnection() throws IllegalAccessException, InstantiationException, IOException {
+    private Connection getConnection() {
         try {
             Class.forName(JDBC_DRIVER);
             Logger.getGlobal().log(Level.INFO, "数据库驱动加载成功");
@@ -86,13 +84,34 @@ public class DataBase {
     }
 
     /**
+     * 检查表结构是否完整
+     *
+     * @return Boolean
+     */
+    public boolean isTableExist() {
+        try {
+            Statement stat = conn.createStatement();
+            String sql1 = "select * from variable";
+            String sql2 = "select * from formula";
+            stat.addBatch(sql1);
+            stat.addBatch(sql2);
+            int[] report = stat.executeBatch();
+            stat.close();
+            return true;
+        } catch (SQLException e) {
+            Logger.getGlobal().log(Level.SEVERE, "数据表结构损坏", e);
+            return false;
+        }
+    }
+
+    /**
      * 查询变量ID对应的第一条公式的ID
      *
      * @param varID 变量ID
      * @return FirstFormulaID 变量ID对应的第一条公式的ID
      * @throws IllegalArgumentException
      */
-    int getFirstFormulaID(int varID) {
+    int getFirstFormulaID(int varID) throws LogicalException {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rSet = stmt.executeQuery("select equationID FROM formula WHERE isDeleted=0 and equation_VarID=".concat(String.valueOf(varID).concat(" limit 1")));
@@ -104,7 +123,7 @@ public class DataBase {
         } catch (SQLException e) {
             Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
         }
-        throw new IllegalArgumentException("该变量ID没有对应的公式");
+        throw new LogicalException("该变量ID没有对应的公式");
     }
 
     /**
@@ -152,7 +171,7 @@ public class DataBase {
             } else {
                 rSet.close();
                 stat.close();
-                return null;
+                throw new LogicalException("没有定义这样的变量:" + varStr);
             }
         } catch (SQLException e) {
             Logger.getGlobal().log(Level.WARNING, "数据库错误", e);
@@ -898,12 +917,13 @@ public class DataBase {
 
     /**
      * 获取Jar文件所在的同级目录
+     *
      * @param cls 需要传入一个Jar里面的Class，可以使用this.getClass()传入
      * @return 使用通用分隔符'/'的路径
      */
     static String getJarPath(Class cls) {
         String path = cls.getProtectionDomain().getCodeSource().getLocation().getPath();
-        int firstIndex = path.indexOf('/')+1;
+        int firstIndex = path.indexOf('/') + 1;
         int lastIndex = path.lastIndexOf('/') + 1;
         path = path.substring(firstIndex, lastIndex);
         return path;
