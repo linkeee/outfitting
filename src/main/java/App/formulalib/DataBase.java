@@ -89,15 +89,19 @@ public class DataBase {
      * @return Boolean
      */
     public boolean isTableExist() {
+        boolean [] result=new boolean[2];
         try {
             Statement stat = conn.createStatement();
             String sql1 = "select * from variable";
             String sql2 = "select * from formula";
-            stat.addBatch(sql1);
-            stat.addBatch(sql2);
-            int[] report = stat.executeBatch();
+            result[0]=stat.execute(sql1);
+            result[1]=stat.execute(sql2);
             stat.close();
-            return true;
+            if (result[0]&&result[1]) {
+                return true;
+            }else {
+                return false;
+            }
         } catch (SQLException e) {
             Logger.getGlobal().log(Level.SEVERE, "数据表结构损坏", e);
             return false;

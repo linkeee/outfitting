@@ -3,6 +3,7 @@ package App;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,18 +19,23 @@ public class Test {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        String ss = "mysqld --initialize --console";
-        String s = "mysqld --install";
-        String s1 = "cmd.exe net start mysql";
-        String s2 = "mysql -uroot -psa --execute \"create database jproject1;\"";
+//        String ss = "mysqld --initialize --console";
+//        String s = "mysqld --install";
+//        String s1 = "cmd.exe net start mysql";
+//        String s2 = "mysql -uroot -psa --execute \"create database jproject1;\"";
 //        executeCMDCommand(ss);
 //        executeCMDCommand(s);
 //        String ssss = executeCMDCommand(s1);
 //        System.out.println(ssss);
-        Runtime.getRuntime().exec("mysqld --install");
-        Runtime.getRuntime().exec("net start mysql");
-        Runtime.getRuntime().exec("mysql -uroot -psa --execute \"create database jproject;\"");
+//        Runtime.getRuntime().exec("mysqld --install");
+//        Runtime.getRuntime().exec("net start mysql");
+//        Runtime.getRuntime().exec("mysql -uroot -psa --execute \"create database jproject;\"");
 //        executeCMDCommand(s2);
+
+        double d = 5.254251252522;
+        BigDecimal b = new BigDecimal(d);
+        d = b.setScale(5, BigDecimal.ROUND_HALF_UP).doubleValue();
+        System.out.println(d);
     }
 
     public static String executeCMDCommand(String cmdCommand)

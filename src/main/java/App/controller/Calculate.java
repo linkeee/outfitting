@@ -91,10 +91,9 @@ public class Calculate {
         List<ParamAndValueData> list = projParamValueTV.getItems();
         for (ParamAndValueData p : list) {
             try {
-                System.out.println(p.getParam_name());
                 double d = cal.varToValue(p.getParam_name());
                 BigDecimal b = new BigDecimal(d);
-                d = b.setScale(paramaccu.get(p.getProj_id()), BigDecimal.ROUND_HALF_UP).doubleValue();
+                d = b.setScale(paramaccu.get(p.getParam_id()), BigDecimal.ROUND_HALF_UP).doubleValue();
                 p.setParam_value(String.valueOf(d));
             } catch (LogicalException e) {
                 MyDialog.error("错误", e.toString());
